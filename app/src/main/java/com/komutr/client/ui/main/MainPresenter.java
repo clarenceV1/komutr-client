@@ -13,6 +13,9 @@ public class MainPresenter extends AppBasePresenter<MainView> {
 
     @Override
     public void onAttached() {
-
+        mView.tast("ssss");
+    }
+    public String getTest2(){
+        return "sss";
     }
 }

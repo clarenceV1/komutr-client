@@ -1,6 +1,9 @@
 package com.komutr.client.ui.main;
 
+import android.widget.Toast;
+
 import com.cai.framework.base.GodBasePresenter;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -26,11 +29,16 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
-        mViewBinding.tvTitle.setText("wo hao le");
+        mViewBinding.tvTitle.setText(presenter.getTest2());
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.main;
+    }
+
+    @Override
+    public void tast(String msg) {
+        ToastUtils.showShort(msg);
     }
 }
