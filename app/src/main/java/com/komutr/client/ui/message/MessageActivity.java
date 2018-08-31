@@ -5,14 +5,14 @@ import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.common.Constant;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MessageBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = Constant.ROUTER_MESSAGE, name = "消息")
+@Route(path = RouterManager.ROUTER_MESSAGE, name = "消息")
 public class MessageActivity extends AppBaseActivity<MessageBinding> implements MessageView {
 
     @Inject

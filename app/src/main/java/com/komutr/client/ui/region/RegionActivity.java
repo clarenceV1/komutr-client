@@ -5,14 +5,14 @@ import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.common.Constant;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RegionBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = Constant.ROUTER_REGION, name = "我的-个人信息-地区")
+@Route(path = RouterManager.ROUTER_REGION, name = "我的-个人信息-地区")
 public class RegionActivity extends AppBaseActivity<RegionBinding> implements RegionView {
     @Inject
     RegionPresenter presenter;

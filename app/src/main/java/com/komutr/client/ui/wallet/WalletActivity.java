@@ -1,4 +1,4 @@
-package com.komutr.client.ui.message;
+package com.komutr.client.ui.wallet;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
@@ -6,17 +6,16 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.databinding.MessageDetailBinding;
+import com.komutr.client.databinding.RegionBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = RouterManager.ROUTER_MESSAGE_DETAIL, name = "消息详情")
-public class MessageDetailActivity extends AppBaseActivity<MessageDetailBinding> implements MessageDetailView {
-
+@Route(path = RouterManager.ROUTER_WALLET, name = "我的-我的钱包")
+public class WalletActivity extends AppBaseActivity<RegionBinding> implements WalletView {
     @Inject
-    MessageDetailPresenter presenter;
+    WalletPresenter presenter;
 
     @Override
     public void initDagger() {
@@ -35,6 +34,6 @@ public class MessageDetailActivity extends AppBaseActivity<MessageDetailBinding>
 
     @Override
     public int getLayoutId() {
-        return R.layout.message_detail;
+        return R.layout.region;
     }
 }

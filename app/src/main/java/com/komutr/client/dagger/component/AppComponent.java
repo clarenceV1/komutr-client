@@ -10,6 +10,7 @@ import com.komutr.client.ui.main.MainActivity;
 import com.komutr.client.ui.message.MessageActivity;
 import com.komutr.client.ui.message.MessageDetailActivity;
 import com.komutr.client.ui.region.RegionActivity;
+import com.komutr.client.ui.wallet.WalletActivity;
 import com.komutr.client.ui.web.WebActivity;
 
 import dagger.Component;
@@ -29,4 +30,5 @@ public interface AppComponent {
     void inject(MessageDetailActivity activity);
     void inject(FeedbackActivity activity);
     void inject(RegionActivity activity);
+    void inject(WalletActivity activity);
 }

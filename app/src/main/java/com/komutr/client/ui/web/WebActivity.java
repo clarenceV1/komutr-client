@@ -17,7 +17,7 @@ import com.cai.framework.web.WebViewFragment;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.common.Constant;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.WebBinding;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-@Route(path = Constant.ROUTER_WEB, name = "web")
+@Route(path = RouterManager.ROUTER_WEB, name = "web")
 public class WebActivity extends AppBaseActivity<WebBinding> implements WebForRTB {
 
     @Inject

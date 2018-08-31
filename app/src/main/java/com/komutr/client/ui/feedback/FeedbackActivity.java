@@ -5,7 +5,7 @@ import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.common.Constant;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.LoginBinding;
 import com.komutr.client.ui.login.LoginView;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = Constant.ROUTER_FEEDBACK, name = "意见反馈")
+@Route(path = RouterManager.ROUTER_FEEDBACK, name = "意见反馈")
 public class FeedbackActivity extends AppBaseActivity<LoginBinding> implements LoginView {
     @Inject
     FeedbackPresenter presenter;

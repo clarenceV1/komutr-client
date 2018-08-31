@@ -4,19 +4,20 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.cai.framework.annotation.apt.Router;
 import com.cai.framework.base.GodBasePresenter;
 import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.common.Constant;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MainBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = Constant.ROUTER_MAIN, name = "首页")
+@Route(path = RouterManager.ROUTER_MAIN, name = "首页")
 public class MainActivity extends AppBaseActivity<MainBinding> implements MainView {
     @Inject
     MainPresenter presenter;
@@ -37,9 +38,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         mViewBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build(Constant.ROUTER_WEB)
-                        .withString("url","http://www.baidu.com")
-                        .withString("title","百度是我孙子").navigation();
+                RouterManager.goWeb("http://www.baidu.com","百度是我孙子",null);
             }
         });
     }

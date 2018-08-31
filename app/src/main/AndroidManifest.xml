@@ -33,6 +33,8 @@
         <activity android:name=".ui.message.MessageActivity" />
         <activity android:name=".ui.message.MessageDetailActivity" />
         <activity android:name=".ui.region.RegionActivity" />
+        <activity android:name=".ui.feedback.FeedbackActivity" />
+        <activity android:name=".ui.wallet.WalletActivity" />
     </application>
 
 </manifest>
