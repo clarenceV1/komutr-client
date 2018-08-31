@@ -16,7 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = Constant.ROUTER_MAIN, name = "web")
+@Route(path = Constant.ROUTER_MAIN, name = "首页")
 public class MainActivity extends AppBaseActivity<MainBinding> implements MainView {
     @Inject
     MainPresenter presenter;

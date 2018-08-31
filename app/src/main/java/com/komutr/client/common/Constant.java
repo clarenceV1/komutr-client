@@ -17,6 +17,11 @@ public class Constant {
     public static final String ROUTER_HOME = "/komutr/";
     public static final String ROUTER_WEB = ROUTER_HOME+"WebActivity";
     public static final String ROUTER_MAIN = ROUTER_HOME+"MainActivity";
+    public static final String ROUTER_LOGIN = ROUTER_HOME+"LoginActivity";
+    public static final String ROUTER_MESSAGE = ROUTER_HOME+"MessageActivity";
+    public static final String ROUTER_MESSAGE_DETAIL = ROUTER_HOME+"MessageDetailActivity";
+    public static final String ROUTER_FEEDBACK = ROUTER_HOME+"FeedbackActivity";
+    public static final String ROUTER_REGION = ROUTER_HOME+"RegionActivity";
     /**
      * 设置是否是测试环境
      *
