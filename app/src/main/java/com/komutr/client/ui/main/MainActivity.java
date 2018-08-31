@@ -9,13 +9,14 @@ import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.common.Constant;
 import com.komutr.client.databinding.MainBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = "/komutr/MainActivity", name = "web")
+@Route(path = Constant.ROUTER_MAIN, name = "web")
 public class MainActivity extends AppBaseActivity<MainBinding> implements MainView {
     @Inject
     MainPresenter presenter;
@@ -36,7 +37,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         mViewBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build("/komutr/WebActivity")
+                ARouter.getInstance().build(Constant.ROUTER_WEB)
                         .withString("url","http://www.baidu.com")
                         .withString("title","百度是我孙子").navigation();
             }

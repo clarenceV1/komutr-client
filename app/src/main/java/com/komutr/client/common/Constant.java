@@ -11,9 +11,12 @@ public class Constant {
 
     public static final String OFFICIAL_BASE_URL = "https://more.ethte.com/";
     public static final String TEST_BASE_URL = "http://101.37.146.65/";
-
     private static final String IS_TEST_ENV = "is_test_env";//是否是测试环境
 
+
+    public static final String ROUTER_HOME = "/komutr/";
+    public static final String ROUTER_WEB = ROUTER_HOME+"WebActivity";
+    public static final String ROUTER_MAIN = ROUTER_HOME+"MainActivity";
     /**
      * 设置是否是测试环境
      *
