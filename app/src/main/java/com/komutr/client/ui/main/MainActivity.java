@@ -1,7 +1,9 @@
 package com.komutr.client.ui.main;
 
-import android.widget.Toast;
+import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
 import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+@Route(path = "/komutr/MainActivity", name = "web")
 public class MainActivity extends AppBaseActivity<MainBinding> implements MainView {
     @Inject
     MainPresenter presenter;
@@ -30,6 +33,14 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
     @Override
     public void initView() {
         mViewBinding.tvTitle.setText(presenter.getTest2());
+        mViewBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build("/komutr/WebActivity")
+                        .withString("url","http://www.baidu.com")
+                        .withString("title","百度是我孙子").navigation();
+            }
+        });
     }
 
     @Override
