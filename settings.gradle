@@ -1,0 +1,7 @@
+include ':app'
+include(':LibFrameWork')
+project(':LibFrameWork').projectDir = new File('../LibFrameWork')
+include(':LibUtils')
+project(':LibUtils').projectDir = new File('../LibUtils')
+include(':LibPullToRefresh')
+project(':LibPullToRefresh').projectDir = new File('../LibPullToRefresh')
