@@ -1,9 +1,8 @@
 package com.komutr.client.common;
 
 /**
- * Created by clarence on 2018/1/12.
+ * 接口声明
  */
-
 public interface ApiService {
 
 }

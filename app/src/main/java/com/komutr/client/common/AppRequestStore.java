@@ -10,7 +10,7 @@ import retrofit2.Retrofit;
 
 
 /**
- * Created by clarence on 2018/3/26.
+ * 接口Rxjava生成
  */
 @ActivityScope
 public class AppRequestStore {

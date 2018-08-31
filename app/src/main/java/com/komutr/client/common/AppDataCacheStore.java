@@ -6,7 +6,7 @@ import com.cai.framework.dataStore.ISharePreference;
 import javax.inject.Inject;
 
 /**
- * Created by clarence on 2018/3/26.
+ * SharePreference缓存数据
  */
 @ActivityScope
 public class AppDataCacheStore {

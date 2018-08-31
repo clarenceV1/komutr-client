@@ -8,6 +8,9 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+/**
+ * 文件存储
+ */
 @ActivityScope
 public class AppFileStore {
     Context context;
