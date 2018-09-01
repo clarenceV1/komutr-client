@@ -3,8 +3,6 @@ package com.komutr.client.ui.main;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.cai.framework.annotation.apt.Router;
 import com.cai.framework.base.GodBasePresenter;
 import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
@@ -34,8 +32,9 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
-        mViewBinding.tvTitle.setText(presenter.getTest2());
-        mViewBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
+        setBarTitle("wo");
+        mViewBinding.tvTitle222.setText(presenter.getTest2());
+        mViewBinding.tvTitle222.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RouterManager.goLogin();
