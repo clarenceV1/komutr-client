@@ -4,12 +4,12 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.UserInfo;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.LoginBinding;
 
@@ -69,5 +69,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
     @Override
     public void registeredOrLoginCallBack(RespondDO respondDO) {
 
+    }
+
+    @Override
+    public void tosat(String msg) {
+        ToastUtils.showShort(msg);
     }
 }

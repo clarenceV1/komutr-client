@@ -10,4 +10,6 @@ public interface LoginView extends GodBaseView {
     void verificationCodeCallback(RespondDO respondDO);
 
     void registeredOrLoginCallBack(RespondDO respondDO);
+
+    void tosat(String msg);
 }

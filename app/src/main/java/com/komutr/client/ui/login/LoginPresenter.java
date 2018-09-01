@@ -38,6 +38,8 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
     public void onAttached() {
     }
 
+
+
     public void registeredOrLogin(String code, String phone, String verTokenKey) {
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.registeredOrLogin");
