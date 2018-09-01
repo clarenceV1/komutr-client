@@ -12,6 +12,7 @@ public class RouterManager {
     public static final String ROUTER_FEEDBACK = ROUTER_HOME + "FeedbackActivity";
     public static final String ROUTER_REGION = ROUTER_HOME + "RegionActivity";
     public static final String ROUTER_WALLET = ROUTER_HOME + "WalletActivity";
+    public static final String ROUTER_NICKNAME= ROUTER_HOME + "NicknameActivity";
 
     public static void goWeb(String url, String title, String paramMap) {
         ARouter.getInstance().build(RouterManager.ROUTER_WEB)

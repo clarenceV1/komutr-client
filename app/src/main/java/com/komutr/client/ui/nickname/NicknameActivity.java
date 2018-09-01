@@ -1,21 +1,22 @@
-package com.komutr.client.ui.region;
+package com.komutr.client.ui.nickname;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.databinding.RegionBinding;
+import com.komutr.client.databinding.NicknameBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = RouterManager.ROUTER_REGION, name = "我的-个人信息-地区")
-public class RegionActivity extends AppBaseActivity<RegionBinding> implements RegionView {
+@Route(path = RouterManager.ROUTER_NICKNAME, name = "昵称")
+public class NicknameActivity extends AppBaseActivity<NicknameBinding> implements NicknameView {
     @Inject
-    RegionPresenter presenter;
+    NicknamePresenter presenter;
 
     @Override
     public void initDagger() {
@@ -34,6 +35,16 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
 
     @Override
     public int getLayoutId() {
-        return R.layout.region;
+        return R.layout.nickname;
+    }
+
+    @Override
+    public void updateMyData(RespondDO respondDO) {
+
+    }
+
+    @Override
+    public void checkUsername(RespondDO respondDO) {
+
     }
 }

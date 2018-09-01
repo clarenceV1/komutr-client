@@ -9,6 +9,7 @@ import com.komutr.client.ui.login.LoginActivity;
 import com.komutr.client.ui.main.MainActivity;
 import com.komutr.client.ui.message.MessageActivity;
 import com.komutr.client.ui.message.MessageDetailActivity;
+import com.komutr.client.ui.nickname.NicknameActivity;
 import com.komutr.client.ui.region.RegionActivity;
 import com.komutr.client.ui.wallet.WalletActivity;
 import com.komutr.client.ui.web.WebActivity;
@@ -31,4 +32,5 @@ public interface AppComponent {
     void inject(FeedbackActivity activity);
     void inject(RegionActivity activity);
     void inject(WalletActivity activity);
+    void inject(NicknameActivity activity);
 }

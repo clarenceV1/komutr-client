@@ -35,6 +35,7 @@
         <activity android:name=".ui.region.RegionActivity" />
         <activity android:name=".ui.feedback.FeedbackActivity" />
         <activity android:name=".ui.wallet.WalletActivity" />
+        <activity android:name=".ui.nickname.NicknameActivity" />
     </application>
 
 </manifest>
