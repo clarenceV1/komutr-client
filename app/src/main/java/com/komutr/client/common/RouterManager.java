@@ -19,4 +19,8 @@ public class RouterManager {
                 .withString("title", title)
                 .withString("paramMap", paramMap).navigation();
     }
+
+    public static void goLogin() {
+        ARouter.getInstance().build(RouterManager.ROUTER_LOGIN).navigation();
+    }
 }

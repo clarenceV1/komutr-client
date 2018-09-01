@@ -3,6 +3,7 @@ package com.komutr.client.base;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBaseApplication;
 import com.komutr.client.BuildConfig;
+import com.komutr.client.been.MyObjectBox;
 import com.komutr.client.common.Constant;
 import com.komutr.client.dagger.component.AppComponent;
 import com.komutr.client.dagger.component.DaggerAppComponent;
@@ -11,21 +12,30 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import javax.inject.Inject;
 
+import io.objectbox.BoxStore;
+
 /**
  * Created by clarence on 2018/1/11.
  */
 
 public class App extends GodBaseApplication {
     public static AppComponent appComponent;
+    public static BoxStore boxStore;
 
     @Inject
     AppPresenter appPresenter;
+
 
     public void onCreate() {
         super.onCreate();
         initRouter();
         initCrashReport();
         initComponent();
+        initSql();
+    }
+
+    private void initSql() {
+        boxStore = MyObjectBox.builder().androidContext(this).build();
     }
 
     @Override
@@ -78,5 +88,9 @@ public class App extends GodBaseApplication {
 
     public static AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    public static BoxStore getBoxStore() {
+        return boxStore;
     }
 }

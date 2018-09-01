@@ -14,7 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTER_FEEDBACK, name = "意见反馈")
-public class FeedbackActivity extends AppBaseActivity<LoginBinding> implements LoginView {
+public class FeedbackActivity extends AppBaseActivity<LoginBinding> implements FeedbackView {
     @Inject
     FeedbackPresenter presenter;
 

@@ -38,7 +38,8 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         mViewBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RouterManager.goWeb("http://www.baidu.com","百度是我孙子",null);
+                RouterManager.goLogin();
+//                RouterManager.goWeb("http://www.baidu.com","百度是我孙子",null);
             }
         });
     }
