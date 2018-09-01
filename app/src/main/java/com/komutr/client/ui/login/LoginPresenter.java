@@ -8,7 +8,7 @@ import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.UserInfo;
+import com.komutr.client.been.User;
 import com.komutr.client.dao.UserInfoDao;
 import com.komutr.client.event.LoginEvent;
 
@@ -51,7 +51,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
             @Override
             public void accept(RespondDO respondDO) {
                 if (respondDO.isStatus()&& !TextUtils.isEmpty(respondDO.getData())) {
-                    UserInfo userInfo = JSON.parseObject(respondDO.getData(), UserInfo.class);
+                    User userInfo = JSON.parseObject(respondDO.getData(), User.class);
                     respondDO.setObject(userInfo);
                     if (userInfoDao != null) {
                         userInfoDao.get().saveAndDelete(userInfo);
