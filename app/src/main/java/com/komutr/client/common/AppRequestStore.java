@@ -43,7 +43,7 @@ public class AppRequestStore {
                         RespondDO respondDO = new RespondDO();
                         try {
                             String result = responseBody.string();
-                            Log.d("registeredOrLogin", result);
+                            Log.d("commonRequest", result);
                             if (!TextUtils.isEmpty(result)) {
                                 respondDO = JSON.parseObject(result, RespondDO.class);
                             }
