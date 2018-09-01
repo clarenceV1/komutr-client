@@ -11,5 +11,5 @@ public interface LoginView extends GodBaseView {
 
     void registeredOrLoginCallBack(RespondDO respondDO);
 
-    void tosat(String msg);
+//    void showToastMsg(String msg);
 }

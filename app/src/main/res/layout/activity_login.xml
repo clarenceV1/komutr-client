@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <include layout="@layout/nav_top_header" />
+
+
+
+        <!--手机号码-->
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_marginTop="21dp"
+            android:hint="@string/enter_your_phone_number"
+            style="@style/edit_text_style" />
+
+
+
+
+        <!--短信验证码-->
+        <LinearLayout
+            style="@style/common_layout_style"
+            android:background="@null"
+            android:layout_marginTop="10dp"
+            android:padding="0dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etInputVerificAtionCode"
+                style="@style/edit_text_style"
+                android:layout_width="0dp"
+                android:paddingRight="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="3dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:digits="1234567890"
+                android:hint="@string/input_verific_ation_code"
+                android:inputType="number"
+                android:lines="1"/>
+
+            <Button
+                android:id="@+id/btnVerificationCode"
+                style="@style/button_style"
+                android:layout_marginLeft="3dp"
+                android:text="@string/verification_code" />
+        </LinearLayout>
+
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="activity_login" />
+
+        <EditText
+            android:id="@+id/editPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="phone" />
+
+        <EditText
+            android:id="@+id/editCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="code" />
+
+        <Button
+            android:id="@+id/btnCommit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录" />
+
+        <Button
+            android:id="@+id/btnGetCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="验证码" />-->
+    </LinearLayout>
+</layout>

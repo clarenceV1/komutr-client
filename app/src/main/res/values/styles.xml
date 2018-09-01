@@ -7,9 +7,45 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="item_line">
         <item name="android:layout_height">0.5dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/item_line_color</item>
     </style>
+
+
+    <style name="edit_text_style" parent="common_layout_style">
+
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textColorHint">@color/color_c6c6c6</item>
+        <item name="android:background">@drawable/edit_text_bg</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+
+
+    <style name="common_layout_style">
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">22dp</item>
+        <item name="android:layout_marginRight">22dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+
+    <style name="button_style">
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/color_ffffff</item>
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
+
+
 </resources>

@@ -7,7 +7,7 @@ import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.LoginBinding;
-import com.komutr.client.ui.login.LoginView;
+
 
 import java.util.List;
 

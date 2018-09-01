@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
-import com.example.clarence.utillibrary.ToastUtils;
+import com.cai.framework.utils.HeaderUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -36,11 +36,14 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
     @Override
     public void initView() {
-        mViewBinding.btnCommit.setOnClickListener(new View.OnClickListener() {
+        HeaderUtils.getInstance(this).topBarForCenter(getString(R.string.login));
+
+       /* mViewBinding.btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String code = mViewBinding.editCode.getText().toString();
                 String phone = mViewBinding.editPhone.getText().toString();
+
                 if (phoneCode != null) {
                     presenter.registeredOrLogin(code, phone, phoneCode.getVer_token_key());
                 }
@@ -53,12 +56,12 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                 String phone = mViewBinding.editPhone.getText().toString();
                 presenter.verificationCode(phone, 1);
             }
-        });
+        });*/
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.login;
+        return R.layout.activity_login;
     }
 
     @Override
@@ -71,8 +74,8 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
     }
 
-    @Override
+    /*@Override
     public void tosat(String msg) {
         ToastUtils.showShort(msg);
-    }
+    }*/
 }
