@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="about_us_list">
+        <item>版本检测</item>
+        <!--<item>功能介绍</item>-->
+        <item>客服电话</item>
+    </string-array>
+
+
+    <string-array name="account_item_list">
+        <item>我的借款</item>
+        <item>账户信息</item>
+        <item>信用额度</item>
+        <item>银行卡</item>
+        <item>我的推广</item>
+    </string-array>
+
+    <string-array name="self_item_list">
+        <item>我的贷款</item>
+        <!--<item>我的优惠券</item>-->
+        <item>认证中心</item>
+        <item>银行卡</item>
+       <!-- <item>提额认证</item>
+        <item>我的推广</item>-->
+        <item>账户安全</item>
+    </string-array>
+
+    <string-array name="repay_detail_list">
+        <item>借款金额</item>
+        <item>合同期限</item>
+        <item>还款方式</item>
+        <item>每月利息</item>
+        <!--<item>还款时间</item>-->
+        <item>逾期天数</item>
+        <item>违约金</item>
+    </string-array>
+
+
+
+
+
+    <string-array name="grade_des_list">
+        <item>我的等级</item>
+        <item>等级增加额度</item>
+        <item>手续费比例</item>
+        <item>等级获取活动券</item>
+    </string-array>
+
+
+    <string-array name="auth_info_list">
+        <item>姓名</item>
+        <item>身份证号</item>
+        <item>直系联系人</item>
+        <item>其他联系人</item>
+        <item>公司名称</item>
+        <item>联系电话</item>
+        <item>所在地址</item>
+        <item>详细地址</item>
+    </string-array>
+
+
+    <string-array name="account_safe_list">
+
+        <item>手势设置</item>
+        <item>修改密码</item>
+        <!--<item>支付密码</item>-->
+    </string-array>
+
+
+    <string-array name="auth_center_list">
+        <item>实名认证</item>
+        <item>人工智能认证</item>
+        <item>收款银行卡</item>
+
+        <item>手机运营商</item>
+        <item>工作信息</item>
+        <item>个人信息</item>
+    </string-array>
+
+
+    <string-array name="work_info_list">
+        <item>工作类型</item>
+        <item>单位名称</item>
+        <item>单位地址</item>
+        <item>详细地址</item>
+        <item>单位电话</item>
+        <item>工作照片</item>
+        <item>工作时长</item>
+    </string-array>
+
+
+    <string-array name="quota_item_list">
+     <!--   <item>芝麻认证</item>-->
+        <item>公积金认证</item>
+        <item>社保卡认证</item>
+        <item>淘宝账户认证</item>
+        <item>京东账户认证</item>
+    </string-array>
+</resources>
