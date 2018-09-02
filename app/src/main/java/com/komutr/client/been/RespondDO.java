@@ -20,6 +20,11 @@ public class RespondDO<T> {
     private long time;//有得接口没有返回这个
     private T object;//自己用
 
+    private int fromCallBack;
+
+
+
+
     public T getObject() {
         return object;
     }

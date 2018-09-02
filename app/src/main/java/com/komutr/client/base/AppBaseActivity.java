@@ -2,6 +2,7 @@ package com.komutr.client.base;
 
 
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -9,7 +10,12 @@ import android.widget.LinearLayout;
 import com.cai.framework.base.GodBasePresenterActivity;
 import com.cai.framework.baseview.TitleBarView;
 import com.komutr.client.R;
+import com.komutr.client.common.Constant;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by clarence on 2018/1/12.
@@ -40,5 +46,15 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
                 });
             }
         }
+    }
+
+
+
+
+    public Map<String, String> getUserParams() {
+
+        Map<String, String> query = new HashMap<>();
+        query.put("auth_key", Constant.AUTH_KEY);
+        return query;
     }
 }

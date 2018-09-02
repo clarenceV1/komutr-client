@@ -3,15 +3,15 @@
     android:shape="rectangle">
     <!-- 设置按钮的四个角为弧形 -->
     <!-- android:radius 弧形的半径 -->
-    <corners android:radius="@dimen/margin_size_3dp" />
+    <corners android:radius="25dp" />
 
     <!-- 填充的颜色 -->
-    <solid android:color="@color/transparent" />
+    <solid android:color="@color/color_ffffff" />
 
     <!-- 边框设置 -->
     <stroke
-        android:width="@dimen/margin_size_1dp"
-        android:color="@color/blue_2f8afd" />
+        android:width="0dp"
+        android:color="@color/transparent" />
 
 
 </shape>
