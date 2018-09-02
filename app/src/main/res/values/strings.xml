@@ -5,4 +5,13 @@
     <string name="input_verific_ation_code">input verific ation code</string>
     <string name="verification_code">Verification code</string>
     <string name="login">login</string>
+    <string name="log_in">log in</string>
+    <string name="log_out">log out</string>
+    <string name="agree_text">You have read and agree</string>
+    <string name="service_agreement">《User service agreement》</string>
+    <string name="please_input_correct_phone_number">Please enter the correct phone number</string>
+    <string name="input_correct_phone">The current mobile phone number does not match the mobile phone number that obtained the verification code</string>
+    <string name="not_get_code">You have not yet obtained a verification code</string>
+    <string name="getting">Getting...</string>
+    <string name="logging">logging in...</string>
 </resources>

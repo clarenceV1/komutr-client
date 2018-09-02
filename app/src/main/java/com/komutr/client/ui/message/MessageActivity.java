@@ -9,6 +9,7 @@ import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MessageBinding;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -36,5 +37,30 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
     @Override
     public int getLayoutId() {
         return R.layout.message;
+    }
+
+    @Override
+    public Map<String, String> getParams(int requestFlag) {
+        return null;
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onError(String msg) {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
+
+    @Override
+    public void showToastMsg(String msg) {
+
     }
 }

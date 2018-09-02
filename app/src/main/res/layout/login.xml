@@ -3,13 +3,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
+
         <!--手机号码-->
         <EditText
             android:id="@+id/etPhone"
             style="@style/edit_text_style"
             android:layout_marginTop="21dp"
+            android:digits="1234567890"
+            android:inputType="number"
+            android:lines="1"
             android:hint="@string/enter_your_phone_number" />
 
         <!--短信验证码-->
@@ -37,8 +42,41 @@
             <Button
                 android:id="@+id/btnVerificationCode"
                 style="@style/button_style"
+                android:layout_width="wrap_content"
+                android:gravity="center"
                 android:layout_marginLeft="3dp"
+                android:layout_marginRight="0dp"
                 android:text="@string/verification_code" />
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btnLogReg"
+            style="@style/button_style"
+            android:layout_marginTop="23dp"
+            android:gravity="center"
+            android:text="@string/log_in" />
+
+
+        <LinearLayout
+            style="@style/common_layout_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/reg_log_agree_service"
+                android:text="@string/agree_text" />
+
+            <TextView
+                android:id="@+id/tvServiceAgreement"
+                style="@style/reg_log_agree_service"
+                android:text="@string/service_agreement"
+                android:textColor="@color/color_0072ff" />
+
         </LinearLayout>
 
         <!--<TextView

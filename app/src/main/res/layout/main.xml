@@ -1,16 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvTitle222"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:text="hellword" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_f1f1f4"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp"
+                android:background="@color/color_ffffff"
+                android:layout_height="45dp">
+
+
+
+                <ImageView
+                    android:id="@+id/ivSelf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/self_icon"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/home_title_icon"/>
+
+
+                <ImageView
+                    android:id="@+id/ivWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/wallet_icon"/>
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+      <LinearLayout
+          android:id="@+id/llMainLeftLayout"
+          android:layout_width="260dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          android:background="@color/color_ffffff"
+          android:layout_gravity="start">
+
+
+          <android.support.v4.widget.NestedScrollView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="171dp"
+                      android:orientation="vertical"
+                      android:gravity="center_horizontal"
+                      android:background="@color/color_2196f3">
+
+
+                      <ImageView
+                          android:id="@+id/ivUserAvatar"
+                          android:layout_width="63dp"
+                          android:layout_height="63dp"
+                          android:layout_marginTop="31dp"
+                          android:layout_marginBottom="19dp"
+                          android:src="@color/color_2196f3"/>
+
+
+
+                      <Button
+                          android:id="@+id/btnLogin"
+                          android:layout_width="140dp"
+                          android:layout_height="35dp"
+                          android:background="@drawable/log_in_bg"
+                          android:text="@string/log_in"
+                          android:textColor="@color/color_2196f3"
+                          android:textSize="15sp"/>
+
+
+                      <LinearLayout
+                          android:visibility="gone"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                          <TextView
+                              android:id="@+id/tvUserNickName"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textSize="20sp"
+                              android:text="gakes"
+                              android:layout_marginBottom="12dp"
+                              android:textColor="@color/color_ffffff"/>
+
+
+                          <TextView
+                              android:id="@+id/tvUserId"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textSize="15sp"
+                              android:text="ID:00001"
+                              android:layout_marginBottom="12dp"
+                              android:textColor="@color/color_ffffff"/>
+
+                      </LinearLayout>
+
+
+
+
+                  </LinearLayout>
+
+
+                  <LinearLayout
+                      android:id="@+id/llLeftListLayout"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"/>
+
+
+                  <Button
+                      android:id="@+id/btnLogout"
+                      android:layout_width="119dp"
+                      android:layout_height="30dp"
+                      android:layout_marginTop="30dp"
+                      android:background="@drawable/log_out_bg"
+                      android:text="@string/log_out"
+                      android:layout_marginLeft="29dp"
+                      android:textColor="@color/color_2196f3"
+                      android:textSize="15sp"/>
+
+              </LinearLayout>
+          </android.support.v4.widget.NestedScrollView>
+
+      </LinearLayout>
+
+
+    </android.support.v4.widget.DrawerLayout>
+
+
 </layout>

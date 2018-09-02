@@ -1,23 +1,31 @@
 package com.komutr.client.ui.login;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
+import com.cai.framework.logger.Logger;
+import com.cai.framework.utils.SMSCountDownTimer;
+import com.example.clarence.utillibrary.StringUtils;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.LoginBinding;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTER_LOGIN, name = "登录/注册")
-public class LoginActivity extends AppBaseActivity<LoginBinding> implements LoginView {
+public class LoginActivity extends AppBaseActivity<LoginBinding> implements LoginView, TextWatcher, View.OnClickListener {
     @Inject
     LoginPresenter presenter;
 
@@ -35,27 +43,12 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
     @Override
     public void initView() {
-//        HeaderUtils.getInstance(this).topBarForCenter(getString(R.string.login));
-////
-//       mViewBinding.btnCommit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String code = mViewBinding.editCode.getText().toString();
-//                String phone = mViewBinding.editPhone.getText().toString();
-//
-//                if (phoneCode != null) {
-//                    presenter.registeredOrLogin(code, phone, phoneCode.getVer_token_key());
-//                }
-//
-//            }
-//        });
-//        mViewBinding.btnGetCode.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String phone = mViewBinding.editPhone.getText().toString();
-//                presenter.verificationCode(phone, 1);
-//            }
-//        });
+        setBarTitle(getString(R.string.login));
+        mViewBinding.etPhone.addTextChangedListener(this);
+        mViewBinding.etInputVerificAtionCode.addTextChangedListener(this);
+        mViewBinding.btnVerificationCode.setOnClickListener(this);
+        mViewBinding.tvServiceAgreement.setOnClickListener(this);
+        mViewBinding.btnLogReg.setOnClickListener(this);
     }
 
     @Override
@@ -65,16 +58,124 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
     @Override
     public void verificationCodeCallback(RespondDO respondDO) {
-        this.phoneCode = (PhoneCode) respondDO.getObject();
+         this.phoneCode = (PhoneCode) respondDO.getObject();
+         if(this.phoneCode!= null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())){
+             new SMSCountDownTimer(mViewBinding.btnVerificationCode,60000,1000);
+         }
+
     }
 
     @Override
     public void registeredOrLoginCallBack(RespondDO respondDO) {
 
+        showToastMsg(respondDO.getMsg());
+        finish();
     }
 
-    /*@Override
-    public void tosat(String msg) {
-        ToastUtils.showShort(msg);
-    }*/
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String text = charSequence.toString();
+        if (mViewBinding.etPhone.hasFocus()) {//获得焦点时为手机号的输入项,获取验证码按钮可点击
+            boolean isNotEmpty = !StringUtils.isEmpty(text);
+            mViewBinding.btnVerificationCode.setEnabled(isNotEmpty);
+            mViewBinding.btnLogReg.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode)));
+        } else if (mViewBinding.etInputVerificAtionCode.hasFocus()) {//获得焦点时为获取验证码的输入项，登录按钮可点击
+            boolean isNotEmpty = !StringUtils.isEmpty(text);
+            mViewBinding.btnLogReg.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etPhone)));
+
+        }
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.tvServiceAgreement){//注册协议
+
+        }else {
+            String phone = mViewBinding.etPhone.getText().toString();
+            if(phone.length() != 11){
+                ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
+                return;
+            }
+            switch (view.getId()) {
+                case R.id.btnVerificationCode://获取验证码
+                    view.setTag(phone);
+                    mViewBinding.btnVerificationCode.setEnabled(false);
+                    mViewBinding.btnVerificationCode.setText(getString(R.string.getting));
+                    presenter.verificationCode(Constant.RrequestFlag.FLAG_1);
+                    break;
+                case R.id.btnLogReg://登录
+                    if(this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())){//为获取验证码
+                        ToastUtils.showShort(getString(R.string.not_get_code));
+                      return;
+                    }
+                   String getCodePhone = (String) mViewBinding.btnVerificationCode.getTag();
+                   if(!phone.equals(getCodePhone)){//当前手机号与获取验证码的手机号不一致
+                       ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
+                       return;
+                   }
+                    mViewBinding.btnVerificationCode.setEnabled(false);
+                    mViewBinding.btnVerificationCode.setText(getString(R.string.logging));
+                    presenter.registeredOrLogin(Constant.RrequestFlag.FLAG_2);
+                    break;
+            }
+        }
+
+    }
+
+
+
+
+    @Override
+    public Map<String, String> getParams(int requestFlag) {
+
+        Map<String, String> query = getUserParams();
+        query.put("phone", StringUtils.getString(mViewBinding.etPhone));
+        if(requestFlag == Constant.RrequestFlag.FLAG_1){//获取验证码
+            query.put("m", "customer.verification");
+            query.put("type",  "1");//@param type  1 注册 2 找回密码 3 重置密码
+        }else {//登录
+            query.put("m", "customer.registeredOrLogin");
+            query.put("ver_token_key", this.phoneCode.getVer_token_key());
+            query.put("code", StringUtils.getString(mViewBinding.etInputVerificAtionCode));
+        }
+        return query;
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onError(String msg) {
+        Logger.e("login error msg="+msg);
+    }
+
+    @Override
+    public void onFinish() {
+        if(!mViewBinding.btnVerificationCode.getText().toString().equals(getString(R.string.verification_code))){
+            mViewBinding.btnVerificationCode.setText(getString(R.string.verification_code));
+            mViewBinding.btnVerificationCode.setEnabled(true);
+        }else if(!mViewBinding.btnLogReg.getText().toString().equals(getString(R.string.log_in))){
+            mViewBinding.btnLogReg.setText(getString(R.string.log_in));
+            mViewBinding.btnLogReg.setEnabled(true);
+        }
+
+    }
+
+    @Override
+    public void showToastMsg(String msg) {
+     ToastUtils.showShort(msg);
+    }
 }

@@ -9,6 +9,7 @@ import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RegionBinding;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -35,5 +36,30 @@ public class WalletActivity extends AppBaseActivity<RegionBinding> implements Wa
     @Override
     public int getLayoutId() {
         return R.layout.region;
+    }
+
+    @Override
+    public Map<String, String> getParams(int requestFlag) {
+        return null;
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onError(String msg) {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
+
+    @Override
+    public void showToastMsg(String msg) {
+
     }
 }

@@ -10,6 +10,7 @@ import com.komutr.client.databinding.LoginBinding;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -36,5 +37,30 @@ public class FeedbackActivity extends AppBaseActivity<LoginBinding> implements F
     @Override
     public int getLayoutId() {
         return R.layout.feedback;
+    }
+
+    @Override
+    public Map<String, String> getParams(int requestFlag) {
+        return null;
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onError(String msg) {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
+
+    @Override
+    public void showToastMsg(String msg) {
+
     }
 }

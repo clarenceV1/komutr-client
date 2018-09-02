@@ -10,6 +10,7 @@ import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.NicknameBinding;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -45,6 +46,31 @@ public class NicknameActivity extends AppBaseActivity<NicknameBinding> implement
 
     @Override
     public void checkUsername(RespondDO respondDO) {
+
+    }
+
+    @Override
+    public Map<String, String> getParams(int requestFlag) {
+        return null;
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onError(String msg) {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
+
+    @Override
+    public void showToastMsg(String msg) {
 
     }
 }
