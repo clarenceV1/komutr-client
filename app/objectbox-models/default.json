@@ -4,27 +4,59 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:6728124839796933775",
-      "lastPropertyId": "3:6807846941046038848",
-      "name": "UserInfo",
+      "id": "1:6463720516586774317",
+      "lastPropertyId": "11:2578030319313798283",
+      "name": "User",
       "properties": [
         {
-          "id": "1:3440107047922535589",
+          "id": "1:1124334461578692372",
           "name": "id"
         },
         {
-          "id": "2:4027803995733351078",
-          "name": "user_id"
+          "id": "2:2035529207417663954",
+          "name": "userId"
         },
         {
-          "id": "3:6807846941046038848",
-          "name": "app_auth"
+          "id": "3:3536920249895014852",
+          "name": "user_type"
+        },
+        {
+          "id": "4:294631440010405789",
+          "name": "username"
+        },
+        {
+          "id": "5:5382201405979721130",
+          "name": "phone"
+        },
+        {
+          "id": "6:602506626315528845",
+          "name": "sex"
+        },
+        {
+          "id": "7:3228137364356379524",
+          "name": "big_area"
+        },
+        {
+          "id": "8:7132195373718213758",
+          "name": "province"
+        },
+        {
+          "id": "9:4240971683741209443",
+          "name": "avatar"
+        },
+        {
+          "id": "10:8905071727458471778",
+          "name": "avatar_thum"
+        },
+        {
+          "id": "11:2578030319313798283",
+          "name": "auth_key"
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "1:6728124839796933775",
+  "lastEntityId": "1:6463720516586774317",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

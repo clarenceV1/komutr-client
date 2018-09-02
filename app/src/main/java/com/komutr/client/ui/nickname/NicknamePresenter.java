@@ -7,11 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.UserInfo;
-import com.komutr.client.event.LoginEvent;
-import com.komutr.client.ui.region.RegionView;
-
-import org.greenrobot.eventbus.EventBus;
+import com.komutr.client.been.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,23 +33,15 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
      * 验证用户名是否可用
      *
      * @param username
-     * @param auth_key
      */
-    public void checkUsername(String username, String auth_key) {
+    public void checkUsername(final String username) {
+        String auth_key = userInfoDao.getAppAuth();
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.checkUsername");
         query.put("auth_key", auth_key);
         query.put("username", username);
-        Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
-            @Override
-            public void accept(RespondDO respondDO) {
-                if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                    UserInfo userInfo = JSON.parseObject(respondDO.getData(), UserInfo.class);
-                    respondDO.setObject(userInfo);
-
-                }
-            }
-        }).observeOn(AndroidSchedulers.mainThread())
+        final Disposable disposable = requestStore.get().commonRequest(query)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
@@ -63,6 +51,7 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
                         } else {//失败
                             mView.checkUsername(respondDO);
                         }
+                        updateMyData(username, null, -1, -1, -1);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -74,30 +63,41 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
     }
 
     /**
+     * 更新用户信息
      *
-     * @param auth_key
      * @param avatar   先上传图片 在提交
      * @param username 用户名提交时要检查是否存在
      * @param big_area 大区id
      * @param province 省id
-     * @param sex 性别 1男 2女
+     * @param sex      性别 1男 2女
      */
-    public void updateMyData(String auth_key, String avatar, String username, int big_area, int province,int sex) {
+    public void updateMyData(String username, String avatar, int big_area, int province, int sex) {
         Map<String, String> query = new HashMap<>();
+        String auth_key = userInfoDao.getAppAuth();
         query.put("m", "customer.updateMyData");
         query.put("auth_key", auth_key);
-        query.put("avatar", avatar);
-        query.put("username", username);
-        query.put("big_area", big_area + "");
-        query.put("province", province + "");
-        query.put("sex", sex + "");
+        if (!TextUtils.isEmpty(avatar)) {
+            query.put("avatar", avatar);
+        }
+        if (!TextUtils.isEmpty(username)) {
+            query.put("username", username);
+        }
+        if (big_area != -1) {
+            query.put("big_area", big_area + "");
+        }
+        if (province != -1) {
+            query.put("province", province + "");
+        }
+        if (sex != -1) {
+            query.put("sex", sex + "");
+        }
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override
             public void accept(RespondDO respondDO) {
                 if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                    UserInfo userInfo = JSON.parseObject(respondDO.getData(), UserInfo.class);
+                    User userInfo = JSON.parseObject(respondDO.getData(), User.class);
+                    userInfoDao.updateUser(userInfo);
                     respondDO.setObject(userInfo);
-
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())

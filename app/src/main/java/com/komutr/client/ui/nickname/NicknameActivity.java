@@ -1,5 +1,7 @@
 package com.komutr.client.ui.nickname;
 
+import android.view.View;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
@@ -31,7 +33,13 @@ public class NicknameActivity extends AppBaseActivity<NicknameBinding> implement
 
     @Override
     public void initView() {
-
+        mViewBinding.tvTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nickName = mViewBinding.editNicke.getText().toString();
+                presenter.checkUsername(nickName);
+            }
+        });
     }
 
     @Override

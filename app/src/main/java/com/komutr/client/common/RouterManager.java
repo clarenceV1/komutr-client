@@ -24,4 +24,7 @@ public class RouterManager {
     public static void goLogin() {
         ARouter.getInstance().build(RouterManager.ROUTER_LOGIN).navigation();
     }
+    public static void goNickname() {
+        ARouter.getInstance().build(RouterManager.ROUTER_NICKNAME).navigation();
+    }
 }

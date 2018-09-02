@@ -6,7 +6,7 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.databinding.RegionBinding;
+import com.komutr.client.databinding.WalletBinding;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTER_WALLET, name = "我的-我的钱包")
-public class WalletActivity extends AppBaseActivity<RegionBinding> implements WalletView {
+public class WalletActivity extends AppBaseActivity<WalletBinding> implements WalletView {
     @Inject
     WalletPresenter presenter;
 
