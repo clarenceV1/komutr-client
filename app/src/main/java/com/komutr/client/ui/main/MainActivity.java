@@ -116,7 +116,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
     private void dynamicAddLeftListView() {
         int height = DimensUtils.dp2px(this, 40f);
         int padding = DimensUtils.dp2px(this, 32f);
-        String[] selfList = getResources().getStringArray(R.array.main_item_list);
+        String[] selfList = getResources().getString(R.string.main_item_list).split(",");
         int length = selfList.length;
         for (int i = 0; i < length; i++) {
             LinearLayout llItemLayout = new LinearLayout(this);
@@ -202,6 +202,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
             switch (index) {
                 case 0://Message
+
                     break;
                 case 1://Service tel
                     break;

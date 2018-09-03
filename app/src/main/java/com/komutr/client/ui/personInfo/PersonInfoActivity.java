@@ -52,7 +52,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
     private void dynamicAddWidget() {
         int height = DimensUtils.dp2px(this, 45f);
         int padding = DimensUtils.dp2px(this, 16f);
-        String[] personInfoList = getResources().getStringArray(R.array.person_info_item_list);
+        String[] personInfoList = getResources().getString(R.string.person_info_item_list).split(",");
         int length = personInfoList.length;
         for (int i = 0; i < length; i++) {
             LinearLayout llItemLayout = new LinearLayout(this);

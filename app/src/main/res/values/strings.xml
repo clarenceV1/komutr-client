@@ -16,5 +16,6 @@
     <string name="logging">logging in...</string>
     <string name="id">ID:%s</string>
     <string name="person_info">Personal information</string>
-
+    <string name="main_item_list">Message,Service tel,Help center,About us,Current version</string>
+    <string name="person_info_item_list">Mobile phone no.,Nickname,E-mail,Date of birth,Gender,Region</string>
 </resources>
