@@ -7,6 +7,9 @@ import com.komutr.client.dagger.module.CommonModule;
 import com.komutr.client.ui.feedback.FeedbackActivity;
 import com.komutr.client.ui.login.LoginActivity;
 import com.komutr.client.ui.main.MainActivity;
+import com.komutr.client.ui.main.fragment.book.BookFragment;
+import com.komutr.client.ui.main.fragment.empty.EmptyFragment;
+import com.komutr.client.ui.main.fragment.trips.MyTripsFragment;
 import com.komutr.client.ui.message.MessageActivity;
 import com.komutr.client.ui.message.MessageDetailActivity;
 import com.komutr.client.ui.nickname.NicknameActivity;
@@ -35,4 +38,9 @@ public interface AppComponent {
     void inject(WalletActivity activity);
     void inject(NicknameActivity activity);
     void inject(PersonInfoActivity activity);
+
+    void inject(BookFragment fragment);
+    void inject(EmptyFragment fragment);
+    void inject(MyTripsFragment fragment);
+
 }

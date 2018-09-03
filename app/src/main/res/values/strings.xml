@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+    <string name="ticket_price">Ticket price</string>
+    <string name="start_location_preview">Start location</string>
+    <string name="end_location_preview">Drop off affress</string>
+    <string name="book">Book</string>
+    <string name="pay">Pay</string>
+    <string name="my_trips">My trips</string>
+    <string name="city">ManilaManila</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="input_verific_ation_code">input verific ation code</string>
     <string name="verification_code">Verification code</string>
@@ -18,4 +25,7 @@
     <string name="person_info">Personal information</string>
     <string name="main_item_list">Message,Service tel,Help center,About us,Current version</string>
     <string name="person_info_item_list">Mobile phone no.,Nickname,E-mail,Date of birth,Gender,Region</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

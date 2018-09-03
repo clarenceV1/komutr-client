@@ -1,9 +1,13 @@
 package com.komutr.client.ui.main;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -13,20 +17,25 @@ import com.cai.framework.imageload.ILoadImage;
 import com.cai.framework.imageload.ILoadImageParams;
 import com.cai.framework.imageload.ImageForGlideParams;
 import com.example.clarence.utillibrary.CommonUtils;
+import com.example.clarence.utillibrary.DeviceUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
+import com.komutr.client.adapter.MainPagerAdapter;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MainBinding;
 import com.komutr.client.event.LoginEvent;
+import com.komutr.client.ui.main.fragment.book.BookFragment;
+import com.komutr.client.ui.main.fragment.trips.MyTripsFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,11 +66,24 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//防止布局被顶上去
         dynamicAddLeftListView();
 
+        List<Fragment> mTabs = new ArrayList<>();
+        mTabs.add(BookFragment.newInstance());
+        mTabs.add(MyTripsFragment.newInstance());
+        mViewBinding.mainActivityViewpager.setOffscreenPageLimit(2);
+        MainPagerAdapter mAdapter = new MainPagerAdapter(getSupportFragmentManager(), mTabs);
+        mViewBinding.mainActivityViewpager.setAdapter(mAdapter);
+        mViewBinding.mainActivityViewpager.setCurrentItem(0);
+        setFooterTabSelected(mViewBinding.rbMainTabOne,true);
         mViewBinding.ivSelf.setOnClickListener(this);
         mViewBinding.ivWallet.setOnClickListener(this);
         mViewBinding.btnLogin.setOnClickListener(this);
         mViewBinding.btnLogout.setOnClickListener(this);
         mViewBinding.ivUserAvatar.setOnClickListener(this);
+        mViewBinding.rbMainTabOne.setOnClickListener(this);
+        mViewBinding.btnMainTabTwo.setOnClickListener(this);
+        mViewBinding.rbMainTabThree.setOnClickListener(this);
+
+
         mViewBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mViewBinding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
@@ -78,6 +100,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         });
         User user = presenter.switcher();
         initLeftData(user);
+
     }
 
     /**
@@ -138,8 +161,26 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 //            tvName.setCompoundDrawablePadding(dp13 / 2);
 //            tvName.setCompoundDrawablesWithIntrinsicBounds(StreamUtils.getInstance().resourceToDrawable(CPResourceUtils.getDrawableId("self_list_" + (i + 1))), null, null, null);
             llItemLayout.addView(tvName);
-
         }
+        addVListener();
+    }
+
+    /**
+     * 是指位置文字在底部显示
+     */
+    private void addVListener() {
+
+        mViewBinding.llLeftLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                int screenHeight = DeviceUtils.getScreenHeight(MainActivity.this);
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mViewBinding.tvLocation.getLayoutParams();
+                params.topMargin = (screenHeight - mViewBinding.llLeftLayout.getHeight()) - DimensUtils.dp2px(MainActivity.this, 45f);
+                mViewBinding.tvLocation.setLayoutParams(params);
+                mViewBinding.llLeftLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     @Override
@@ -182,6 +223,44 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             case R.id.ivUserAvatar://头像
                 RouterManager.goPersonInfo();
                 break;
+            case R.id.rbMainTabOne://地图
+                if(mViewBinding.mainActivityViewpager.getCurrentItem() != 0){
+                    setFooterTabSelected(mViewBinding.rbMainTabOne,false);
+                    mViewBinding.mainActivityViewpager.setCurrentItem(0);
+                }
+                break;
+            case R.id.btnMainTabTwo://扫描支付
+                break;
+            case R.id.rbMainTabThree://我的行程
+                if(mViewBinding.mainActivityViewpager.getCurrentItem() != 1){
+                    setFooterTabSelected(mViewBinding.rbMainTabThree,false);
+                    mViewBinding.mainActivityViewpager.setCurrentItem(1);
+                }
+                break;
+        }
+    }
+
+
+    RadioButton lastFooterRadioButton;
+
+    private void setFooterTabSelected(RadioButton btnSelected, boolean isFirst) {
+        int dp60 = DimensUtils.dp2px(this,60f);
+        int dp3 = DimensUtils.dp2px(this,3f);
+        Drawable selectedDrawable = StreamUtils.getInstance().resourceToDrawable(R.drawable.main_header_tab_pressed,this);
+        selectedDrawable.setBounds(0, 0, dp60, dp3);
+        btnSelected.setChecked(true);
+        btnSelected.setCompoundDrawables(null, null, null, selectedDrawable);
+
+        Drawable normalDrawable = StreamUtils.getInstance().resourceToDrawable(R.drawable.main_header_tab_normal,this);
+        normalDrawable.setBounds(0, 0, dp60, dp3);
+        if (lastFooterRadioButton != null) {
+            lastFooterRadioButton.setCompoundDrawables(null, null, null, normalDrawable);
+            lastFooterRadioButton.setChecked(false);
+        }
+        lastFooterRadioButton = btnSelected;
+        if (isFirst) {
+            mViewBinding.rbMainTabThree.setChecked(false);
+            mViewBinding.rbMainTabThree.setCompoundDrawables(null, null, null, normalDrawable);
         }
     }
 

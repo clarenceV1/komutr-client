@@ -8,6 +8,7 @@
     <color name="color_c6c6c6">#c6c6c6</color>
     <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
+    <color name="color_999999">#999999</color>
     <color name="color_f6f5f5">#f6f5f5</color>
     <color name="color_ffffff">#ffffff</color>
     <color name="color_2196f3">#2196f3</color>
@@ -18,5 +19,9 @@
     <color name="color_f1f1f4">#f1f1f4</color>
     <color name="color_000000">#000000</color>
     <color name="color_00ffffff">#00ffffff</color>
+
+
+    <!-- 边线颜色 -->
+    <color name="color_side_line">#eaeaea</color>
 
 </resources>

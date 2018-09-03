@@ -111,7 +111,6 @@ dependencies {
     api rootProject.ext.dependencies["objectbox-android"]
 //  api rootProject.ext.dependencies["objectbox-rxjava"]
 
-
     //bugly
     api rootProject.ext.dependencies["bugly-crashreport"]
     api rootProject.ext.dependencies["bugly-nativecrashreport"]

@@ -49,13 +49,47 @@
                         android:layout_centerVertical="true"
                         android:src="@drawable/wallet_icon" />
 
-
                 </RelativeLayout>
+
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbMainTabOne"
+                        style="@style/radio_button_main"
+                        android:checked="true"
+                        android:text="@string/book" />
+
+                    <Button
+                        android:id="@+id/btnMainTabTwo"
+                        style="@style/radio_button_main"
+                        android:text="@string/pay" />
+
+
+                    <RadioButton
+                        android:id="@+id/rbMainTabThree"
+                        style="@style/radio_button_main"
+                        android:text="@string/my_trips" />
+
+                </RadioGroup>
+
+
+                <com.cai.framework.widget.NoScrollViewPager
+                    android:id="@+id/mainActivityViewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
 
 
             </LinearLayout>
 
 
+            <!--侧滑布局-->
             <LinearLayout
                 android:id="@+id/llMainLeftLayout"
                 android:layout_width="260dp"
@@ -70,6 +104,7 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
+                        android:id="@+id/llLeftLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -149,6 +184,22 @@
                             android:text="@string/log_out"
                             android:textColor="@color/color_2196f3"
                             android:textSize="15sp" />
+
+
+
+
+                           <TextView
+                               android:id="@+id/tvLocation"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:paddingLeft="32dp"
+                               android:layout_gravity="bottom"
+                               android:textColor="@color/color_000000"
+                               android:text="@string/city"
+                               android:drawableLeft="@drawable/location"
+                               android:drawablePadding="10dp"
+                               android:textSize="15sp"/>
+
 
                     </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>

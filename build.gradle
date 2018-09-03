@@ -3,9 +3,6 @@ apply from: "config.gradle"
 buildscript {
     ext.kotlin_version = '1.2.60'
     repositories {
-        maven { url "http://objectbox.net/beta-repo/" }
-        maven { url "https://jitpack.io" }
-        maven { url "https://maven.google.com" }
         google()
         jcenter()
     }
@@ -22,10 +19,13 @@ buildscript {
 
 allprojects {
     repositories {
+//        maven { url "https://maven.google.com" }
         google()
         jcenter()
-        mavenCentral()
+//        mavenCentral()
         maven { url "http://objectbox.net/beta-repo/" }
+        maven { url "https://jitpack.io" }
+
     }
 }
 
