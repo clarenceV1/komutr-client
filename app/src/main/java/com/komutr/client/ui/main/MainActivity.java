@@ -25,6 +25,7 @@ import com.komutr.client.R;
 import com.komutr.client.adapter.MainPagerAdapter;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MainBinding;
@@ -130,7 +131,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             mViewBinding.btnLogout.setVisibility(View.GONE);
             mViewBinding.llUserInfoLayout.setVisibility(View.GONE);
         }
-
     }
 
 
@@ -219,7 +219,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 RouterManager.goLogin();
                 break;
             case R.id.btnLogout://退出
-                initLeftData(null);
+                presenter.logout();
                 break;
             case R.id.ivUserAvatar://头像
                 RouterManager.goPersonInfo();
@@ -262,6 +262,13 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         if (isFirst) {
             mViewBinding.rbMainTabThree.setChecked(false);
             mViewBinding.rbMainTabThree.setCompoundDrawables(null, null, null, normalDrawable);
+        }
+    }
+
+    @Override
+    public void logout(RespondDO respondDO) {
+        if (respondDO.isStatus()) {
+            initLeftData(null);
         }
     }
 
