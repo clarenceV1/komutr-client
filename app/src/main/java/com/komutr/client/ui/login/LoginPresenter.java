@@ -39,13 +39,15 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
     }
 
 
-    /**
-     * 请求登录注册
-     * @param requestFlag
-     */
-    public void registeredOrLogin(int requestFlag) {
-        mView.onBegin();
-        Disposable disposable = requestStore.get().commonRequest(mView.getParams(requestFlag)).doOnSuccess(new Consumer<RespondDO>() {
+
+    public void registeredOrLogin(String code, String phone, String verTokenKey) {
+        Map<String, String> query = new HashMap<>();
+        query.put("m", "customer.registeredOrLogin");
+        query.put("auth_key", "d511D54i5Odb6WT");
+        query.put("ver_token_key", verTokenKey);
+        query.put("code", code);
+        query.put("phone", phone);
+        Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override
             public void accept(RespondDO respondDO) {
                 if (respondDO.isStatus()&& !TextUtils.isEmpty(respondDO.getData())) {
@@ -54,27 +56,23 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
                     if (userInfoDao != null) {
                         userInfoDao.get().saveAndDelete(userInfo);
                     }
-                    EventBus.getDefault().post(new LoginEvent(1, userInfo));
+                    EventBus.getDefault().post(new LoginEvent(LoginEvent.STATE_LOGIN_SUCCESS, userInfo));
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        Logger.d(respondDO.toString());
-                        mView.onFinish();
-                        if (respondDO.isStatus()) { //成功
-                            mView.registeredOrLoginCallBack(respondDO);
-                        } else {//失败
-                            mView.showToastMsg(respondDO.getMsg());
-                        }
+                        Log.d("registeredOrLogin", respondDO.toString());
+                        mView.registeredOrLoginCallBack(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
-                        mView.onFinish();
-                        mView.onError(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setFromCallBack(-1);
+                        mView.registeredOrLoginCallBack(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);
@@ -83,13 +81,16 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
     /**
      * 获取验证码
      *
-     * @param requestFlag
-     *
+     * @param phone
+     * @param type  1 注册 2 找回密码 3 重置密码
      */
-    public void verificationCode(int requestFlag) {
-        mView.onBegin();
-
-        Disposable disposable = requestStore.get().commonRequest(mView.getParams(requestFlag))
+    public void verificationCode(final String phone, int type) {
+        Map<String, String> query = new HashMap<>();
+        query.put("m", "customer.verification");
+        query.put("auth_key", "d511D54i5Odb6WT");
+        query.put("phone", phone);
+        query.put("type", type + "");
+        Disposable disposable = requestStore.get().commonRequest(query)
                 .observeOn(AndroidSchedulers.mainThread()).doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
@@ -102,20 +103,16 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        mView.onFinish();
                         Logger.d(respondDO.toString());
-                        if (respondDO.isStatus()) { //成功
-                            mView.verificationCodeCallback(respondDO);
-                        } else {//失败
-                            mView.showToastMsg(respondDO.getMsg());
-                        }
+                        mView.verificationCodeCallback(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
-                        mView.onFinish();
-                        mView.onError(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setFromCallBack(-1);
+                        mView.verificationCodeCallback(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);

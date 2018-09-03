@@ -39,28 +39,4 @@ public class FeedbackActivity extends AppBaseActivity<LoginBinding> implements F
         return R.layout.feedback;
     }
 
-    @Override
-    public Map<String, String> getParams(int requestFlag) {
-        return null;
-    }
-
-    @Override
-    public void onBegin() {
-
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
-    public void onFinish() {
-
-    }
-
-    @Override
-    public void showToastMsg(String msg) {
-
-    }
 }

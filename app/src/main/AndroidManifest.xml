@@ -36,6 +36,7 @@
         <activity android:name=".ui.feedback.FeedbackActivity" />
         <activity android:name=".ui.wallet.WalletActivity" />
         <activity android:name=".ui.nickname.NicknameActivity" />
+        <activity android:name=".ui.personInfo.PersonInfoActivity" />
     </application>
 
 </manifest>

@@ -35,31 +35,7 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
 
     @Override
     public int getLayoutId() {
-        return R.layout.region;
+        return R.layout.wallet;
     }
 
-    @Override
-    public Map<String, String> getParams(int requestFlag) {
-        return null;
-    }
-
-    @Override
-    public void onBegin() {
-
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
-    public void onFinish() {
-
-    }
-
-    @Override
-    public void showToastMsg(String msg) {
-
-    }
 }

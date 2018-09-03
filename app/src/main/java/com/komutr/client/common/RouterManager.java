@@ -12,7 +12,8 @@ public class RouterManager {
     public static final String ROUTER_FEEDBACK = ROUTER_HOME + "FeedbackActivity";
     public static final String ROUTER_REGION = ROUTER_HOME + "RegionActivity";
     public static final String ROUTER_WALLET = ROUTER_HOME + "WalletActivity";
-    public static final String ROUTER_NICKNAME= ROUTER_HOME + "NicknameActivity";
+    public static final String ROUTER_NICKNAME = ROUTER_HOME + "NicknameActivity";
+    public static final String PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
 
     public static void goWeb(String url, String title, String paramMap) {
         ARouter.getInstance().build(RouterManager.ROUTER_WEB)
@@ -24,7 +25,12 @@ public class RouterManager {
     public static void goLogin() {
         ARouter.getInstance().build(RouterManager.ROUTER_LOGIN).navigation();
     }
+
     public static void goNickname() {
         ARouter.getInstance().build(RouterManager.ROUTER_NICKNAME).navigation();
+    }
+
+    public static void goPersonInfo() {
+        ARouter.getInstance().build(RouterManager.PERSON_INFO).navigation();
     }
 }

@@ -14,4 +14,7 @@
     <string name="not_get_code">You have not yet obtained a verification code</string>
     <string name="getting">Getting...</string>
     <string name="logging">logging in...</string>
+    <string name="id">ID:%s</string>
+    <string name="person_info">Personal information</string>
+
 </resources>

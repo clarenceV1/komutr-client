@@ -38,28 +38,4 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
         return R.layout.region;
     }
 
-    @Override
-    public Map<String, String> getParams(int requestFlag) {
-        return null;
-    }
-
-    @Override
-    public void onBegin() {
-
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
-    public void onFinish() {
-
-    }
-
-    @Override
-    public void showToastMsg(String msg) {
-
-    }
 }

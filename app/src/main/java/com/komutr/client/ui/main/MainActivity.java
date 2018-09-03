@@ -18,13 +18,22 @@ import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
+import com.komutr.client.dao.UserInfoDao;
 import com.komutr.client.databinding.MainBinding;
+import com.komutr.client.event.LoginEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import dagger.Lazy;
 
 @Route(path = RouterManager.ROUTER_MAIN, name = "首页")
 public class MainActivity extends AppBaseActivity<MainBinding> implements MainView, View.OnClickListener {
@@ -34,6 +43,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Inject
     ILoadImage iLoadImage;
+
+
+    @Inject
+    Lazy<UserInfoDao> userInfoDao;
 
     @Override
     public void initDagger() {
@@ -47,34 +60,55 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
-//        setBarTitle("wo");
-      /*  mViewBinding.tvTitle222.setText(presenter.getTest2());
-        mViewBinding.tvTitle222.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RouterManager.goLogin();
-//                RouterManager.goWeb("http://www.baidu.com","百度是我孙子",null);
-            }
-        });*/
-        initLeftView();
+        setBarTitle("首页");
+        EventBus.getDefault().register(this);
+        dynamicAddLeftListView();
         mViewBinding.ivSelf.setOnClickListener(this);
         mViewBinding.ivWallet.setOnClickListener(this);
         mViewBinding.btnLogin.setOnClickListener(this);
         mViewBinding.btnLogout.setOnClickListener(this);
         mViewBinding.ivUserAvatar.setOnClickListener(this);
 
-        ILoadImageParams imageParams = new ImageForGlideParams.Builder()
-                .url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536463927&di=1fe7a492f833960e4eddd2e968bc8b32&imgtype=jpg&er=1&src=http%3A%2F%2Fww2.sinaimg.cn%2Fbmiddle%2F0062Tsskjw1ev5k66vo12j30c80gbt9w.jpg")
-                .transformation(new GlideCircleTransform(this))
-                .build();
-        imageParams.setImageView(mViewBinding.ivUserAvatar);
-        iLoadImage.loadImage(this, imageParams);
+
+        userInfoDao.get().switcher();
+        initLeftData(userInfoDao.get().getUser());
     }
+
+    /**
+     *
+     * @param user
+     */
+    private void initLeftData(User user) {
+
+        if(user != null){
+            mViewBinding.ivUserAvatar.setClickable(true);
+            mViewBinding.btnLogin.setVisibility(View.GONE);
+            mViewBinding.btnLogout.setVisibility(View.VISIBLE);
+            mViewBinding.llUserInfoLayout.setVisibility(View.VISIBLE);
+            mViewBinding.tvUserNickName.setText(user.getUsername());
+            mViewBinding.tvUserId.setText(getString(R.string.id,user.getId()+""));
+            ILoadImageParams imageParams = new ImageForGlideParams.Builder()
+                    .placeholder(R.drawable.default_avatar)
+                    .error(R.drawable.default_avatar)
+                    .url(user.getAvatar())
+                    .transformation(new GlideCircleTransform(this))
+                    .build();
+            imageParams.setImageView(mViewBinding.ivUserAvatar);
+            iLoadImage.loadImage(this, imageParams);
+        }else {
+            mViewBinding.ivUserAvatar.setClickable(false);
+            mViewBinding.btnLogin.setVisibility(View.VISIBLE);
+            mViewBinding.btnLogout.setVisibility(View.GONE);
+            mViewBinding.llUserInfoLayout.setVisibility(View.GONE);
+        }
+
+    }
+
 
     /**
      * 动态添加侧滑列表试图
      */
-    private void initLeftView() {
+    private void dynamicAddLeftListView() {
         int height = DimensUtils.dp2px(this, 40f);
         int padding = DimensUtils.dp2px(this, 32f);
         String[] selfList = getResources().getStringArray(R.array.main_item_list);
@@ -103,48 +137,23 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         }
     }
 
-
-    /**
-     * 动态添加控件
-     */
-    private void dynamicAddWidget() {
-
-
-    }
-
     @Override
     public int getLayoutId() {
         return R.layout.main;
     }
 
-    @Override
-    public void tast(String msg) {
-        ToastUtils.showShort(msg);
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LoginEvent loginEvent) {
+
+        if (loginEvent != null && loginEvent.getStateType() == LoginEvent.STATE_LOGIN_SUCCESS) {
+            initLeftData(loginEvent.getUserInfo());
+        }
     }
 
     @Override
-    public Map<String, String> getParams(int requestFlag) {
-        return null;
-    }
-
-    @Override
-    public void onBegin() {
-
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
-    public void onFinish() {
-
-    }
-
-    @Override
-    public void showToastMsg(String msg) {
-
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -163,8 +172,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 RouterManager.goLogin();
                 break;
             case R.id.btnLogout://退出
+                 initLeftData(null);
                 break;
             case R.id.ivUserAvatar://头像
+                RouterManager.goPersonInfo();
                 break;
         }
     }

@@ -53,6 +53,11 @@ public class UserInfoDao extends BaseDAO {
         return null;
     }
 
+    public User getUser() {
+
+        return mUser;
+    }
+
     /**
      * 更新用户数据
      *

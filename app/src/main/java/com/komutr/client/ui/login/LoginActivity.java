@@ -58,6 +58,8 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
     @Override
     public void verificationCodeCallback(RespondDO respondDO) {
+        mViewBinding.btnVerificationCode.setText(getString(R.string.verification_code));
+        mViewBinding.btnVerificationCode.setEnabled(true);
          this.phoneCode = (PhoneCode) respondDO.getObject();
          if(this.phoneCode!= null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())){
              new SMSCountDownTimer(mViewBinding.btnVerificationCode,60000,1000);
@@ -68,8 +70,17 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
     @Override
     public void registeredOrLoginCallBack(RespondDO respondDO) {
 
-        showToastMsg(respondDO.getMsg());
-        finish();
+        mViewBinding.btnLogReg.setText(getString(R.string.log_in));
+        mViewBinding.btnLogReg.setEnabled(true);
+        if(respondDO.getFromCallBack() != -1){
+            ToastUtils.showShort(respondDO.getMsg());
+            if (respondDO.isStatus()) { //成功
+               finish();
+            } else {//失败
+
+            }
+        }
+
     }
 
     @Override
@@ -112,7 +123,7 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                     view.setTag(phone);
                     mViewBinding.btnVerificationCode.setEnabled(false);
                     mViewBinding.btnVerificationCode.setText(getString(R.string.getting));
-                    presenter.verificationCode(Constant.RrequestFlag.FLAG_1);
+                    presenter.verificationCode(phone,1);
                     break;
                 case R.id.btnLogReg://登录
                     if(this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())){//为获取验证码
@@ -126,56 +137,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                    }
                     mViewBinding.btnVerificationCode.setEnabled(false);
                     mViewBinding.btnVerificationCode.setText(getString(R.string.logging));
-                    presenter.registeredOrLogin(Constant.RrequestFlag.FLAG_2);
+                    presenter.registeredOrLogin(StringUtils.getString(mViewBinding.etInputVerificAtionCode),phone,this.phoneCode.getVer_token_key());
                     break;
             }
         }
 
-    }
-
-
-
-
-    @Override
-    public Map<String, String> getParams(int requestFlag) {
-
-        Map<String, String> query = getUserParams();
-        query.put("phone", StringUtils.getString(mViewBinding.etPhone));
-        if(requestFlag == Constant.RrequestFlag.FLAG_1){//获取验证码
-            query.put("m", "customer.verification");
-            query.put("type",  "1");//@param type  1 注册 2 找回密码 3 重置密码
-        }else {//登录
-            query.put("m", "customer.registeredOrLogin");
-            query.put("ver_token_key", this.phoneCode.getVer_token_key());
-            query.put("code", StringUtils.getString(mViewBinding.etInputVerificAtionCode));
-        }
-        return query;
-    }
-
-    @Override
-    public void onBegin() {
-
-    }
-
-    @Override
-    public void onError(String msg) {
-        Logger.e("login error msg="+msg);
-    }
-
-    @Override
-    public void onFinish() {
-        if(!mViewBinding.btnVerificationCode.getText().toString().equals(getString(R.string.verification_code))){
-            mViewBinding.btnVerificationCode.setText(getString(R.string.verification_code));
-            mViewBinding.btnVerificationCode.setEnabled(true);
-        }else if(!mViewBinding.btnLogReg.getText().toString().equals(getString(R.string.log_in))){
-            mViewBinding.btnLogReg.setText(getString(R.string.log_in));
-            mViewBinding.btnLogReg.setEnabled(true);
-        }
-
-    }
-
-    @Override
-    public void showToastMsg(String msg) {
-     ToastUtils.showShort(msg);
     }
 }

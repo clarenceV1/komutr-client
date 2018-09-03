@@ -10,5 +10,14 @@
         <item>Current version</item>
     </string-array>
 
+    <string-array name="person_info_item_list">
+        <item>Mobile phone no.</item>
+        <item>Nickname</item>
+        <item>E-mail</item>
+        <item>Date of birth</item>
+        <item>Gender</item>
+        <item>Region</item>
+    </string-array>
+
 
 </resources>

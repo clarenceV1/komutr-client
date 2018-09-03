@@ -13,4 +13,12 @@ public class LoginEvent {
         this.stateType = stateType;
         this.userInfo = userInfo;
     }
+
+    public int getStateType() {
+        return stateType;
+    }
+
+    public User getUserInfo() {
+        return userInfo;
+    }
 }
