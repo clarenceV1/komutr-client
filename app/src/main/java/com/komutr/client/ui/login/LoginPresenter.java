@@ -92,7 +92,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
         query.put("phone", phone);
         query.put("type", type + "");
         Disposable disposable = requestStore.get().commonRequest(query)
-                .observeOn(AndroidSchedulers.mainThread()).doOnSuccess(new Consumer<RespondDO>() {
+                .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
                         if(respondDO.isStatus()&&!TextUtils.isEmpty(respondDO.getData())){
@@ -101,6 +101,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
                         }
                     }
                 })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
