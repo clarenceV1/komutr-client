@@ -14,6 +14,8 @@ import com.komutr.client.ui.message.MessageActivity;
 import com.komutr.client.ui.message.MessageDetailActivity;
 import com.komutr.client.ui.nickname.NicknameActivity;
 import com.komutr.client.ui.personInfo.PersonInfoActivity;
+import com.komutr.client.ui.phoneNumber.BindPhoneActivity;
+import com.komutr.client.ui.phoneNumber.PhoneNumberActivity;
 import com.komutr.client.ui.region.RegionActivity;
 import com.komutr.client.ui.wallet.WalletActivity;
 import com.komutr.client.ui.web.WebActivity;
@@ -38,6 +40,9 @@ public interface AppComponent {
     void inject(WalletActivity activity);
     void inject(NicknameActivity activity);
     void inject(PersonInfoActivity activity);
+    void inject(PhoneNumberActivity activity);
+    void inject(BindPhoneActivity activity);
+
 
     void inject(BookFragment fragment);
     void inject(EmptyFragment fragment);

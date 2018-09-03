@@ -5,9 +5,10 @@ import io.objectbox.annotation.Id;
 
 @Entity
 public class User {
+//    {"app_auth_key":"JCNnKH7Y6HCFFuKK","avatar":"","avatar_thum":"","id":19,"phone":"13779926287","username":"vcf"}
     private long id;
     @Id
-    private long userId;
+    private long userId;//数据库ID
     private String user_type;
     private String username;
     private String phone;
