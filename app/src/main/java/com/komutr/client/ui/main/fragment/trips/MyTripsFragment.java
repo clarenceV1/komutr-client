@@ -2,14 +2,19 @@ package com.komutr.client.ui.main.fragment.trips;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.cai.framework.baseview.LoadingView;
+import com.cai.framework.imageload.ILoadImage;
+import com.cai.pullrefresh.BaseListPtrFrameLayout;
+import com.cai.pullrefresh.PtrRecyclerView;
+import com.cai.pullrefresh.lib.PtrFrameLayout;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
-import com.komutr.client.databinding.FragmentEmptyBinding;
+import com.komutr.client.been.MyTrips;
 import com.komutr.client.databinding.FragmentMyTripsBinding;
-import com.komutr.client.ui.main.fragment.book.BookPresenter;
 
 import java.util.List;
 
@@ -21,10 +26,14 @@ import javax.inject.Inject;
  * Use the {@link MyTripsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> {
+public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> implements MyTripsView {
 
     @Inject
-    BookPresenter presenter;
+    MyTripsPresenter presenter;
+    PtrRecyclerView mPtrRecyclerView;
+    MyTripsAdapter adapter;
+    @Inject
+    ILoadImage iLoadImage;
 
     public MyTripsFragment() {
         // Required empty public constructor
@@ -41,7 +50,6 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> {
         MyTripsFragment fragment = new MyTripsFragment();
         return fragment;
     }
-
 
     @Override
     public void initDagger() {
@@ -61,7 +69,49 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> {
 
     @Override
     public void initView(View view) {
+        mPtrRecyclerView = (PtrRecyclerView) mViewBinding.pullListView.getRecyclerView();
+        adapter = new MyTripsAdapter(getContext(), iLoadImage, presenter);
+        mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mPtrRecyclerView.setAdapter(adapter);
+        mViewBinding.pullListView.setCloseLoadMore(true);
+        mViewBinding.pullListView.setOnPullLoadListener(new BaseListPtrFrameLayout.OnPullLoadListener() {
+            @Override
+            public void onRefresh(final PtrFrameLayout frame) {
+                presenter.requestList();
+            }
 
+            @Override
+            public void onLoadMore() {
+                presenter.requestMore();
+            }
+        });
+        mViewBinding.loadView.setClickListener(new LoadingView.LoadViewClickListener() {
+            @Override
+            public void onLoadViewClick(int status) {
+                presenter.requestList();
+            }
+        });
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
     }
 
+    @Override
+    public void callback(List<MyTrips> data) {
+        if (data != null && data.size() > 0) {//有数据
+//            if (timestamp == 0) {
+//                adapter.setDatas(data.getList());//下拉
+//            } else {
+//                adapter.addDatas(data.getList());//上啦
+//            }
+            mViewBinding.pullListView.setCloseLoadMore(false);
+            mViewBinding.pullListView.refreshOrLoadMoreComplete(true);
+        } else {
+            mViewBinding.pullListView.refreshOrLoadMoreComplete(false);
+        }
+
+        if (adapter.getDatas().isEmpty()) {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_NODATA);
+        } else {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
+        }
+    }
 }

@@ -18,4 +18,10 @@ public class MyTripsPresenter extends AppBasePresenter<MyTripsView> {
     }
 
 
+    public void requestMore() {
+        
+    }
+
+    public void requestList() {
+    }
 }
