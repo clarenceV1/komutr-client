@@ -1,7 +1,9 @@
 package com.komutr.client.ui.main;
 
+import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -60,14 +62,17 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
-        setBarTitle("首页");
+//        setBarTitle("首页");
         EventBus.getDefault().register(this);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//防止布局被顶上去
         dynamicAddLeftListView();
+
         mViewBinding.ivSelf.setOnClickListener(this);
         mViewBinding.ivWallet.setOnClickListener(this);
         mViewBinding.btnLogin.setOnClickListener(this);
         mViewBinding.btnLogout.setOnClickListener(this);
         mViewBinding.ivUserAvatar.setOnClickListener(this);
+        mViewBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
 
         userInfoDao.get().switcher();
