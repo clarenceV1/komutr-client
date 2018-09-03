@@ -96,7 +96,7 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
             public void accept(RespondDO respondDO) {
                 if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
                     User userInfo = JSON.parseObject(respondDO.getData(), User.class);
-                    userInfoDao.updateUser(userInfo);
+                    userInfoDao.get().updateUser(userInfo);
                     respondDO.setObject(userInfo);
                 }
             }
