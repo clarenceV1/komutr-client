@@ -1,10 +1,13 @@
 package com.komutr.client.ui.region;
 
+import android.view.View;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RegionBinding;
 
@@ -29,7 +32,13 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
 
     @Override
     public void initView() {
-
+        mViewBinding.tvTest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        presenter.requestBigArea();
+                        presenter.requestNextArea();
+                    }
+                });
     }
 
     @Override
@@ -37,4 +46,13 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
         return R.layout.region;
     }
 
+    @Override
+    public void bigAreaCallback(RespondDO respondDO) {
+
+    }
+
+    @Override
+    public void nextAreaCallback(RespondDO respondDO) {
+
+    }
 }

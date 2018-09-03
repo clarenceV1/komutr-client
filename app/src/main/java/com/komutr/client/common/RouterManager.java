@@ -37,4 +37,13 @@ public class RouterManager {
     public static void goFeedback() {
         ARouter.getInstance().build(RouterManager.ROUTER_FEEDBACK).navigation();
     }
+
+
+    public static void goMessage() {
+        ARouter.getInstance().build(RouterManager.ROUTER_MESSAGE).navigation();
+    }
+
+    public static void goRegion() {
+        ARouter.getInstance().build(RouterManager.ROUTER_REGION).navigation();
+    }
 }
