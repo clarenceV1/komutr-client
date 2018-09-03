@@ -9,6 +9,7 @@ import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
+import com.komutr.client.common.Constant;
 import com.komutr.client.dao.UserInfoDao;
 import com.komutr.client.event.LoginEvent;
 
@@ -43,7 +44,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
     public void registeredOrLogin(String code, String phone, String verTokenKey) {
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.registeredOrLogin");
-        query.put("auth_key", "d511D54i5Odb6WT");
+        query.put("auth_key", Constant.AUTH_KEY);
         query.put("ver_token_key", verTokenKey);
         query.put("code", code);
         query.put("phone", phone);
@@ -87,7 +88,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
     public void verificationCode(final String phone, int type) {
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.verification");
-        query.put("auth_key", "d511D54i5Odb6WT");
+        query.put("auth_key", Constant.AUTH_KEY);
         query.put("phone", phone);
         query.put("type", type + "");
         Disposable disposable = requestStore.get().commonRequest(query)

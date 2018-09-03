@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
-import com.cai.framework.logger.Logger;
 import com.cai.framework.utils.SMSCountDownTimer;
 import com.example.clarence.utillibrary.StringUtils;
 import com.example.clarence.utillibrary.ToastUtils;
@@ -15,12 +14,10 @@ import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.LoginBinding;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -57,10 +54,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
     }
 
     @Override
-    public void verificationCodeCallback(RespondDO respondDO) {
+    public void verificationCodeCallback(RespondDO<PhoneCode> respondDO) {
         mViewBinding.btnVerificationCode.setText(getString(R.string.verification_code));
         mViewBinding.btnVerificationCode.setEnabled(true);
-         this.phoneCode = (PhoneCode) respondDO.getObject();
+         this.phoneCode = respondDO.getObject();
          if(this.phoneCode!= null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())){
              new SMSCountDownTimer(mViewBinding.btnVerificationCode,60000,1000);
          }

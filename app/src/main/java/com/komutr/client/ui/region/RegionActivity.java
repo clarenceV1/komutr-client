@@ -9,7 +9,6 @@ import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RegionBinding;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 

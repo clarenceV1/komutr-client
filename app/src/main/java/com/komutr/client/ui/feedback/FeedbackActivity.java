@@ -10,7 +10,6 @@ import com.komutr.client.databinding.LoginBinding;
 
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
