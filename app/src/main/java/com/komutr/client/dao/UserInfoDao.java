@@ -54,7 +54,6 @@ public class UserInfoDao extends BaseDAO {
     }
 
     public User getUser() {
-
         return mUser;
     }
 
@@ -64,7 +63,7 @@ public class UserInfoDao extends BaseDAO {
      * @param userInfo
      */
     public void updateUser(User userInfo) {
-        if (userInfo == null) {
+        if (userInfo == null || mUser == null) {
             return;
         }
         if (!TextUtils.isEmpty(userInfo.getUsername())) {
@@ -83,5 +82,10 @@ public class UserInfoDao extends BaseDAO {
             mUser.setSex(userInfo.getSex());
         }
         userBox.put(mUser);
+    }
+
+    public void logout() {
+        userBox.removeAll();
+        mUser = null;
     }
 }

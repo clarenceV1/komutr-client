@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cai.framework.annotation.apt.Router;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.imageload.GlideCircleTransform;
 import com.cai.framework.imageload.ILoadImage;
@@ -24,6 +25,7 @@ import com.komutr.client.R;
 import com.komutr.client.adapter.MainPagerAdapter;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MainBinding;
@@ -73,7 +75,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         MainPagerAdapter mAdapter = new MainPagerAdapter(getSupportFragmentManager(), mTabs);
         mViewBinding.mainActivityViewpager.setAdapter(mAdapter);
         mViewBinding.mainActivityViewpager.setCurrentItem(0);
-        setFooterTabSelected(mViewBinding.rbMainTabOne,true);
+        setFooterTabSelected(mViewBinding.rbMainTabOne, true);
         mViewBinding.ivSelf.setOnClickListener(this);
         mViewBinding.ivWallet.setOnClickListener(this);
         mViewBinding.btnLogin.setOnClickListener(this);
@@ -129,7 +131,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             mViewBinding.btnLogout.setVisibility(View.GONE);
             mViewBinding.llUserInfoLayout.setVisibility(View.GONE);
         }
-
     }
 
 
@@ -218,22 +219,22 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 RouterManager.goLogin();
                 break;
             case R.id.btnLogout://退出
-                initLeftData(null);
+                presenter.logout();
                 break;
             case R.id.ivUserAvatar://头像
                 RouterManager.goPersonInfo();
                 break;
             case R.id.rbMainTabOne://地图
-                if(mViewBinding.mainActivityViewpager.getCurrentItem() != 0){
-                    setFooterTabSelected(mViewBinding.rbMainTabOne,false);
+                if (mViewBinding.mainActivityViewpager.getCurrentItem() != 0) {
+                    setFooterTabSelected(mViewBinding.rbMainTabOne, false);
                     mViewBinding.mainActivityViewpager.setCurrentItem(0);
                 }
                 break;
             case R.id.tvMainTabTwo://扫描支付
                 break;
             case R.id.rbMainTabThree://我的行程
-                if(mViewBinding.mainActivityViewpager.getCurrentItem() != 1){
-                    setFooterTabSelected(mViewBinding.rbMainTabThree,false);
+                if (mViewBinding.mainActivityViewpager.getCurrentItem() != 1) {
+                    setFooterTabSelected(mViewBinding.rbMainTabThree, false);
                     mViewBinding.mainActivityViewpager.setCurrentItem(1);
                 }
                 break;
@@ -244,14 +245,14 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
     RadioButton lastFooterRadioButton;
 
     private void setFooterTabSelected(RadioButton btnSelected, boolean isFirst) {
-        int dp60 = DimensUtils.dp2px(this,60f);
-        int dp3 = DimensUtils.dp2px(this,3f);
-        Drawable selectedDrawable = StreamUtils.getInstance().resourceToDrawable(R.drawable.main_header_tab_pressed,this);
+        int dp60 = DimensUtils.dp2px(this, 60f);
+        int dp3 = DimensUtils.dp2px(this, 3f);
+        Drawable selectedDrawable = StreamUtils.getInstance().resourceToDrawable(R.drawable.main_header_tab_pressed, this);
         selectedDrawable.setBounds(0, 0, dp60, dp3);
         btnSelected.setChecked(true);
         btnSelected.setCompoundDrawables(null, null, null, selectedDrawable);
 
-        Drawable normalDrawable = StreamUtils.getInstance().resourceToDrawable(R.drawable.main_header_tab_normal,this);
+        Drawable normalDrawable = StreamUtils.getInstance().resourceToDrawable(R.drawable.main_header_tab_normal, this);
         normalDrawable.setBounds(0, 0, dp60, dp3);
         if (lastFooterRadioButton != null) {
             lastFooterRadioButton.setCompoundDrawables(null, null, null, normalDrawable);
@@ -261,6 +262,13 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         if (isFirst) {
             mViewBinding.rbMainTabThree.setChecked(false);
             mViewBinding.rbMainTabThree.setCompoundDrawables(null, null, null, normalDrawable);
+        }
+    }
+
+    @Override
+    public void logout(RespondDO respondDO) {
+        if (respondDO.isStatus()) {
+            initLeftData(null);
         }
     }
 
@@ -274,13 +282,13 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             this.index = index;
         }
 
-
         @Override
         public void onClick(View view) {
 
             switch (index) {
                 case 0://Message
-
+//                    RouterManager.goMessage();
+                    RouterManager.goRegion();
                     break;
                 case 1://Service tel
                     break;
