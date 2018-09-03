@@ -9,13 +9,17 @@ import com.cai.framework.baseview.LoadingView;
 import com.cai.framework.imageload.ILoadImage;
 import com.cai.pullrefresh.BaseListPtrFrameLayout;
 import com.cai.pullrefresh.PtrRecyclerView;
+import com.cai.pullrefresh.RecycleViewDivider;
 import com.cai.pullrefresh.lib.PtrFrameLayout;
+import com.example.clarence.utillibrary.DimensUtils;
+import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
 import com.komutr.client.been.MyTrips;
 import com.komutr.client.databinding.FragmentMyTripsBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -69,12 +73,16 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
 
     @Override
     public void initView(View view) {
-        mPtrRecyclerView = (PtrRecyclerView) mViewBinding.pullListView.getRecyclerView();
+        mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
+        //
+        mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(activity, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(activity,10f), StreamUtils.getInstance().resourceToColor(R.color.transparent,activity)));
+
         adapter = new MyTripsAdapter(getContext(), iLoadImage, presenter);
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mPtrRecyclerView.setAdapter(adapter);
-        mViewBinding.pullListView.setCloseLoadMore(true);
-        mViewBinding.pullListView.setOnPullLoadListener(new BaseListPtrFrameLayout.OnPullLoadListener() {
+        adapter.setDatas(presenter.getTestList());
+        mViewBinding.ptyRecycle.setCloseLoadMore(true);
+        mViewBinding.ptyRecycle.setOnPullLoadListener(new BaseListPtrFrameLayout.OnPullLoadListener() {
             @Override
             public void onRefresh(final PtrFrameLayout frame) {
                 presenter.requestList();
@@ -91,7 +99,8 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
                 presenter.requestList();
             }
         });
-        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
+//        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
     }
 
     @Override
@@ -102,10 +111,10 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
 //            } else {
 //                adapter.addDatas(data.getList());//上啦
 //            }
-            mViewBinding.pullListView.setCloseLoadMore(false);
-            mViewBinding.pullListView.refreshOrLoadMoreComplete(true);
+            mViewBinding.ptyRecycle.setCloseLoadMore(false);
+            mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(true);
         } else {
-            mViewBinding.pullListView.refreshOrLoadMoreComplete(false);
+            mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
         }
 
         if (adapter.getDatas().isEmpty()) {

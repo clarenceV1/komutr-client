@@ -80,7 +80,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         mViewBinding.btnLogout.setOnClickListener(this);
         mViewBinding.ivUserAvatar.setOnClickListener(this);
         mViewBinding.rbMainTabOne.setOnClickListener(this);
-        mViewBinding.btnMainTabTwo.setOnClickListener(this);
+        mViewBinding.tvMainTabTwo.setOnClickListener(this);
         mViewBinding.rbMainTabThree.setOnClickListener(this);
 
 
@@ -229,7 +229,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                     mViewBinding.mainActivityViewpager.setCurrentItem(0);
                 }
                 break;
-            case R.id.btnMainTabTwo://扫描支付
+            case R.id.tvMainTabTwo://扫描支付
                 break;
             case R.id.rbMainTabThree://我的行程
                 if(mViewBinding.mainActivityViewpager.getCurrentItem() != 1){
