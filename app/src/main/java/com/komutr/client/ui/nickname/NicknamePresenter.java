@@ -35,7 +35,7 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
      * @param username
      */
     public void checkUsername(final String username) {
-        String auth_key = userInfoDao.getAppAuth();
+        String auth_key = userInfoDao.get().getAppAuth();
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.checkUsername");
         query.put("auth_key", auth_key);
@@ -73,7 +73,7 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
      */
     public void updateMyData(String username, String avatar, int big_area, int province, int sex) {
         Map<String, String> query = new HashMap<>();
-        String auth_key = userInfoDao.getAppAuth();
+        String auth_key = userInfoDao.get().getAppAuth();
         query.put("m", "customer.updateMyData");
         query.put("auth_key", auth_key);
         if (!TextUtils.isEmpty(avatar)) {
