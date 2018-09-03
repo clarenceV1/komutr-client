@@ -4,11 +4,10 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white_a"
-        android:paddingTop="44dp">
+        android:paddingTop="10dp">
 
         <com.cai.pullrefresh.PtrRecyclerViewFrameLayout
-            android:id="@+id/pullListView"
+            android:id="@+id/ptyRecycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

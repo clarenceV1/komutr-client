@@ -65,8 +65,8 @@
                         android:checked="true"
                         android:text="@string/book" />
 
-                    <Button
-                        android:id="@+id/btnMainTabTwo"
+                    <TextView
+                        android:id="@+id/tvMainTabTwo"
                         style="@style/radio_button_main"
                         android:text="@string/pay" />
 

@@ -11,7 +11,7 @@ import com.cai.pullrefresh.BaseViewHold;
 import com.komutr.client.R;
 import com.komutr.client.been.MyTrips;
 
-public class MyTripsAdapter extends BasePtrAdapter<MyTrips,MyTripsAdapter.ViewHolder> {
+public class MyTripsAdapter extends BasePtrAdapter<MyTrips,MyTripsAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener {
     ILoadImage iLoadImage;
     MyTripsPresenter presenter;
     Context context;
@@ -25,18 +25,19 @@ public class MyTripsAdapter extends BasePtrAdapter<MyTrips,MyTripsAdapter.ViewHo
     @Override
     protected BasePtrViewHold onPtrCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = inflateItemView(parent, R.layout.adapter_my_trips);
-        ViewHolder viewHolder = new ViewHolder(itemView, new BaseViewHold.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
 
-            }
-
-            @Override
-            public void onItemLongClick(View v, int position) {
-
-            }
-        });
+        ViewHolder viewHolder = new ViewHolder(itemView,this);
         return viewHolder;
+    }
+
+    @Override
+    public void onItemClick(View v, int position) {
+
+    }
+
+    @Override
+    public void onItemLongClick(View v, int position) {
+
     }
 
     @Override
