@@ -22,6 +22,6 @@ public abstract class AppBasePresenter<V> extends GodBasePresenter<V> {
     @Inject
     public Lazy<AppDataCacheStore> cacheStore;
     @Inject
-    public UserInfoDao userInfoDao;
+    public Lazy<UserInfoDao> userInfoDao;
 
 }

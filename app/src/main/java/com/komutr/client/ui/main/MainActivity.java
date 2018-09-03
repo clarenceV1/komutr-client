@@ -16,13 +16,11 @@ import com.cai.framework.imageload.ImageForGlideParams;
 import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
-import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.dao.UserInfoDao;
 import com.komutr.client.databinding.MainBinding;
 import com.komutr.client.event.LoginEvent;
 
@@ -31,11 +29,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
-
-import dagger.Lazy;
 
 @Route(path = RouterManager.ROUTER_MAIN, name = "首页")
 public class MainActivity extends AppBaseActivity<MainBinding> implements MainView, View.OnClickListener {
@@ -45,10 +40,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Inject
     ILoadImage iLoadImage;
-
-
-    @Inject
-    Lazy<UserInfoDao> userInfoDao;
 
     @Override
     public void initDagger() {
@@ -73,25 +64,35 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         mViewBinding.btnLogout.setOnClickListener(this);
         mViewBinding.ivUserAvatar.setOnClickListener(this);
         mViewBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mViewBinding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                setStatuBarColor(R.color.color_2196f3);
+                super.onDrawerOpened(drawerView);
+            }
 
-
-        userInfoDao.get().switcher();
-        initLeftData(userInfoDao.get().getUser());
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                setStatuBarColor(R.color.color_00ffffff);
+                super.onDrawerClosed(drawerView);
+            }
+        });
+        User user = presenter.switcher();
+        initLeftData(user);
     }
 
     /**
-     *
      * @param user
      */
     private void initLeftData(User user) {
 
-        if(user != null){
+        if (user != null) {
             mViewBinding.ivUserAvatar.setClickable(true);
             mViewBinding.btnLogin.setVisibility(View.GONE);
             mViewBinding.btnLogout.setVisibility(View.VISIBLE);
             mViewBinding.llUserInfoLayout.setVisibility(View.VISIBLE);
             mViewBinding.tvUserNickName.setText(user.getUsername());
-            mViewBinding.tvUserId.setText(getString(R.string.id,user.getId()+""));
+            mViewBinding.tvUserId.setText(getString(R.string.id, user.getId() + ""));
             ILoadImageParams imageParams = new ImageForGlideParams.Builder()
                     .placeholder(R.drawable.default_avatar)
                     .error(R.drawable.default_avatar)
@@ -100,7 +101,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                     .build();
             imageParams.setImageView(mViewBinding.ivUserAvatar);
             iLoadImage.loadImage(this, imageParams);
-        }else {
+        } else {
             mViewBinding.ivUserAvatar.setClickable(false);
             mViewBinding.btnLogin.setVisibility(View.VISIBLE);
             mViewBinding.btnLogout.setVisibility(View.GONE);
@@ -126,7 +127,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             params.gravity = Gravity.CENTER_VERTICAL;
             mViewBinding.llLeftListLayout.addView(llItemLayout, params);
             llItemLayout.setGravity(Gravity.CENTER_VERTICAL);
-            llItemLayout.setPadding(padding,0,0,0);
+            llItemLayout.setPadding(padding, 0, 0, 0);
 
             llItemLayout.setOnClickListener(new OnClickListener(i));
             TextView tvName = new TextView(this);
@@ -177,7 +178,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 RouterManager.goLogin();
                 break;
             case R.id.btnLogout://退出
-                 initLeftData(null);
+                initLeftData(null);
                 break;
             case R.id.ivUserAvatar://头像
                 RouterManager.goPersonInfo();
@@ -194,7 +195,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         public OnClickListener(int index) {
             this.index = index;
         }
-
 
 
         @Override

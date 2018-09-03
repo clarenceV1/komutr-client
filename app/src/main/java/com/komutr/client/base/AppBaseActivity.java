@@ -29,6 +29,12 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
         tintManager.setTintColor(getResources().getColor(R.color.transparent));
     }
 
+    public void setStatuBarColor(int color) {
+        if (tintManager != null) {
+            tintManager.setTintColor(getResources().getColor(color));
+        }
+    }
+
     public void setBarTitle(String title) {
         if (rootView != null && rootView.getChildCount() > 0) {
             View view = rootView.getChildAt(0);
@@ -37,7 +43,7 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
                 titleBarView = new TitleBarView(this);
                 titleBarView.setBackgroundResource(R.color.color_ffffff);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                linearLayout.addView(titleBarView,0, layoutParams);
+                linearLayout.addView(titleBarView, 0, layoutParams);
                 titleBarView.setTitleText(title);
                 titleBarView.setLeftClickListener(new View.OnClickListener() {
                     @Override
@@ -48,8 +54,6 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
             }
         }
     }
-
-
 
 
     public Map<String, String> getUserParams() {
