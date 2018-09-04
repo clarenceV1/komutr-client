@@ -13,7 +13,7 @@
         android:background="@drawable/my_trips_bg"
         android:orientation="vertical">
 
-        <!--票价、日期-->
+        <!--日期、使用状态-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -22,17 +22,19 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
 
-            <TextView
-                android:id="@+id/tvMyTripsDate"
-                style="@style/my_trips_text_style"
-                android:text="11/9/2018" />
-
 
             <TextView
                 android:id="@+id/tvMyTripsTime"
                 style="@style/my_trips_text_style"
-                android:layout_marginLeft="10dp"
                 android:text="6:23pm" />
+
+            <TextView
+                android:id="@+id/tvMyTripsDate"
+                style="@style/my_trips_text_style"
+                android:layout_marginLeft="10dp"
+                android:text="11/9/2018" />
+
+
 
             <View
                 android:layout_width="0dp"
@@ -61,51 +63,82 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
 
 
-             <TextView
-                 android:id="@+id/tvBusNumber"
-                 style="@style/my_trips_text_style"
-                 android:drawablePadding="10dp"
-                 android:drawableLeft="@drawable/bus_icon"
-                 android:text="A192"/>
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="27dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/bus_path_icon"/>
-
 
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/my_trips_text_small_style"
+                    android:text="@string/license_plate_no"/>
 
 
                 <TextView
-                    android:id="@+id/tvStartLocation"
-                    style="@style/my_trips_text_style"
-                    android:layout_marginTop="3dp"
-                    android:text="Heron Bay"/>
-
-
-                <TextView
-                    android:id="@+id/tvEndLocation"
-                    style="@style/my_trips_text_style"
-                    android:layout_marginTop="13dp"
-                    android:text="Suntec Tower 5"/>
-
+                    style="@style/my_trips_text_small_style"
+                    android:layout_marginLeft="18dp"
+                    android:text="DS210001"/>
 
             </LinearLayout>
+
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1"
+               android:gravity="center_vertical"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:id="@+id/tvBusNumber"
+                   style="@style/my_trips_text_style"
+                   android:drawablePadding="10dp"
+                   android:drawableLeft="@drawable/bus_icon"
+                   android:text="A192"/>
+
+
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:paddingTop="10dp"
+                   android:paddingBottom="5dp"
+                   android:layout_marginLeft="30dp"
+                   android:layout_marginRight="10dp"
+                   android:src="@drawable/bus_path_icon"/>
+
+
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="1"
+                   android:orientation="vertical">
+
+
+
+                   <TextView
+                       android:id="@+id/tvStartLocation"
+                       style="@style/my_trips_text_style"
+                       android:text="Heron Bay"/>
+
+
+                   <TextView
+                       android:id="@+id/tvEndLocation"
+                       style="@style/my_trips_text_style"
+                       android:text="Suntec Tower 5"/>
+
+
+               </LinearLayout>
+           </LinearLayout>
 
 
         </LinearLayout>

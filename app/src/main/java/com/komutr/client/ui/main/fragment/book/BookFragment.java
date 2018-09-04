@@ -7,6 +7,7 @@ import android.view.View;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.FragmentBookBinding;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import javax.inject.Inject;
  * Use the {@link BookFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookFragment extends AppBaseFragment<FragmentBookBinding> {
+public class BookFragment extends AppBaseFragment<FragmentBookBinding> implements View.OnClickListener{
 
     @Inject
     BookPresenter presenter;
@@ -59,6 +60,21 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> {
     @Override
     public void initView(View view) {
 
+        mViewBinding.ivChangeLocation.setOnClickListener(this);
+        mViewBinding.ivSearchRoutes.setOnClickListener(this);
+
+
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ivChangeLocation://位置切换
+                break;
+            case R.id.ivSearchRoutes://位置切换
+                RouterManager.goSearchRoutes();
+                break;
+
+        }
+    }
 }

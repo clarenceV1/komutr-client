@@ -30,12 +30,18 @@ import javax.inject.Inject;
  * Use the {@link MyTripsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> implements MyTripsView {
+public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> implements MyTripsView,BaseListPtrFrameLayout.OnPullLoadListener,LoadingView.LoadViewClickListener {
 
     @Inject
     MyTripsPresenter presenter;
+
+
     PtrRecyclerView mPtrRecyclerView;
+
+
     MyTripsAdapter adapter;
+
+
     @Inject
     ILoadImage iLoadImage;
 
@@ -76,28 +82,13 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(activity, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(activity,10f), StreamUtils.getInstance().resourceToColor(R.color.transparent,activity)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new MyTripsAdapter(getContext(), iLoadImage, presenter);
+        adapter = new MyTripsAdapter(activity, iLoadImage, presenter);
         mPtrRecyclerView.setAdapter(adapter);
         adapter.setDatas(presenter.getTestList());
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
-        mViewBinding.ptyRecycle.setOnPullLoadListener(new BaseListPtrFrameLayout.OnPullLoadListener() {
-            @Override
-            public void onRefresh(final PtrFrameLayout frame) {
-                presenter.requestList();
-            }
 
-            @Override
-            public void onLoadMore() {
-                presenter.requestMore();
-            }
-        });
-        mViewBinding.loadView.setClickListener(new LoadingView.LoadViewClickListener() {
-
-            @Override
-            public void onLoadViewClick(int status) {
-                presenter.requestList();
-            }
-        });
+        mViewBinding.ptyRecycle.setOnPullLoadListener(this);
+        mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
 //      mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
     }
@@ -121,5 +112,20 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
         } else {
             mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
         }
+    }
+
+    @Override
+    public void onRefresh(PtrFrameLayout frame) {
+        presenter.requestList();
+    }
+
+    @Override
+    public void onLoadMore() {
+        presenter.requestMore();
+    }
+
+    @Override
+    public void onLoadViewClick(int status) {
+        presenter.requestList();
     }
 }

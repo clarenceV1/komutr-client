@@ -1,18 +1,18 @@
-package com.komutr.client.ui.routes;
+package com.komutr.client.ui.routeDetail;
 
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.SearchRoutes;
-import com.komutr.client.ui.wallet.WalletView;
+import com.komutr.client.ui.routes.SearchRoutesView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
+public class RouteDetailPresenter extends AppBasePresenter<RouteDetailView> {
 
     @Inject
-    public SearchRoutesPresenter() {
+    public RouteDetailPresenter() {
 
     }
 

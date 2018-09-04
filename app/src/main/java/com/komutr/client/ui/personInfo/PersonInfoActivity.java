@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.imageload.GlideCircleTransform;
-import com.cai.framework.imageload.GlideRoundTransform;
 import com.cai.framework.imageload.ILoadImage;
 import com.cai.framework.imageload.ILoadImageParams;
 import com.cai.framework.imageload.ImageForGlideParams;
@@ -21,14 +20,9 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.User;
-import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PersonInfoBinding;
-import com.komutr.client.databinding.WalletBinding;
-import com.komutr.client.ui.wallet.WalletPresenter;
-import com.komutr.client.ui.wallet.WalletView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

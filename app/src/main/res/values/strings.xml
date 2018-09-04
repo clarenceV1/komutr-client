@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">komutr-client</string>
+    <string name="confirm">Confirm</string>
+    <string name="review_purchase">Review Purchase</string>
+    <string name="payment">PAYMENT</string>
+    <string name="total">TOTAL</string>
+    <string name="important_notes">IMPORTANT NOTES</string>
 
+
+
+    <string name="license_plate_no">License plate No.</string>
+    <string name="search_routes">Search Routes</string>
+    <string name="login">login</string>
+    <string name="buy">buy</string>
     <string name="ticket_price">Ticket price</string>
     <string name="start_location_preview">Start location</string>
     <string name="end_location_preview">Drop off affress</string>
@@ -11,7 +22,7 @@
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="input_verific_ation_code">input verific ation code</string>
     <string name="verification_code">Verification code</string>
-    <string name="login">login</string>
+
     <string name="log_in">log in</string>
     <string name="log_out">log out</string>
     <string name="agree_text">You have read and agree</string>

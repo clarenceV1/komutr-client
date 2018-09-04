@@ -15,7 +15,6 @@ public class RouterManager {
     public static final String ROUTER_REGION = ROUTER_HOME + "RegionActivity";
     public static final String ROUTER_WALLET = ROUTER_HOME + "WalletActivity";
     public static final String ROUTER_NICKNAME = ROUTER_HOME + "NicknameActivity";
-    public static final String PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
     public static final String SEARCH_ROUTES = ROUTER_HOME + "SearchRoutesActivity";
     public static final String ROUTER_PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
     public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
@@ -23,41 +22,95 @@ public class RouterManager {
 
 
     public static void goWeb(String url, String title, String paramMap) {
-        ARouter.getInstance().build(RouterManager.ROUTER_WEB)
+        ARouter.getInstance().build(ROUTER_WEB)
                 .withString("url", url)
                 .withString("title", title)
                 .withString("paramMap", paramMap).navigation();
     }
 
     public static void goBindPhone() {
-        ARouter.getInstance().build(RouterManager.ROUTER_BIND_PHONE).navigation();
+        ARouter.getInstance().build(ROUTER_BIND_PHONE).navigation();
     }
     public static void goPhoneNumber() {
-        ARouter.getInstance().build(RouterManager.ROUTER_PHONE_NUMBER).navigation();
+        ARouter.getInstance().build(ROUTER_PHONE_NUMBER).navigation();
     }
 
     public static void goLogin() {
-        ARouter.getInstance().build(RouterManager.ROUTER_LOGIN).navigation();
+        ARouter.getInstance().build(ROUTER_LOGIN).navigation();
     }
 
     public static void goNickname() {
-        ARouter.getInstance().build(RouterManager.ROUTER_NICKNAME).navigation();
+        ARouter.getInstance().build(ROUTER_NICKNAME).navigation();
     }
 
     public static void goPersonInfo() {
-        ARouter.getInstance().build(RouterManager.ROUTER_PERSON_INFO).navigation();
+        ARouter.getInstance().build(ROUTER_PERSON_INFO).navigation();
     }
 
     public static void goFeedback() {
-        ARouter.getInstance().build(RouterManager.ROUTER_FEEDBACK).navigation();
+        ARouter.getInstance().build(ROUTER_FEEDBACK).navigation();
     }
 
 
     public static void goMessage() {
-        ARouter.getInstance().build(RouterManager.ROUTER_MESSAGE).navigation();
+        ARouter.getInstance().build(ROUTER_MESSAGE).navigation();
     }
 
     public static void goRegion() {
-        ARouter.getInstance().build(RouterManager.ROUTER_REGION).navigation();
+        ARouter.getInstance().build(ROUTER_REGION).navigation();
     }
+
+
+//--------------------------------你从顶上添加我从下面添加防止冲突----------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static final String REVIEW_PURCHASE = ROUTER_HOME + "ReviewPurchaseActivity";
+
+
+    public static final String ROUTE_DETAIL = ROUTER_HOME + "RouteDetailActivity";
+
+
+    public static final String CONFIRM_PAYMENT = ROUTER_HOME + "ConfirmPaymentActivity";
+
+
+
+
+
+
+
+    public static void goConfirmPayment() {
+        ARouter.getInstance().build(CONFIRM_PAYMENT).navigation();
+    }
+
+
+    public static void goSearchRoutes() {
+        ARouter.getInstance().build(SEARCH_ROUTES).navigation();
+    }
+
+    public static void goReviewPurchase() {ARouter.getInstance().build(REVIEW_PURCHASE).navigation();}
+
+    public static void goRouteDetail() {
+        ARouter.getInstance().build(ROUTE_DETAIL).navigation();
+    }
+
+
+
 }

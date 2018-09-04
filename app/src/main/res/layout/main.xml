@@ -21,7 +21,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:background="@color/color_ffffff"
+                    android:background="@color/color_main"
                     android:paddingLeft="13dp"
                     android:paddingRight="13dp">
 
@@ -55,7 +55,7 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@color/white"
+                    android:background="@color/color_main"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -112,7 +112,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="171dp"
-                            android:background="@color/color_2196f3"
+                            android:background="@color/color_main"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -132,7 +132,7 @@
                                 android:layout_height="35dp"
                                 android:background="@drawable/log_in_bg"
                                 android:text="@string/log_in"
-                                android:textColor="@color/color_2196f3"
+                                android:textColor="@color/color_main"
                                 android:textSize="15sp" />
 
 
@@ -182,7 +182,7 @@
                             android:layout_marginTop="30dp"
                             android:background="@drawable/log_out_bg"
                             android:text="@string/log_out"
-                            android:textColor="@color/color_2196f3"
+                            android:textColor="@color/color_main"
                             android:textSize="15sp" />
 
 

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="116dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/my_trips_bg"
+        android:orientation="vertical">
+
+        <!--票价、日期-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:id="@+id/ivDriverAvatar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/default_avatar"/>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvDriverPhoneNum"
+                    style="@style/my_trips_text_style"
+                    android:textColor="@color/color_000000"
+                    android:textSize="13sp"
+                    android:text="122444****12445" />
+
+
+                <com.cai.framework.widget.CustomRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/crbDriverGrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:clickable="false"
+                    app:starCount="5"
+                    app:starStep="3"
+                    app:starEmpty="@drawable/star_empty"
+                    app:starFill="@drawable/star_full"
+                    app:starImageSize="13dp"
+                    app:starPadding="2dp"
+                    app:stepSize="Full"/>
+
+
+
+            </LinearLayout>
+
+
+
+            <TextView
+                style="@style/my_trips_text_style"
+                android:textColor="@color/color_main"
+                android:text="₱"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tvBusPrice"
+                style="@style/my_trips_text_style"
+                android:textColor="@color/color_000000"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="13dp"
+                android:text="10"
+                android:textSize="17sp" />
+
+
+
+            <Button
+                android:id="@+id/btnBuy"
+                style="@style/button_style"
+                android:layout_width="65dp"
+                android:layout_height="28dp"
+                android:layout_margin="0dp"
+                android:enabled="true"
+                android:background="@drawable/buy_bg"
+                android:gravity="center"
+                android:text="@string/buy" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/color_side_line" />
+
+
+       <!--行程-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+
+             <TextView
+                 android:id="@+id/tvBusNumber"
+                 style="@style/my_trips_text_style"
+                 android:drawablePadding="10dp"
+                 android:drawableTop="@drawable/bus_icon"
+                 android:text="A188"/>
+
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/bus_path_icon"/>
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tvStartLocation"
+                    style="@style/my_trips_text_style"
+                    android:layout_marginTop="3dp"
+                    android:text="Heron Bay"/>
+
+
+                <TextView
+                    android:id="@+id/tvEndLocation"
+                    style="@style/my_trips_text_style"
+                    android:layout_marginTop="13dp"
+                    android:text="Suntec Tower 5"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBusStartTime"
+                style="@style/my_trips_text_style"
+                android:textSize="14sp"
+                android:textColor="@color/color_000000"
+                android:layout_marginRight="15dp"
+                android:text="6:23pm" />
+
+
+            <TextView
+                android:id="@+id/tvBusStatus"
+                style="@style/my_trips_text_style"
+                android:textSize="14sp"
+                android:textColor="@color/color_24b722"
+                android:layout_marginLeft="15dp"
+                android:text="8min" />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

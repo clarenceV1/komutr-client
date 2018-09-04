@@ -88,7 +88,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         mViewBinding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
-                setStatuBarColor(R.color.color_2196f3);
+                setStatuBarColor(R.color.color_main);
                 super.onDrawerOpened(drawerView);
             }
 
