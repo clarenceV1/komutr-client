@@ -37,8 +37,9 @@
         <activity android:name=".ui.wallet.WalletActivity" />
         <activity android:name=".ui.nickname.NicknameActivity" />
         <activity android:name=".ui.personInfo.PersonInfoActivity" />
-        <activity android:name=".ui.phoneNumber.ReplacePhoneActivity"/>
-        <activity android:name=".ui.phoneNumber.BindPhoneActivity"/>
+        <activity android:name=".ui.phoneNumber.ReplacePhoneActivity" />
+        <activity android:name=".ui.phoneNumber.BindPhoneActivity" />
+        <activity android:name=".ui.payment.ConfirmPayActivity" />
     </application>
 
 </manifest>

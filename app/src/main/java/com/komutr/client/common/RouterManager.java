@@ -1,6 +1,7 @@
 package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.komutr.client.ui.payment.ConfirmPayActivity;
 
 public class RouterManager {
     public static final String ROUTER_HOME = "/komutr/";
@@ -13,11 +14,12 @@ public class RouterManager {
     public static final String ROUTER_REGION = ROUTER_HOME + "RegionActivity";
     public static final String ROUTER_WALLET = ROUTER_HOME + "WalletActivity";
     public static final String ROUTER_NICKNAME = ROUTER_HOME + "NicknameActivity";
-    public static final String PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
     public static final String SEARCH_ROUTES = ROUTER_HOME + "SearchRoutesActivity";
     public static final String ROUTER_PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
     public static final String ROUTER_REPLACE_PHONE = ROUTER_HOME + "ReplacePhoneActivity";
     public static final String ROUTER_BIND_PHONE = ROUTER_HOME + "BindPhoneActivity";
+    public static final String ROUTER_CONFIRM_PAY = ROUTER_HOME + "ConfirmPayActivity";
+
 
 
     public static void goWeb(String url, String title, String paramMap) {
@@ -26,7 +28,9 @@ public class RouterManager {
                 .withString("title", title)
                 .withString("paramMap", paramMap).navigation();
     }
-
+    public static void goConfirmPay() {
+        ARouter.getInstance().build(RouterManager.ROUTER_CONFIRM_PAY).navigation();
+    }
     public static void goBindPhone() {
         ARouter.getInstance().build(RouterManager.ROUTER_BIND_PHONE).navigation();
     }
