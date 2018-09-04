@@ -295,7 +295,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
             switch (index) {
                 case 0://Message
-//                    RouterManager.goMessage();
+                    RouterManager.goMessage();
                     break;
                 case 1://Service tel
                     presenter.callPhone(MainActivity.this, "13779926287");
