@@ -7,4 +7,6 @@ public interface MainView extends GodBaseView {
 
 
     void logout(RespondDO respondDO);
+
+    void servicePhoneCallBack(RespondDO respondDO);
 }
