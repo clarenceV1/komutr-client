@@ -41,29 +41,19 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
         query.put("ver_token_key",phoneCode.getVer_token_key());
         query.put("code", phoneCode.getCode());
         Disposable disposable = requestStore.get().commonRequest(query)
-                .doOnSuccess(new Consumer<RespondDO>() {
-                    @Override
-                    public void accept(RespondDO respondDO) {
-                        //[{"big_area_code":"100","code":"100","id":1,"is_active":1,"name":"lkjlk"}]
-                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-
-                        }
-                    }
-                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
                         Logger.d(respondDO.toString());
-//                        mView.callb(respondDO);
+                        mView.changePhoneNumberCallback(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
-                        respondDO.setFromCallBack(-1);
-//                        mView.nextAreaCallback(respondDO);
+                        mView.changePhoneNumberCallback(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);
@@ -72,15 +62,14 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
      * 获取验证码
      *
      * @param phone
-     * @param type  1 注册 2 找回密码 3 重置密码
      */
-    public void verificationCode(final String phone, int type) {
+    public void verificationCode(final String phone) {
         String authKey = userInfoDao.get().getAppAuth();
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.verification");
         query.put("auth_key", authKey);
         query.put("phone", phone);
-        query.put("type", type + "");
+        query.put("type","4");// 1 注册 2 找回密码 3 重置密码 4.重新绑定
         Disposable disposable = requestStore.get().commonRequest(query)
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override

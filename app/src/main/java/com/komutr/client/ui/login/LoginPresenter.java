@@ -83,14 +83,13 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
      * 获取验证码
      *
      * @param phone
-     * @param type  1 注册 2 找回密码 3 重置密码
      */
-    public void verificationCode(final String phone, int type) {
+    public void verificationCode(final String phone) {
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.verification");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("phone", phone);
-        query.put("type", type + "");
+        query.put("type", "1");// 1 注册 2 找回密码 3 重置密码 4.重新绑定
         Disposable disposable = requestStore.get().commonRequest(query)
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override

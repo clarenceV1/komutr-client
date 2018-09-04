@@ -8,4 +8,6 @@ public interface ReplacePhoneView extends GodBaseView {
 
 
     void verificationCodeCallback(RespondDO<PhoneCode> respondDO);
+
+    void changePhoneNumberCallback(RespondDO respondDO);
 }

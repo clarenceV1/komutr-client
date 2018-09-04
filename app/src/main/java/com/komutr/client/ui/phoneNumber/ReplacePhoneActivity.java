@@ -38,7 +38,7 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
             @Override
             public void onClick(View v) {
                 String phone = mViewBinding.tvPhone.getText().toString();
-                presenter.verificationCode(phone,3);
+                presenter.verificationCode(phone);
             }
         });
         mViewBinding.btnCommit.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +60,20 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
 
     @Override
     public void verificationCodeCallback(RespondDO<PhoneCode> respondDO) {
-        phoneCode = respondDO.getObject();
+        if(respondDO.isStatus()){//成功失败
+            phoneCode = respondDO.getObject();
+        }else{//失败
+
+        }
+
+    }
+
+    @Override
+    public void changePhoneNumberCallback(RespondDO respondDO) {
+        if(respondDO.isStatus()){//成功失败
+           
+        }else{//失败
+
+        }
     }
 }
