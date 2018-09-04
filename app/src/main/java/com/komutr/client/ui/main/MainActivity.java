@@ -22,6 +22,7 @@ import com.example.clarence.utillibrary.DeviceUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.PackageUtils;
 import com.example.clarence.utillibrary.StreamUtils;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -91,7 +92,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         mViewBinding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
-                setStatuBarColor(R.color.color_2196f3);
+                setStatuBarColor(R.color.color_main);
                 super.onDrawerOpened(drawerView);
             }
 
@@ -306,6 +307,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                     RouterManager.goAboutUs();
                     break;
                 case 4://Current version
+                    ToastUtils.showShort("接口未给");
                     break;
             }
 

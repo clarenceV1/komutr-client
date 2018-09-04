@@ -37,6 +37,12 @@
         <activity android:name=".ui.wallet.WalletActivity" />
         <activity android:name=".ui.nickname.NicknameActivity" />
         <activity android:name=".ui.personInfo.PersonInfoActivity" />
+        <activity android:name=".ui.phoneNumber.PhoneNumberActivity"/>
+        <activity android:name=".ui.phoneNumber.BindPhoneActivity"/>
+        <activity android:name=".ui.routes.SearchRoutesActivity"/>
+        <activity android:name=".ui.Purchase.ReviewPurchaseActivity"/>
+        <activity android:name=".ui.routeDetail.RouteDetailActivity"/>
+        <activity android:name=".ui.confirmPayment.ConfirmPaymentActivity"/>
         <activity android:name=".ui.phoneNumber.ReplacePhoneActivity" />
         <activity android:name=".ui.phoneNumber.BindPhoneActivity" />
         <activity android:name=".ui.payment.ConfirmPayActivity" />

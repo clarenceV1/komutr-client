@@ -1,23 +1,24 @@
-package com.komutr.client.ui.helpCenter;
+package com.komutr.client.ui.routeDetail;
+
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
-import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.databinding.HelpCenterBinding;
+import com.komutr.client.databinding.RouteDetailBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = RouterManager.ROUTER_HELP_CENTER, name = "帮助中心")
-public class HelpCenterActivity extends AppBaseActivity<HelpCenterBinding> implements HelpCenterView {
+@Route(path = RouterManager.ROUTE_DETAIL, name = "搜索-搜索路线-路线详情")
+public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> implements RouteDetailView,View.OnClickListener {
+
     @Inject
-    HelpCenterPresenter presenter;
+    RouteDetailPresenter presenter;
 
     @Override
     public void initDagger() {
@@ -31,17 +32,18 @@ public class HelpCenterActivity extends AppBaseActivity<HelpCenterBinding> imple
 
     @Override
     public void initView() {
-        ToastUtils.showShort("帮助中心接口未给");
-//        presenter.requestHelpCenter();
+        setBarTitle("Df10001");
+        mViewBinding.btnBuy.setOnClickListener(this);
     }
+
 
     @Override
     public int getLayoutId() {
-        return R.layout.help_center;
+        return R.layout.route_detail;
     }
 
     @Override
-    public void callback(RespondDO respondDO) {
+    public void onClick(View view) {
 
     }
 }

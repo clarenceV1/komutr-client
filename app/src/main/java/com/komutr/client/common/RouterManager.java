@@ -1,9 +1,6 @@
 package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.komutr.client.ui.aboutUs.AboutUsActivity;
-import com.komutr.client.ui.helpCenter.HelpCenterActivity;
-import com.komutr.client.ui.payment.ConfirmPayActivity;
 
 public class RouterManager {
     public static final String ROUTER_HOME = "/komutr/";
@@ -23,10 +20,11 @@ public class RouterManager {
     public static final String ROUTER_CONFIRM_PAY = ROUTER_HOME + "ConfirmPayActivity";
     public static final String ROUTER_ABOUT_US = ROUTER_HOME + "AboutUsActivity";
     public static final String ROUTER_HELP_CENTER = ROUTER_HOME + "HelpCenterActivity";
+    public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
 
 
     public static void goWeb(String url, String title, String paramMap) {
-        ARouter.getInstance().build(RouterManager.ROUTER_WEB)
+        ARouter.getInstance().build(ROUTER_WEB)
                 .withString("url", url)
                 .withString("title", title)
                 .withString("paramMap", paramMap).navigation();
@@ -41,34 +39,93 @@ public class RouterManager {
         ARouter.getInstance().build(RouterManager.ROUTER_CONFIRM_PAY).navigation();
     }
     public static void goBindPhone() {
-        ARouter.getInstance().build(RouterManager.ROUTER_BIND_PHONE).navigation();
+        ARouter.getInstance().build(ROUTER_BIND_PHONE).navigation();
+    }
+
+    public static void goPhoneNumber() {
+        ARouter.getInstance().build(ROUTER_PHONE_NUMBER).navigation();
+
     }
     public static void goReplacePhone() {
-        ARouter.getInstance().build(RouterManager.ROUTER_REPLACE_PHONE).navigation();
+        ARouter.getInstance().build(ROUTER_REPLACE_PHONE).navigation();
     }
 
     public static void goLogin() {
-        ARouter.getInstance().build(RouterManager.ROUTER_LOGIN).navigation();
+        ARouter.getInstance().build(ROUTER_LOGIN).navigation();
     }
 
     public static void goNickname() {
-        ARouter.getInstance().build(RouterManager.ROUTER_NICKNAME).navigation();
+        ARouter.getInstance().build(ROUTER_NICKNAME).navigation();
     }
 
     public static void goPersonInfo() {
-        ARouter.getInstance().build(RouterManager.ROUTER_PERSON_INFO).navigation();
+        ARouter.getInstance().build(ROUTER_PERSON_INFO).navigation();
     }
 
     public static void goFeedback() {
-        ARouter.getInstance().build(RouterManager.ROUTER_FEEDBACK).navigation();
+        ARouter.getInstance().build(ROUTER_FEEDBACK).navigation();
     }
 
 
     public static void goMessage() {
-        ARouter.getInstance().build(RouterManager.ROUTER_MESSAGE).navigation();
+        ARouter.getInstance().build(ROUTER_MESSAGE).navigation();
     }
 
     public static void goRegion() {
-        ARouter.getInstance().build(RouterManager.ROUTER_REGION).navigation();
+        ARouter.getInstance().build(ROUTER_REGION).navigation();
     }
+
+
+//--------------------------------你从顶上添加我从下面添加防止冲突----------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static final String REVIEW_PURCHASE = ROUTER_HOME + "ReviewPurchaseActivity";
+
+
+    public static final String ROUTE_DETAIL = ROUTER_HOME + "RouteDetailActivity";
+
+
+    public static final String CONFIRM_PAYMENT = ROUTER_HOME + "ConfirmPaymentActivity";
+
+
+
+
+
+
+
+    public static void goConfirmPayment() {
+        ARouter.getInstance().build(CONFIRM_PAYMENT).navigation();
+    }
+
+
+    public static void goSearchRoutes() {
+        ARouter.getInstance().build(SEARCH_ROUTES).navigation();
+    }
+
+    public static void goReviewPurchase() {ARouter.getInstance().build(REVIEW_PURCHASE).navigation();}
+
+    public static void goRouteDetail() {
+        ARouter.getInstance().build(ROUTE_DETAIL).navigation();
+    }
+
+
+
 }

@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="10dp">
+        android:orientation="vertical">
 
-        <com.cai.pullrefresh.PtrRecyclerViewFrameLayout
-            android:id="@+id/ptyRecycle"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/color_f1f1f4"
+            android:paddingTop="10dp">
 
-        <com.cai.framework.baseview.LoadingView
-            android:id="@+id/loadView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+            <com.cai.pullrefresh.PtrRecyclerViewFrameLayout
+                android:id="@+id/ptyRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.cai.framework.baseview.LoadingView
+                android:id="@+id/loadView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+        <!-- <include
+
+                   layout="@layout/item_common_recycle"
+                   android:layout_height="0dp"
+                   android:layout_width="match_parent"
+                   android:layout_weight="1"
+                   android:paddingTop="10dp"/>
+        -->
+
+    </LinearLayout>
 </layout>

@@ -41,7 +41,7 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
             if (view != null && view instanceof LinearLayout) {
                 LinearLayout linearLayout = (LinearLayout) view;
                 titleBarView = new TitleBarView(this);
-                titleBarView.setBackgroundResource(R.color.color_ffffff);
+                titleBarView.setBackgroundResource(R.color.color_main);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 linearLayout.addView(titleBarView, 0, layoutParams);
                 titleBarView.setTitleText(title);
