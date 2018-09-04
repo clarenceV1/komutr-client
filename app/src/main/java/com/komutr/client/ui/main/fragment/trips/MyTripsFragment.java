@@ -19,7 +19,6 @@ import com.komutr.client.base.AppBaseFragment;
 import com.komutr.client.been.MyTrips;
 import com.komutr.client.databinding.FragmentMyTripsBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

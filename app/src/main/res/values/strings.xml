@@ -41,5 +41,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="bind_phone_number_title">Bind phone number</string>
     <string name="phone_number">phone number</string>
-    <string name="replace_the_binding">Replace the binding</string>
+    <string name="bind_phone_number">Bind phone number</string>
+    <string name="replace_the_binding_title">Replace the binding</string>
 </resources>

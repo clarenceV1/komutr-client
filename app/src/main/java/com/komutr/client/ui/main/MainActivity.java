@@ -16,9 +16,11 @@ import com.cai.framework.imageload.GlideCircleTransform;
 import com.cai.framework.imageload.ILoadImage;
 import com.cai.framework.imageload.ILoadImageParams;
 import com.cai.framework.imageload.ImageForGlideParams;
+import com.cai.framework.permission.RxPermissionsFragment;
 import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.DeviceUtils;
 import com.example.clarence.utillibrary.DimensUtils;
+import com.example.clarence.utillibrary.PackageUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
@@ -45,9 +47,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Inject
     MainPresenter presenter;
-
     @Inject
     ILoadImage iLoadImage;
+
+    RadioButton lastFooterRadioButton;
 
     @Override
     public void initDagger() {
@@ -100,7 +103,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         });
         User user = presenter.switcher();
         initLeftData(user);
-
+        presenter.requestServicePhone();
     }
 
     /**
@@ -243,9 +246,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         }
     }
 
-
-    RadioButton lastFooterRadioButton;
-
     private void setFooterTabSelected(RadioButton btnSelected, boolean isFirst) {
         int dp60 = DimensUtils.dp2px(this, 60f);
         int dp3 = DimensUtils.dp2px(this, 3f);
@@ -274,6 +274,11 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         }
     }
 
+    @Override
+    public void servicePhoneCallBack(RespondDO respondDO) {
+
+    }
+
 
     //item的点击事件
     class OnClickListener implements View.OnClickListener {
@@ -292,6 +297,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 //                    RouterManager.goMessage();
                     break;
                 case 1://Service tel
+                    presenter.callPhone(MainActivity.this, "13779926287");
                     break;
                 case 2:// Help center
                     break;

@@ -16,7 +16,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-@Route(path = RouterManager.ROUTER_NICKNAME, name = "昵称")
+@Route(path = RouterManager.ROUTER_NICKNAME, name = "我的-个人信息-昵称")
 public class NicknameActivity extends AppBaseActivity<NicknameBinding> implements NicknameView {
     @Inject
     NicknamePresenter presenter;

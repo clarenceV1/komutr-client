@@ -120,7 +120,7 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                     view.setTag(phone);
                     mViewBinding.btnVerificationCode.setEnabled(false);
                     mViewBinding.btnVerificationCode.setText(getString(R.string.getting));
-                    presenter.verificationCode(phone,1);
+                    presenter.verificationCode(phone);
                     break;
                 case R.id.btnLogReg://登录
                     if(this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())){//为获取验证码

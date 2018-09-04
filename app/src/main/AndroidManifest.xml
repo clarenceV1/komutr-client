@@ -43,6 +43,9 @@
         <activity android:name=".ui.Purchase.ReviewPurchaseActivity"/>
         <activity android:name=".ui.routeDetail.RouteDetailActivity"/>
         <activity android:name=".ui.confirmPayment.ConfirmPaymentActivity"/>
+        <activity android:name=".ui.phoneNumber.ReplacePhoneActivity" />
+        <activity android:name=".ui.phoneNumber.BindPhoneActivity" />
+        <activity android:name=".ui.payment.ConfirmPayActivity" />
     </application>
 
 </manifest>

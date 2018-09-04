@@ -44,6 +44,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:gravity="center"
-            android:text="@string/replace_the_binding" />
+            android:text="@string/bind_phone_number" />
     </LinearLayout>
 </layout>
