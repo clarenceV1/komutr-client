@@ -34,9 +34,6 @@
 
         </LinearLayout>
 
-
-
-
         <LinearLayout
             android:id="@+id/llPersonInfoLayout"
             android:layout_width="match_parent"
@@ -44,9 +41,6 @@
             android:layout_marginTop="10dp"
             android:background="@color/color_ffffff"
             android:orientation="vertical"/>
-
-
-
 
     </LinearLayout>
 </layout>

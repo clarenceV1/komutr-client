@@ -74,11 +74,9 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
     @Override
     public void initView(View view) {
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
-        //
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(activity, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(activity,10f), StreamUtils.getInstance().resourceToColor(R.color.transparent,activity)));
-
+        mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new MyTripsAdapter(getContext(), iLoadImage, presenter);
-        mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mPtrRecyclerView.setAdapter(adapter);
         adapter.setDatas(presenter.getTestList());
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
@@ -94,13 +92,14 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
             }
         });
         mViewBinding.loadView.setClickListener(new LoadingView.LoadViewClickListener() {
+
             @Override
             public void onLoadViewClick(int status) {
                 presenter.requestList();
             }
         });
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
-//        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
+//      mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
     }
 
     @Override

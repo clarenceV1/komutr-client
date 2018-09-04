@@ -1,6 +1,8 @@
 package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.komutr.client.ui.phoneNumber.BindPhoneActivity;
+import com.komutr.client.ui.phoneNumber.PhoneNumberActivity;
 
 public class RouterManager {
     public static final String ROUTER_HOME = "/komutr/";
@@ -15,6 +17,9 @@ public class RouterManager {
     public static final String ROUTER_NICKNAME = ROUTER_HOME + "NicknameActivity";
     public static final String PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
     public static final String SEARCH_ROUTES = ROUTER_HOME + "SearchRoutesActivity";
+    public static final String ROUTER_PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
+    public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
+    public static final String ROUTER_BIND_PHONE = ROUTER_HOME + "BindPhoneActivity";
 
 
     public static void goWeb(String url, String title, String paramMap) {
@@ -22,6 +27,13 @@ public class RouterManager {
                 .withString("url", url)
                 .withString("title", title)
                 .withString("paramMap", paramMap).navigation();
+    }
+
+    public static void goBindPhone() {
+        ARouter.getInstance().build(RouterManager.ROUTER_BIND_PHONE).navigation();
+    }
+    public static void goPhoneNumber() {
+        ARouter.getInstance().build(RouterManager.ROUTER_PHONE_NUMBER).navigation();
     }
 
     public static void goLogin() {
@@ -33,7 +45,7 @@ public class RouterManager {
     }
 
     public static void goPersonInfo() {
-        ARouter.getInstance().build(RouterManager.PERSON_INFO).navigation();
+        ARouter.getInstance().build(RouterManager.ROUTER_PERSON_INFO).navigation();
     }
 
     public static void goFeedback() {

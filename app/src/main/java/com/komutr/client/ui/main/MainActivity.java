@@ -220,7 +220,11 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 presenter.logout();
                 break;
             case R.id.ivUserAvatar://头像
-                RouterManager.goPersonInfo();
+                if (!presenter.isLogin()) {
+                    RouterManager.goLogin();
+                } else {
+                    RouterManager.goPersonInfo();
+                }
                 break;
             case R.id.rbMainTabOne://地图
                 if (mViewBinding.mainActivityViewpager.getCurrentItem() != 0) {
@@ -286,7 +290,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             switch (index) {
                 case 0://Message
 //                    RouterManager.goMessage();
-                    RouterManager.goRegion();
                     break;
                 case 1://Service tel
                     break;

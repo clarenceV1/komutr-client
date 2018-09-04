@@ -1,5 +1,7 @@
 package com.komutr.client.ui.personInfo;
 
+import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -7,27 +9,38 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
+import com.cai.framework.imageload.GlideCircleTransform;
+import com.cai.framework.imageload.GlideRoundTransform;
+import com.cai.framework.imageload.ILoadImage;
+import com.cai.framework.imageload.ILoadImageParams;
+import com.cai.framework.imageload.ImageForGlideParams;
 import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.User;
+import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PersonInfoBinding;
 import com.komutr.client.databinding.WalletBinding;
 import com.komutr.client.ui.wallet.WalletPresenter;
 import com.komutr.client.ui.wallet.WalletView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = RouterManager.PERSON_INFO, name = "我的-个人信息")
+@Route(path = RouterManager.ROUTER_PERSON_INFO, name = "我的-个人信息")
 public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> implements PersonInfoView {
 
     @Inject
     PersonInfoPresenter presenter;
+    @Inject
+    ILoadImage loadImage;
+    SparseArray<String> infoList = new SparseArray<>();
 
     @Override
     public void initDagger() {
@@ -42,7 +55,30 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
     @Override
     public void initView() {
         setBarTitle(getString(R.string.person_info));
+        initData();
         dynamicAddWidget();
+        presenter.requestUserInfo();
+    }
+
+    private void initData() {
+        User user = presenter.getUserInfo();
+        if (user != null) {
+            if (!TextUtils.isEmpty(user.getAvatar_thum())) {
+                ILoadImageParams imageParams = new ImageForGlideParams.Builder()
+                        .url(user.getAvatar_thum())
+                        .placeholder(R.drawable.default_avatar)
+                        .error(R.drawable.default_avatar)
+                        .transformation(new GlideCircleTransform(this))
+                        .build();
+                imageParams.setImageView(mViewBinding.ivUserAvatar);
+                loadImage.loadImage(this, imageParams);
+            } else {
+                mViewBinding.ivUserAvatar.setImageResource(R.drawable.default_avatar);
+            }
+            mViewBinding.tvUserId.setText("ID:" + user.getId());
+            infoList.put(0, user.getPhone());
+            infoList.put(1, user.getUsername());
+        }
     }
 
 
@@ -78,7 +114,9 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
             tvName.setGravity(Gravity.CENTER_VERTICAL);
             tvName.setGravity(Gravity.RIGHT);
             tvName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_666666, this));
-//            tvName.setText(i == 3 ? SharedPreUtils.getString(Constant.SharedPreferKey.SERVICE_TEL) : "");
+            if (!TextUtils.isEmpty(infoList.get(i))) {
+                tvName.setText(infoList.get(i));
+            }
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.weight = 1;
             layoutParams.width = 0;
@@ -113,15 +151,20 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         public void onClick(View view) {
 
             switch (index) {
-                case 0://Message
+                case 0://tel
+                    RouterManager.goBindPhone();
                     break;
-                case 1://Service tel
+                case 1://nickanme
+                    RouterManager.goNickname();
                     break;
-                case 2:// Help center
+                case 2://e-mail
                     break;
-                case 3://About us
+                case 3://date of birth
                     break;
-                case 4://Current version
+                case 4://gender
+                    break;
+                case 5://region
+                    RouterManager.goRegion();
                     break;
             }
 

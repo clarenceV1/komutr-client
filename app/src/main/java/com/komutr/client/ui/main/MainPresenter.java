@@ -62,4 +62,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
                 });
         mCompositeSubscription.add(disposable);
     }
+    public boolean isLogin(){
+        return userInfoDao.get().isLogin();
+    }
 }
