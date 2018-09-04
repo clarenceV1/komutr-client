@@ -1,8 +1,6 @@
 package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.komutr.client.ui.phoneNumber.BindPhoneActivity;
-import com.komutr.client.ui.phoneNumber.PhoneNumberActivity;
 
 public class RouterManager {
     public static final String ROUTER_HOME = "/komutr/";
@@ -16,7 +14,7 @@ public class RouterManager {
     public static final String ROUTER_WALLET = ROUTER_HOME + "WalletActivity";
     public static final String ROUTER_NICKNAME = ROUTER_HOME + "NicknameActivity";
     public static final String ROUTER_PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
-    public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
+    public static final String ROUTER_REPLACE_PHONE = ROUTER_HOME + "ReplacePhoneActivity";
     public static final String ROUTER_BIND_PHONE = ROUTER_HOME + "BindPhoneActivity";
 
 
@@ -30,8 +28,8 @@ public class RouterManager {
     public static void goBindPhone() {
         ARouter.getInstance().build(RouterManager.ROUTER_BIND_PHONE).navigation();
     }
-    public static void goPhoneNumber() {
-        ARouter.getInstance().build(RouterManager.ROUTER_PHONE_NUMBER).navigation();
+    public static void goReplacePhone() {
+        ARouter.getInstance().build(RouterManager.ROUTER_REPLACE_PHONE).navigation();
     }
 
     public static void goLogin() {

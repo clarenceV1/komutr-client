@@ -37,7 +37,7 @@
         <activity android:name=".ui.wallet.WalletActivity" />
         <activity android:name=".ui.nickname.NicknameActivity" />
         <activity android:name=".ui.personInfo.PersonInfoActivity" />
-        <activity android:name=".ui.phoneNumber.PhoneNumberActivity"/>
+        <activity android:name=".ui.phoneNumber.ReplacePhoneActivity"/>
         <activity android:name=".ui.phoneNumber.BindPhoneActivity"/>
     </application>
 

@@ -18,10 +18,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-public class PhoneNumberPresenter extends AppBasePresenter<PhoneNumberView> {
+public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
 
     @Inject
-    public PhoneNumberPresenter() {
+    public ReplacePhonePresenter() {
 
     }
 

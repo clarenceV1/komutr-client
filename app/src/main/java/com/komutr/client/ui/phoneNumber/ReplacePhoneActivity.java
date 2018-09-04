@@ -10,16 +10,16 @@ import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.databinding.PhoneNumberBinding;
+import com.komutr.client.databinding.ReplacePhoneBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = RouterManager.ROUTER_PHONE_NUMBER, name = "我的-设置-重新绑定")
-public class PhoneNumberActivity extends AppBaseActivity<PhoneNumberBinding> implements PhoneNumberView {
+@Route(path = RouterManager.ROUTER_REPLACE_PHONE, name = "我的-设置-重新绑定")
+public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> implements ReplacePhoneView {
     @Inject
-    PhoneNumberPresenter presenter;
+    ReplacePhonePresenter presenter;
     PhoneCode phoneCode;
 
     @Override
@@ -55,7 +55,7 @@ public class PhoneNumberActivity extends AppBaseActivity<PhoneNumberBinding> imp
 
     @Override
     public int getLayoutId() {
-        return R.layout.phone_number;
+        return R.layout.replace_phone;
     }
 
     @Override

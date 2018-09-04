@@ -7,8 +7,6 @@ import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.been.PhoneCode;
-import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.BindPhoneBinding;
@@ -20,7 +18,7 @@ import javax.inject.Inject;
 @Route(path = RouterManager.ROUTER_BIND_PHONE, name = "我的-设置-更换手机号码")
 public class BindPhoneActivity extends AppBaseActivity<BindPhoneBinding> implements BindPhoneView {
     @Inject
-    PhoneNumberPresenter presenter;
+    ReplacePhonePresenter presenter;
 
     @Override
     public void initDagger() {
@@ -42,7 +40,7 @@ public class BindPhoneActivity extends AppBaseActivity<BindPhoneBinding> impleme
         mViewBinding.tvBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RouterManager.goPhoneNumber();
+                RouterManager.goReplacePhone();
             }
         });
     }
