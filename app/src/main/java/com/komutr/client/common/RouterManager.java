@@ -19,6 +19,8 @@ public class RouterManager {
     public static final String ROUTER_REPLACE_PHONE = ROUTER_HOME + "ReplacePhoneActivity";
     public static final String ROUTER_BIND_PHONE = ROUTER_HOME + "BindPhoneActivity";
     public static final String ROUTER_CONFIRM_PAY = ROUTER_HOME + "ConfirmPayActivity";
+    public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
+
 
 
 
@@ -37,6 +39,8 @@ public class RouterManager {
 
     public static void goPhoneNumber() {
         ARouter.getInstance().build(ROUTER_PHONE_NUMBER).navigation();
+
+    }
     public static void goReplacePhone() {
         ARouter.getInstance().build(ROUTER_REPLACE_PHONE).navigation();
     }
