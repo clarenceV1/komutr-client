@@ -14,6 +14,8 @@ public class RouterManager {
     public static final String ROUTER_WALLET = ROUTER_HOME + "WalletActivity";
     public static final String ROUTER_NICKNAME = ROUTER_HOME + "NicknameActivity";
     public static final String PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
+    public static final String SEARCH_ROUTES = ROUTER_HOME + "SearchRoutesActivity";
+
 
     public static void goWeb(String url, String title, String paramMap) {
         ARouter.getInstance().build(RouterManager.ROUTER_WEB)
