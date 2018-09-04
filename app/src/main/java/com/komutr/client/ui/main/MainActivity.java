@@ -11,7 +11,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.cai.framework.annotation.apt.Router;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.imageload.GlideCircleTransform;
 import com.cai.framework.imageload.ILoadImage;
@@ -22,7 +21,6 @@ import com.example.clarence.utillibrary.DeviceUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
-import com.komutr.client.adapter.MainPagerAdapter;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;

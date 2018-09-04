@@ -1,4 +1,4 @@
-package com.komutr.client.adapter;
+package com.komutr.client.ui.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
