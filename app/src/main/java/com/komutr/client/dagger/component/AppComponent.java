@@ -4,7 +4,9 @@ package com.komutr.client.dagger.component;
 import com.cai.framework.dagger.ActivityScope;
 import com.komutr.client.base.App;
 import com.komutr.client.dagger.module.CommonModule;
+import com.komutr.client.ui.aboutUs.AboutUsActivity;
 import com.komutr.client.ui.feedback.FeedbackActivity;
+import com.komutr.client.ui.helpCenter.HelpCenterActivity;
 import com.komutr.client.ui.login.LoginActivity;
 import com.komutr.client.ui.main.MainActivity;
 import com.komutr.client.ui.main.fragment.book.BookFragment;
@@ -45,6 +47,8 @@ public interface AppComponent {
     void inject(SearchRoutesActivity activity);
     void inject(ReplacePhoneActivity activity);
     void inject(ConfirmPayActivity activity);
+    void inject(AboutUsActivity activity);
+    void inject(HelpCenterActivity activity);
 
 
     void inject(BindPhoneActivity activity);

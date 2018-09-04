@@ -40,6 +40,8 @@
         <activity android:name=".ui.phoneNumber.ReplacePhoneActivity" />
         <activity android:name=".ui.phoneNumber.BindPhoneActivity" />
         <activity android:name=".ui.payment.ConfirmPayActivity" />
+        <activity android:name=".ui.aboutUs.AboutUsActivity" />
+        <activity android:name=".ui.helpCenter.HelpCenterActivity"/>
     </application>
 
 </manifest>

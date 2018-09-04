@@ -300,8 +300,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                     presenter.callPhone(MainActivity.this, "13779926287");
                     break;
                 case 2:// Help center
+                    RouterManager.goHelpCenter();
                     break;
                 case 3://About us
+                    RouterManager.goAboutUs();
                     break;
                 case 4://Current version
                     break;
