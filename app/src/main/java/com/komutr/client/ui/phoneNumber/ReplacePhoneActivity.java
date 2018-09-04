@@ -34,6 +34,7 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
 
     @Override
     public void initView() {
+        setBarTitle(getString(R.string.replace_the_binding_title));
         mViewBinding.btnCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
