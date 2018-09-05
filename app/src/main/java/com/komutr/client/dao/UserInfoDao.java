@@ -81,6 +81,18 @@ public class UserInfoDao extends BaseDAO {
         if (!TextUtils.isEmpty(userInfo.getSex())) {
             mUser.setSex(userInfo.getSex());
         }
+        if (!TextUtils.isEmpty(userInfo.getEmail())) {
+            mUser.setEmail(userInfo.getEmail());
+        }
+        if (!TextUtils.isEmpty(userInfo.getPhone())) {
+            mUser.setPhone(userInfo.getPhone());
+        }
+        if (!TextUtils.isEmpty(userInfo.getAvatar_thum())) {
+            mUser.setAvatar_thum(userInfo.getAvatar_thum());
+        }
+        if (!TextUtils.isEmpty(userInfo.getAuth_key())) {
+            mUser.setAuth_key(userInfo.getAuth_key());
+        }
         userBox.put(mUser);
     }
 

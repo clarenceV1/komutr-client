@@ -49,7 +49,7 @@ public class HelpCenterActivity extends AppBaseActivity<HelpCenterBinding> imple
             @Override
             public void onClick(View v) {
                 if (helpCenters != null && helpCenters.size() > 0) {
-                    presenter.requestDetail(helpCenters.get(0).getId());
+                    RouterManager.goFAQ(helpCenters.get(0).getId());
                 }
             }
         });

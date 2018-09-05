@@ -8,7 +8,7 @@ public class RouterManager {
     public static final String ROUTER_MAIN = ROUTER_HOME + "MainActivity";
     public static final String ROUTER_LOGIN = ROUTER_HOME + "LoginActivity";
     public static final String ROUTER_MESSAGE = ROUTER_HOME + "MessageActivity";
-    public static final String ROUTER_MESSAGE_DETAIL = ROUTER_HOME + "MessageDetailActivity";
+    public static final String ROUTER_FAQ = ROUTER_HOME + "FAQActivity";
     public static final String ROUTER_FEEDBACK = ROUTER_HOME + "FeedbackActivity";
     public static final String ROUTER_REGION = ROUTER_HOME + "RegionActivity";
     public static final String ROUTER_WALLET = ROUTER_HOME + "WalletActivity";
@@ -21,14 +21,23 @@ public class RouterManager {
     public static final String ROUTER_ABOUT_US = ROUTER_HOME + "AboutUsActivity";
     public static final String ROUTER_HELP_CENTER = ROUTER_HOME + "HelpCenterActivity";
     public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
+    public static final String ROUTER_BIND_EMAIL = ROUTER_HOME + "EmailActivity";
 
-
+    public static void goBindEmail() {
+        ARouter.getInstance().build(RouterManager.ROUTER_BIND_EMAIL).navigation();
+    }
     public static void goWeb(String url, String title, String paramMap) {
         ARouter.getInstance().build(ROUTER_WEB)
                 .withString("url", url)
                 .withString("title", title)
                 .withString("paramMap", paramMap).navigation();
     }
+
+    public static void goFAQ(int contentType) {
+        ARouter.getInstance().build(ROUTER_FAQ)
+                .withInt("contentType", contentType).navigation();
+    }
+
     public static void goHelpCenter() {
         ARouter.getInstance().build(RouterManager.ROUTER_HELP_CENTER).navigation();
     }

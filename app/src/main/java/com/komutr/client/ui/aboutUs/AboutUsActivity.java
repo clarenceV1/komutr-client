@@ -31,6 +31,7 @@ public class AboutUsActivity extends AppBaseActivity<AboutBinding> implements Ab
 
     @Override
     public void initView() {
+        setBarTitle(getString(R.string.about_us_title));
         presenter.requestContent();
     }
 

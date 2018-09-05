@@ -9,6 +9,7 @@ import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.utils.SMSCountDownTimer;
 import com.example.clarence.utillibrary.StringUtils;
 import com.example.clarence.utillibrary.ToastUtils;
+import com.komutr.client.BuildConfig;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -57,10 +58,13 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
     public void verificationCodeCallback(RespondDO<PhoneCode> respondDO) {
         mViewBinding.btnVerificationCode.setText(getString(R.string.verification_code));
         mViewBinding.btnVerificationCode.setEnabled(true);
-         this.phoneCode = respondDO.getObject();
-         if(this.phoneCode!= null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())){
-             new SMSCountDownTimer(mViewBinding.btnVerificationCode,60000,1000);
-         }
+        this.phoneCode = respondDO.getObject();
+        if (this.phoneCode != null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {
+            new SMSCountDownTimer(mViewBinding.btnVerificationCode, 60000, 1000);
+        }
+        if (BuildConfig.DEBUG) {
+            ToastUtils.showShort("验证码：" + phoneCode.getCode());
+        }
 
     }
 
@@ -69,10 +73,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
         mViewBinding.btnLogReg.setText(getString(R.string.log_in));
         mViewBinding.btnLogReg.setEnabled(true);
-        if(respondDO.getFromCallBack() != -1){
+        if (respondDO.getFromCallBack() != -1) {
             ToastUtils.showShort(respondDO.getMsg());
             if (respondDO.isStatus()) { //成功
-               finish();
+                finish();
             } else {//失败
 
             }
@@ -107,11 +111,11 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.tvServiceAgreement){//注册协议
+        if (view.getId() == R.id.tvServiceAgreement) {//注册协议
 
-        }else {
+        } else {
             String phone = mViewBinding.etPhone.getText().toString();
-            if(phone.length() != 11){
+            if (phone.length() != 11) {
                 ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
                 return;
             }
@@ -123,18 +127,18 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                     presenter.verificationCode(phone);
                     break;
                 case R.id.btnLogReg://登录
-                    if(this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())){//为获取验证码
+                    if (this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {//为获取验证码
                         ToastUtils.showShort(getString(R.string.not_get_code));
-                      return;
+                        return;
                     }
-                   String getCodePhone = (String) mViewBinding.btnVerificationCode.getTag();
-                   if(!phone.equals(getCodePhone)){//当前手机号与获取验证码的手机号不一致
-                       ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
-                       return;
-                   }
+                    String getCodePhone = (String) mViewBinding.btnVerificationCode.getTag();
+                    if (!phone.equals(getCodePhone)) {//当前手机号与获取验证码的手机号不一致
+                        ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
+                        return;
+                    }
                     mViewBinding.btnVerificationCode.setEnabled(false);
                     mViewBinding.btnVerificationCode.setText(getString(R.string.logging));
-                    presenter.registeredOrLogin(StringUtils.getString(mViewBinding.etInputVerificAtionCode),phone,this.phoneCode.getVer_token_key());
+                    presenter.registeredOrLogin(StringUtils.getString(mViewBinding.etInputVerificAtionCode), phone, this.phoneCode.getVer_token_key());
                     break;
             }
         }

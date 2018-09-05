@@ -7,7 +7,9 @@ import com.komutr.client.dagger.module.CommonModule;
 import com.komutr.client.ui.aboutUs.AboutUsActivity;
 import com.komutr.client.ui.Purchase.ReviewPurchaseActivity;
 import com.komutr.client.ui.confirmPayment.ConfirmPaymentActivity;
+import com.komutr.client.ui.email.BindEmailActivity;
 import com.komutr.client.ui.feedback.FeedbackActivity;
+import com.komutr.client.ui.FAQ.FAQActivity;
 import com.komutr.client.ui.helpCenter.HelpCenterActivity;
 import com.komutr.client.ui.login.LoginActivity;
 import com.komutr.client.ui.main.MainActivity;
@@ -15,7 +17,6 @@ import com.komutr.client.ui.main.fragment.book.BookFragment;
 import com.komutr.client.ui.main.fragment.empty.EmptyFragment;
 import com.komutr.client.ui.main.fragment.trips.MyTripsFragment;
 import com.komutr.client.ui.message.MessageActivity;
-import com.komutr.client.ui.message.MessageDetailActivity;
 import com.komutr.client.ui.nickname.NicknameActivity;
 import com.komutr.client.ui.status.StatusActivity;
 import com.komutr.client.ui.personInfo.PersonInfoActivity;
@@ -36,16 +37,12 @@ import dagger.Component;
 @Component(dependencies = CommonComponent.class, modules = CommonModule.class)
 public interface AppComponent {
 
-
-
-
-
     void inject(App app);
     void inject(MainActivity activity);
     void inject(WebActivity activity);
     void inject(LoginActivity activity);
     void inject(MessageActivity activity);
-    void inject(MessageDetailActivity activity);
+    void inject(FAQActivity activity);
     void inject(FeedbackActivity activity);
     void inject(RegionActivity activity);
     void inject(WalletActivity activity);
@@ -55,6 +52,7 @@ public interface AppComponent {
     void inject(ReplacePhoneActivity activity);
     void inject(AboutUsActivity activity);
     void inject(HelpCenterActivity activity);
+    void inject(BindEmailActivity activity);
 
 
     void inject(BindPhoneActivity activity);
@@ -63,15 +61,6 @@ public interface AppComponent {
     void inject(MyTripsFragment fragment);
 
     //--------------------------------你从顶上添加我从下面添加防止冲突----------------------
-
-
-
-
-
-
-
-
-
 
 
 

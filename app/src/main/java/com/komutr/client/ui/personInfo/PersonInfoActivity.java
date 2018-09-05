@@ -19,6 +19,7 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PersonInfoBinding;
@@ -51,6 +52,11 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         setBarTitle(getString(R.string.person_info));
         initData();
         dynamicAddWidget();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         presenter.requestUserInfo();
     }
 
@@ -130,6 +136,11 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         return R.layout.person_info;
     }
 
+    @Override
+    public void callbackUserInfo(RespondDO respondDO) {
+
+    }
+
 
     //item的点击事件
     class OnClickListener implements View.OnClickListener {
@@ -152,6 +163,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
                     RouterManager.goNickname();
                     break;
                 case 2://e-mail
+                    RouterManager.goBindEmail();
                     break;
                 case 3://date of birth
                     break;

@@ -5,7 +5,9 @@ import io.objectbox.annotation.Id;
 
 @Entity
 public class User {
-//    {"app_auth_key":"JCNnKH7Y6HCFFuKK","avatar":"","avatar_thum":"","id":19,"phone":"13779926287","username":"vcf"}
+//  注册/登录   {"auth_key":"JCNnKH7Y6HCFFuKK","avatar":"","avatar_thum":"","id":19,"phone":"13779926287","username":"vcf"}
+
+    //获取用户信息 {"app_auth_key":"JCNnKH7Y6HCFFuKK","avatar":"","avatar_thum":"","email":"763287516@qq.com","id":19,"phone":"13779926287","username":"vcf"}
     private long id;
     @Id
     private long userId;//数据库ID
@@ -18,6 +20,15 @@ public class User {
     private String avatar;
     private String avatar_thum;
     private String auth_key;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public User() {
     }

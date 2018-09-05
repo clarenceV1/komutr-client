@@ -32,6 +32,7 @@ public class FeedbackActivity extends AppBaseActivity<FeedbackBinding> implement
 
     @Override
     public void initView() {
+        setBarTitle(getString(R.string.feedback_title));
         mViewBinding.tvFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

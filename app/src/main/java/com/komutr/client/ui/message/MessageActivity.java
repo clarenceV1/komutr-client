@@ -33,6 +33,7 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
 
     @Override
     public void initView() {
+        setBarTitle(getString(R.string.message_title));
         presenter.requestMessage();
     }
 

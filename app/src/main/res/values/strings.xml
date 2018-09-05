@@ -68,4 +68,9 @@
     <string name="btn_yes">YES</string>
     <string name="feed_back">Feedback</string>
     <string name="help_center_title">Help Center</string>
+    <string name="faq_title">Top-up FAQ</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="message_title">Message</string>
+    <string name="about_us_title">About Us</string>
+    <string name="bind_email_title">E-mail</string>
 </resources>
