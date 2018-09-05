@@ -1,5 +1,7 @@
 package com.komutr.client.ui.confirmPayment;
 
+import android.view.View;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
@@ -13,7 +15,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.CONFIRM_PAYMENT, name = "搜索-搜索路线-路线详情-确认付款")
-public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBinding> implements ConfirmPaymentView {
+public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBinding> implements ConfirmPaymentView,View.OnClickListener {
+
+
     @Inject
     ConfirmPaymentPresenter presenter;
 
@@ -29,6 +33,8 @@ public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBindin
 
     @Override
     public void initView() {
+      mViewBinding.btnPay.setOnClickListener(this);
+      mViewBinding.ivClosePage.setOnClickListener(this);
 
     }
 
@@ -37,4 +43,16 @@ public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBindin
         return R.layout.confirm_payment;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnPay://支付
+                RouterManager.goPayStatus();
+                break;
+            case R.id.ivClosePage:
+                finish();
+                break;
+        }
+
+    }
 }

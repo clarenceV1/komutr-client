@@ -1,13 +1,13 @@
-package com.komutr.client.ui.payment;
+package com.komutr.client.ui.status;
 
 import com.komutr.client.base.AppBasePresenter;
 
 import javax.inject.Inject;
 
-public class ConfirmPayPresenter extends AppBasePresenter<ConfirmPayView> {
+public class StatusPresenter extends AppBasePresenter<StatusView> {
 
     @Inject
-    public ConfirmPayPresenter() {
+    public StatusPresenter() {
 
     }
 
