@@ -18,6 +18,7 @@ import com.komutr.client.ui.main.fragment.empty.EmptyFragment;
 import com.komutr.client.ui.main.fragment.trips.MyTripsFragment;
 import com.komutr.client.ui.message.MessageActivity;
 import com.komutr.client.ui.nickname.NicknameActivity;
+import com.komutr.client.ui.orderDetails.OrderDetailsActivity;
 import com.komutr.client.ui.status.StatusActivity;
 import com.komutr.client.ui.personInfo.PersonInfoActivity;
 import com.komutr.client.ui.phoneNumber.BindPhoneActivity;
@@ -25,6 +26,7 @@ import com.komutr.client.ui.phoneNumber.ReplacePhoneActivity;
 import com.komutr.client.ui.region.RegionActivity;
 import com.komutr.client.ui.routeDetail.RouteDetailActivity;
 import com.komutr.client.ui.routes.SearchRoutesActivity;
+import com.komutr.client.ui.userRatings.UserRatingsActivity;
 import com.komutr.client.ui.wallet.WalletActivity;
 import com.komutr.client.ui.web.WebActivity;
 
@@ -65,9 +67,20 @@ public interface AppComponent {
 
 
 
+
+
+
+
+
+
+
+
+
+    void inject(OrderDetailsActivity activity);
     void inject(ReviewPurchaseActivity activity);
     void inject(RouteDetailActivity activity);
     void inject(ConfirmPaymentActivity activity);
     void inject(StatusActivity activity);
+    void inject(UserRatingsActivity activity);
 
 }

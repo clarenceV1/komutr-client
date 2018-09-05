@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f1f1f4"
+        android:orientation="vertical">
+
+        <!--司机信息-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp">
+
+            <ImageView
+                android:id="@+id/ivDriverAvatar"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/default_avatar" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tvDriverName"
+                    style="@style/my_trips_text_style"
+                    android:text="NickName"
+                    android:textColor="@color/color_000000"
+                    android:textSize="17sp" />
+
+
+                <TextView
+                    android:id="@+id/tvDriverPhoneNum"
+                    style="@style/my_trips_text_style"
+                    android:layout_marginTop="8dp"
+                    android:text="12****12445"
+                    android:textColor="@color/color_000000"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+            <com.cai.framework.widget.CustomRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/crbDriverGrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:clickable="false"
+                app:starCount="5"
+                app:starEmpty="@drawable/star_empty"
+                app:starFill="@drawable/star_full"
+                app:starImageSize="13dp"
+                app:starPadding="2dp"
+                app:starStep="3"
+                app:stepSize="Full" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <com.cai.framework.widget.CustomRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/crbUserRatings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:clickable="false"
+                app:starCount="5"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:starEmpty="@drawable/star_empty"
+                app:starFill="@drawable/star_full"
+                app:starImageSize="18dp"
+                app:starPadding="15dp"
+                app:stepSize="Full" />
+
+
+            <EditText
+                android:id="@+id/etUserCommentContent"
+                style="@style/edit_text_style"
+                android:layout_height="76dp"
+                android:gravity="left"
+                android:lines="10"
+                android:padding="11dp"
+                android:maxLength="60"
+                android:hint="@string/comment_content"
+                android:layout_margin="0dp"/>
+
+            <TextView
+                android:id="@+id/tvContentLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="@color/color_333333"
+                android:textSize="13sp"
+                android:layout_marginTop="5dp"
+                android:text="0/60"/>
+
+
+
+            <Button
+                android:id="@+id/btnSubmit"
+                style="@style/button_style"
+                android:layout_width="160dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/submit_bg"
+                android:gravity="center"
+                android:text="@string/submit" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
