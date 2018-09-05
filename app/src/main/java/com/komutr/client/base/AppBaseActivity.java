@@ -22,7 +22,7 @@ import java.util.TreeMap;
  */
 
 public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBasePresenterActivity<M> {
-    TitleBarView titleBarView;
+    public TitleBarView titleBarView;
 
     @Override
     public void setStatusBar(SystemBarTintManager tintManager) {

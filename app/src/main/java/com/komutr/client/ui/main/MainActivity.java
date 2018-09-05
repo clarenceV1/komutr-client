@@ -220,6 +220,11 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 }
                 break;
             case R.id.ivWallet://钱包
+                if (presenter.isLogin()) {
+                    RouterManager.goWallet();
+                } else {
+                    RouterManager.goLogin();
+                }
                 break;
             case R.id.btnLogin://登录
                 RouterManager.goLogin();
@@ -228,10 +233,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 logoutDialog();
                 break;
             case R.id.ivUserAvatar://头像
-                if (!presenter.isLogin()) {
-                    RouterManager.goLogin();
-                } else {
+                if (presenter.isLogin()) {
                     RouterManager.goPersonInfo();
+                } else {
+                    RouterManager.goLogin();
                 }
                 break;
             case R.id.rbMainTabOne://地图
@@ -301,7 +306,11 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
             switch (index) {
                 case 0://Message
-                    RouterManager.goMessage();
+                    if (presenter.isLogin()) {
+                        RouterManager.goMessage();
+                    } else {
+                        RouterManager.goLogin();
+                    }
                     break;
                 case 1://Service tel
                     if (service != null) {

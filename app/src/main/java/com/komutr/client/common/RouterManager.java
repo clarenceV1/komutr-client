@@ -32,6 +32,9 @@ public class RouterManager {
     public static void goHelpCenter() {
         ARouter.getInstance().build(RouterManager.ROUTER_HELP_CENTER).navigation();
     }
+    public static void goWallet() {
+        ARouter.getInstance().build(RouterManager.ROUTER_WALLET).navigation();
+    }
     public static void goAboutUs() {
         ARouter.getInstance().build(RouterManager.ROUTER_ABOUT_US).navigation();
     }
