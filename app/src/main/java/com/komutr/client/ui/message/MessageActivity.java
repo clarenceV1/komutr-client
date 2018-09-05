@@ -2,10 +2,10 @@ package com.komutr.client.ui.message;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
-import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.Message;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MessageBinding;
@@ -19,6 +19,7 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
 
     @Inject
     MessagePresenter presenter;
+    List<Message> messageList;
 
     @Override
     public void initDagger() {
@@ -32,8 +33,7 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
 
     @Override
     public void initView() {
-        ToastUtils.showShort("消息数据接口未给");
-//        presenter.requestMessage();
+        presenter.requestMessage();
     }
 
     @Override
@@ -42,7 +42,9 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
     }
 
     @Override
-    public void callback(RespondDO respondDO) {
-
+    public void callback(RespondDO<List<Message>> respondDO) {
+        if (respondDO.isStatus()) {
+            this.messageList = respondDO.getObject();
+        }
     }
 }

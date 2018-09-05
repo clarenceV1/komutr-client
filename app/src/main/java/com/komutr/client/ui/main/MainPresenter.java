@@ -3,16 +3,26 @@ package com.komutr.client.ui.main;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.cai.framework.permission.RxPermissions;
 import com.example.clarence.utillibrary.ToastUtils;
+import com.komutr.client.BuildConfig;
+import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
+import com.komutr.client.been.AppVersion;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
 
@@ -73,7 +83,8 @@ public class MainPresenter extends AppBasePresenter<MainView> {
                 });
         mCompositeSubscription.add(disposable);
     }
-    public boolean isLogin(){
+
+    public boolean isLogin() {
         return userInfoDao.get().isLogin();
     }
 
@@ -85,8 +96,6 @@ public class MainPresenter extends AppBasePresenter<MainView> {
             public void accept(Boolean granted) throws Exception {
                 if (granted) {
                     callPhone(phoneNum);
-                } else {
-                    ToastUtils.showShort("one");
                 }
             }
         });
@@ -101,7 +110,8 @@ public class MainPresenter extends AppBasePresenter<MainView> {
         intent.setData(data);
         context.startActivity(intent);
     }
-    public void requestServicePhone(){
+
+    public void requestPhoneAndAppVersion() {
         Map<String, String> query = new HashMap<>();
         query.put("m", "system.serviceInfo");
         query.put("auth_key", Constant.AUTH_KEY);
@@ -109,8 +119,10 @@ public class MainPresenter extends AppBasePresenter<MainView> {
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        if (respondDO.isStatus()) {
-
+                        //{"app":{"update_url":"http://baidu.com","version":"1.00"},"telphone":"1111111"}
+                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
+                            Service service = JSON.parseObject(respondDO.getData(), Service.class);
+                            respondDO.setObject(service);
                         }
                     }
                 })
@@ -119,16 +131,27 @@ public class MainPresenter extends AppBasePresenter<MainView> {
                     @Override
                     public void accept(RespondDO respondDO) {
                         Logger.d(respondDO.toString());
-                        mView.servicePhoneCallBack(respondDO);
+                        mView.serviceCallBack(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
-                        RespondDO respondDO=new RespondDO();
-                        mView.servicePhoneCallBack(respondDO);
+                        RespondDO respondDO = new RespondDO();
+                        mView.serviceCallBack(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);
+    }
+
+    public  void openBrowser(String url) {
+        try {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
