@@ -89,4 +89,18 @@ public class RespondDO<T> {
     public void setTime(long time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "RespondDO{" +
+                "type='" + type + '\'' +
+                ", status=" + status +
+                ", code='" + code + '\'' +
+                ", msg='" + msg + '\'' +
+                ", data='" + data + '\'' +
+                ", time=" + time +
+                ", object=" + object +
+                ", fromCallBack=" + fromCallBack +
+                '}';
+    }
 }

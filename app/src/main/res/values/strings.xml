@@ -80,4 +80,6 @@
     <string name="logout_dialog_title">Are you sure to log out?</string>
     <string name="btn_no">NO</string>
     <string name="btn_yes">YES</string>
+    <string name="feed_back">Feedback</string>
+    <string name="help_center_title">Help Center</string>
 </resources>

@@ -1,11 +1,13 @@
 package com.komutr.client.ui.helpCenter;
 
+import android.view.View;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
-import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.HelpCenter;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.HelpCenterBinding;
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 public class HelpCenterActivity extends AppBaseActivity<HelpCenterBinding> implements HelpCenterView {
     @Inject
     HelpCenterPresenter presenter;
+    List<HelpCenter> helpCenters;
 
     @Override
     public void initDagger() {
@@ -31,8 +34,25 @@ public class HelpCenterActivity extends AppBaseActivity<HelpCenterBinding> imple
 
     @Override
     public void initView() {
-        ToastUtils.showShort("帮助中心接口未给");
-//        presenter.requestHelpCenter();
+        setBarTitle(getString(R.string.help_center_title));
+        if (titleBarView != null) {
+            titleBarView.setRightText(getString(R.string.feed_back));
+            titleBarView.setRightClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RouterManager.goFeedback();
+                }
+            });
+        }
+        presenter.requestHelpList();
+        mViewBinding.tvTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (helpCenters != null && helpCenters.size() > 0) {
+                    presenter.requestDetail(helpCenters.get(0).getId());
+                }
+            }
+        });
     }
 
     @Override
@@ -41,7 +61,14 @@ public class HelpCenterActivity extends AppBaseActivity<HelpCenterBinding> imple
     }
 
     @Override
-    public void callback(RespondDO respondDO) {
+    public void helpListCallback(RespondDO<List<HelpCenter>> respondDO) {
+        if (respondDO.isStatus()) {
+            helpCenters = respondDO.getObject();
+        }
+    }
+
+    @Override
+    public void detailCallback(RespondDO respondDO) {
 
     }
 }
