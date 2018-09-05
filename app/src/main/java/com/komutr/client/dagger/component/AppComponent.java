@@ -53,7 +53,6 @@ public interface AppComponent {
     void inject(PersonInfoActivity activity);
     void inject(SearchRoutesActivity activity);
     void inject(ReplacePhoneActivity activity);
-    void inject(ConfirmPayActivity activity);
     void inject(AboutUsActivity activity);
     void inject(HelpCenterActivity activity);
 
