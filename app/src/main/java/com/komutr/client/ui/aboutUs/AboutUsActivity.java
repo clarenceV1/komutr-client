@@ -1,25 +1,23 @@
-package com.komutr.client.ui.message;
+package com.komutr.client.ui.aboutUs;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.been.Message;
+import com.komutr.client.been.AboutUs;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.databinding.MessageBinding;
+import com.komutr.client.databinding.AboutBinding;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-@Route(path = RouterManager.ROUTER_MESSAGE, name = "消息")
-public class MessageActivity extends AppBaseActivity<MessageBinding> implements MessageView {
-
+@Route(path = RouterManager.ROUTER_ABOUT_US, name = "我的-关于我们")
+public class AboutUsActivity extends AppBaseActivity<AboutBinding> implements AboutUsView {
     @Inject
-    MessagePresenter presenter;
-    List<Message> messageList;
+    AboutUsPresenter presenter;
 
     @Override
     public void initDagger() {
@@ -33,18 +31,16 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
 
     @Override
     public void initView() {
-        presenter.requestMessage();
+        presenter.requestContent();
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.message;
+        return R.layout.about;
     }
 
     @Override
-    public void callback(RespondDO<List<Message>> respondDO) {
-        if (respondDO.isStatus()) {
-            this.messageList = respondDO.getObject();
-        }
+    public void callback(RespondDO<AboutUs> respondDO) {
+
     }
 }

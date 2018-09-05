@@ -1,5 +1,6 @@
 package com.komutr.client.ui.main;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -17,15 +18,19 @@ import com.cai.framework.imageload.ILoadImage;
 import com.cai.framework.imageload.ILoadImageParams;
 import com.cai.framework.imageload.ImageForGlideParams;
 import com.cai.framework.permission.RxPermissionsFragment;
+import com.cai.framework.widget.dialog.GodDialog;
 import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.DeviceUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.PackageUtils;
 import com.example.clarence.utillibrary.StreamUtils;
+import com.example.clarence.utillibrary.ToastUtils;
+import com.komutr.client.BuildConfig;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MainBinding;
@@ -51,6 +56,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
     ILoadImage iLoadImage;
 
     RadioButton lastFooterRadioButton;
+    Service service;
 
     @Override
     public void initDagger() {
@@ -103,7 +109,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         });
         User user = presenter.switcher();
         initLeftData(user);
-        presenter.requestServicePhone();
+        presenter.requestPhoneAndAppVersion();
     }
 
     /**
@@ -192,7 +198,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(LoginEvent loginEvent) {
-
         if (loginEvent != null && loginEvent.getStateType() == LoginEvent.STATE_LOGIN_SUCCESS) {
             initLeftData(loginEvent.getUserInfo());
         }
@@ -220,7 +225,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 RouterManager.goLogin();
                 break;
             case R.id.btnLogout://退出
-                presenter.logout();
+                logoutDialog();
                 break;
             case R.id.ivUserAvatar://头像
                 if (!presenter.isLogin()) {
@@ -275,8 +280,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
     }
 
     @Override
-    public void servicePhoneCallBack(RespondDO respondDO) {
-
+    public void serviceCallBack(RespondDO<Service> respondDO) {
+        if (respondDO.isStatus()) {
+            service = respondDO.getObject();
+        }
     }
 
 
@@ -294,19 +301,65 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
             switch (index) {
                 case 0://Message
-//                    RouterManager.goMessage();
+                    RouterManager.goMessage();
                     break;
                 case 1://Service tel
-                    presenter.callPhone(MainActivity.this, "13779926287");
+                    if (service != null) {
+                        presenter.callPhone(MainActivity.this, service.getTelphone());
+                    }
                     break;
                 case 2:// Help center
+                    RouterManager.goHelpCenter();
                     break;
                 case 3://About us
+                    RouterManager.goAboutUs();
                     break;
                 case 4://Current version
+                    handleVersion();
                     break;
             }
 
         }
+    }
+
+    private void handleVersion() {
+        if (service != null && service.getApp() != null && !BuildConfig.VERSION_NAME.equals(service.getApp().getVersion())) {//有新版本
+            new GodDialog.Builder(MainActivity.this)
+                    .setTitle(getString(R.string.detected_latest_version))
+                    .setMessage(getString(R.string.update_app_content, service.getApp().getVersion()))
+                    .setNegativeButton(R.string.btn_cancle, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setPositiveButton(R.string.btn_update, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            presenter.openBrowser(service.getApp().getUpdate_url());
+                            dialog.dismiss();
+                        }
+                    }).build().show();
+        } else { //已经是最新的
+            ToastUtils.showShort(R.string.already_latest_version);
+        }
+    }
+
+    private void logoutDialog() {
+        new GodDialog.Builder(MainActivity.this)
+                .setTitle(getString(R.string.logout_dialog_title))
+                .setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.logout();
+                        dialog.dismiss();
+                    }
+                }).build().show();
     }
 }

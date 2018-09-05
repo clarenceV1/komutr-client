@@ -18,9 +18,9 @@ public class RouterManager {
     public static final String ROUTER_REPLACE_PHONE = ROUTER_HOME + "ReplacePhoneActivity";
     public static final String ROUTER_BIND_PHONE = ROUTER_HOME + "BindPhoneActivity";
     public static final String ROUTER_CONFIRM_PAY = ROUTER_HOME + "ConfirmPayActivity";
+    public static final String ROUTER_ABOUT_US = ROUTER_HOME + "AboutUsActivity";
+    public static final String ROUTER_HELP_CENTER = ROUTER_HOME + "HelpCenterActivity";
     public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
-
-
 
 
     public static void goWeb(String url, String title, String paramMap) {
@@ -28,6 +28,12 @@ public class RouterManager {
                 .withString("url", url)
                 .withString("title", title)
                 .withString("paramMap", paramMap).navigation();
+    }
+    public static void goHelpCenter() {
+        ARouter.getInstance().build(RouterManager.ROUTER_HELP_CENTER).navigation();
+    }
+    public static void goAboutUs() {
+        ARouter.getInstance().build(RouterManager.ROUTER_ABOUT_US).navigation();
     }
     public static void goConfirmPay() {
         ARouter.getInstance().build(RouterManager.ROUTER_CONFIRM_PAY).navigation();
