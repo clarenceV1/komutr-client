@@ -30,5 +30,8 @@
 
     <!-- 边线颜色 -->
     <color name="color_side_line">#eaeaea</color>
+    <color name="color_29c426">#29c426</color>
 
+    <color name="color_e31d1d">#e31d1d</color>
+    <color name="color_fe4a3b">#fe4a3b</color>
 </resources>

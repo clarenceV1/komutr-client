@@ -1,7 +1,6 @@
 package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.komutr.client.ui.payment.ConfirmPayActivity;
 
 public class RouterManager {
     public static final String ROUTER_HOME = "/komutr/";
@@ -101,9 +100,15 @@ public class RouterManager {
     public static final String CONFIRM_PAYMENT = ROUTER_HOME + "ConfirmPaymentActivity";
 
 
+    public static final String PAY_STATUS = ROUTER_HOME + "StatusActivity";
 
 
 
+
+
+    public static void goPayStatus() {
+        ARouter.getInstance().build(PAY_STATUS).navigation();
+    }
 
 
     public static void goConfirmPayment() {

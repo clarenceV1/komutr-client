@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">komutr-client</string>
+
+    <string name="view_details">View details</string>
+    <string name="refund_amount">Refund amount</string>
+    <string name="deduct_expenses">Deduct expenses</string>
+    <string name="view_order">View Order</string>
+    <string name="complete">Complete</string>
+
+    <string name="your_wallet_balance">Your wallet balance</string>
+    <string name="payment_success">Payment success！</string>
+    <string name="refund_success">Refund success！</string>
+    <string name="refund_fail">Refund failed!\nThe system is busy, please try again later.</string>
+    <string name="payment_fail">Payment failure\nThe network is not stable, paease try\nagain later!</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="payment_amount">Payment amount</string>
+    <string name="confirm_payment">Confirm Payment</string>
     <string name="confirm">Confirm</string>
     <string name="review_purchase">Review Purchase</string>
     <string name="payment">PAYMENT</string>

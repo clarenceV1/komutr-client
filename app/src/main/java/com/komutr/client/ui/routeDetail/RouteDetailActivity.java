@@ -44,6 +44,6 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
 
     @Override
     public void onClick(View view) {
-
+        RouterManager.goConfirmPayment();
     }
 }

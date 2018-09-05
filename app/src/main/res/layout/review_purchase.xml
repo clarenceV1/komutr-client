@@ -247,7 +247,7 @@
 
 
         <Button
-            android:id="@+id/btnLogReg"
+            android:id="@+id/btnConfirm"
             style="@style/button_style"
             android:enabled="true"
             android:layout_margin="0dp"

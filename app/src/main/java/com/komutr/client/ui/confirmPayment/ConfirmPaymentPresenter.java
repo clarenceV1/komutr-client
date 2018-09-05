@@ -14,6 +14,7 @@ public class ConfirmPaymentPresenter extends AppBasePresenter<ConfirmPaymentView
 
     @Override
     public void onAttached() {
+
     }
 
 }
