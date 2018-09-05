@@ -108,9 +108,13 @@ public class RouterManager {
 
     public static final String PAY_STATUS = ROUTER_HOME + "StatusActivity";
 
+    public static final String ORDER_DETAILS = ROUTER_HOME + "OrderDetailsActivity";
 
 
 
+    public static void goOrderDetails() {
+        ARouter.getInstance().build(ORDER_DETAILS).navigation();
+    }
 
     public static void goPayStatus() {
         ARouter.getInstance().build(PAY_STATUS).navigation();
@@ -131,6 +135,12 @@ public class RouterManager {
     public static void goRouteDetail() {
         ARouter.getInstance().build(ROUTE_DETAIL).navigation();
     }
+
+
+    public static void goMain() {
+        ARouter.getInstance().build(ROUTER_MAIN).navigation();
+    }
+
 
 
 

@@ -91,10 +91,14 @@ public class StatusActivity extends AppBaseActivity<StatusBinding> implements St
                 finish();
                 break;
             case R.id.btnViewOrder://查看订单
+                 if(isPayStatus){//跳订单详情
+                     RouterManager.goOrderDetails();
+                 }else {//跳账单详情
 
+                 }
                 break;
             case R.id.btnComplete://完成
-                finish();
+                RouterManager.goMain();
                 break;
         }
     }

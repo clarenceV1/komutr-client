@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f1f1f4"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/color_main">
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/arrow_back"
+                android:padding="12dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="@string/order_details" />
+
+
+
+            <TextView
+                android:id="@+id/tvRefund"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:drawableRight="@drawable/delete" />
+
+
+        </RelativeLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_ffffff"
+                    android:orientation="vertical"
+                    android:padding="13dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <!--出发时间-->
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingLeft="13dp"
+                                android:paddingRight="13dp">
+
+                                <TextView
+                                    style="@style/my_trips_text_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/departure_time"
+                                    android:textColor="@color/color_666666"
+                                    android:textSize="12sp" />
+
+
+                                <TextView
+                                    android:id="@+id/tvDate"
+                                    style="@style/my_trips_text_style"
+                                    android:text="11/10/2018"
+                                    android:textColor="@color/color_dc4c4c"
+                                    android:textSize="15sp" />
+
+
+                                <TextView
+                                    android:id="@+id/tvTime"
+                                    style="@style/my_trips_text_style"
+                                    android:layout_marginLeft="7dp"
+                                    android:text="10:30 am"
+                                    android:textColor="@color/color_000000"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+
+                            <!--车牌编号-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingLeft="13dp"
+                                android:paddingRight="13dp">
+
+                                <TextView
+                                    style="@style/my_trips_text_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/license_plate_no_"
+                                    android:textColor="@color/color_666666"
+                                    android:textSize="12sp" />
+
+
+                                <TextView
+                                    android:id="@+id/tvLicensePlateNo"
+                                    style="@style/my_trips_text_style"
+                                    android:text="DX00001"
+                                    android:textColor="@color/color_dc4c4c"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+
+                            <!--票价-->
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingLeft="13dp"
+                                android:paddingRight="13dp">
+
+                                <TextView
+                                    style="@style/my_trips_text_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/ticket_price_"
+                                    android:textColor="@color/color_666666"
+                                    android:textSize="12sp" />
+
+
+                                <TextView
+                                    android:id="@+id/tvTicketPriceNum"
+                                    style="@style/my_trips_text_style"
+                                    android:layout_marginLeft="7dp"
+                                    android:text="1Ticket ₱21.00"
+                                    android:textColor="@color/color_000000"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+
+                            <!--订单号-->
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingLeft="13dp"
+                                android:paddingRight="13dp">
+
+                                <TextView
+                                    style="@style/my_trips_text_style"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/order_id"
+                                    android:textColor="@color/color_666666"
+                                    android:textSize="12sp" />
+
+
+                                <TextView
+                                    android:id="@+id/tvorderId"
+                                    style="@style/my_trips_text_style"
+                                    android:layout_marginLeft="7dp"
+                                    android:text="4598564542821115"
+                                    android:textColor="@color/color_000000"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/color_side_line" />
+
+
+                            <!--行程-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingLeft="15dp">
+
+                                <TextView
+                                    android:id="@+id/tvBusNumber"
+                                    style="@style/my_trips_text_style"
+                                    android:drawablePadding="10dp"
+                                    android:text="A192" />
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/bus_path_icon" />
+
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:id="@+id/tvStartLocation"
+                                        style="@style/my_trips_text_style"
+                                        android:layout_marginTop="2dp"
+                                        android:text="Heron Bay" />
+
+
+                                    <TextView
+                                        android:id="@+id/tvEndLocation"
+                                        style="@style/my_trips_text_style"
+                                        android:layout_marginTop="10dp"
+                                        android:text="Suntec Tower 5" />
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+
+
+                        <ImageView
+                            android:id="@+id/ivUseStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:layout_centerVertical="true"
+                            android:visibility="gone"
+                            android:src="@drawable/used"/>
+
+
+                    </RelativeLayout>
+
+
+
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_side_line" />
+
+
+                    <!--司机信息-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <ImageView
+                            android:id="@+id/ivDriverAvatar"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginRight="12dp"
+                            android:src="@drawable/default_avatar" />
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tvDriverName"
+                                style="@style/my_trips_text_style"
+                                android:text="NickName"
+                                android:textColor="@color/color_000000"
+                                android:textSize="13sp" />
+
+
+                            <TextView
+                                android:id="@+id/tvDriverPhoneNum"
+                                style="@style/my_trips_text_style"
+                                android:layout_marginTop="8dp"
+                                android:text="12****12445"
+                                android:textColor="@color/color_000000"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+
+                        <com.cai.framework.widget.CustomRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/crbDriverGrade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:clickable="false"
+                            app:starCount="5"
+                            app:starEmpty="@drawable/star_empty"
+                            app:starFill="@drawable/star_full"
+                            app:starImageSize="18dp"
+                            app:starPadding="2dp"
+                            app:starStep="3"
+                            app:stepSize="Full" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llCenterLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp">
+
+                    <!--用户评级-->
+                    <LinearLayout
+                        android:id="@+id/llRUserRatingLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/my_trips_text_style"
+                            android:layout_width="wrap_content"
+                            android:text="@string/user_ratings"
+                            android:textColor="@color/color_000000"
+                            android:textSize="15sp" />
+
+
+                        <com.cai.framework.widget.CustomRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/crbUserRatings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            app:clickable="false"
+                            app:starCount="5"
+                            app:starEmpty="@drawable/star_empty"
+                            app:starFill="@drawable/star_full"
+                            app:starImageSize="13dp"
+                            app:starPadding="2dp"
+                            app:starStep="3"
+                            app:stepSize="Full" />
+
+
+
+                        <TextView
+                            android:id="@+id/tvDidNoScore"
+                            style="@style/my_trips_text_style"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:drawableRight="@drawable/right_arrow_icon"
+                            android:drawablePadding="10dp"
+                            android:visibility="gone"
+                            android:gravity="center_vertical|right"
+                            android:text="@string/did_not_score"
+                            android:textColor="@color/color_999999"
+                            android:textSize="15sp" />
+
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/viewCommentLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_side_line" />
+
+
+                    <!--评论-->
+                    <TextView
+                        android:id="@+id/tvUserComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="“Because of your evaluation, today we unwittingly became the Crown seller. Continue to take the high-end route, independent design, independent production, reasonable pricing, I hope to be able to support the store as always, thank you!”"
+                        android:textColor="@color/color_666666"
+                        android:textSize="12sp" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_side_line" />
+
+
+                    <!--退票介绍-->
+                    <TextView
+                        android:id="@+id/tvRefundInstructions"
+                        style="@style/my_trips_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:drawableRight="@drawable/right_arrow_icon"
+                        android:gravity="center_vertical"
+                        android:text="@string/refund_instructions"
+                        android:textColor="@color/color_666666"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_ffffff"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+
+                    <TextView
+                        style="@style/my_trips_text_style"
+                        android:text="@string/important_notes"
+                        android:textColor="@color/color_666666" />
+
+
+                    <TextView
+                        android:id="@+id/tvImportantNotes"
+                        style="@style/my_trips_text_small_style"
+                        android:text="• This ticket is valid for the same day only\n• Guaranteed seats when booked\n• Please arrive at the bus stop 5 min in  advance\n• Look out for KOMUTR bus number and route information\n• Service tel：1111 1111 1111" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </LinearLayout>
+</layout>

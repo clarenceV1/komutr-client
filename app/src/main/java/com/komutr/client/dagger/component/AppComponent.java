@@ -17,6 +17,7 @@ import com.komutr.client.ui.main.fragment.trips.MyTripsFragment;
 import com.komutr.client.ui.message.MessageActivity;
 import com.komutr.client.ui.message.MessageDetailActivity;
 import com.komutr.client.ui.nickname.NicknameActivity;
+import com.komutr.client.ui.orderDetails.OrderDetailsActivity;
 import com.komutr.client.ui.status.StatusActivity;
 import com.komutr.client.ui.personInfo.PersonInfoActivity;
 import com.komutr.client.ui.phoneNumber.BindPhoneActivity;
@@ -75,7 +76,7 @@ public interface AppComponent {
 
 
 
-
+    void inject(OrderDetailsActivity activity);
     void inject(ReviewPurchaseActivity activity);
     void inject(RouteDetailActivity activity);
     void inject(ConfirmPaymentActivity activity);
