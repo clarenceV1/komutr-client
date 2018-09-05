@@ -102,17 +102,15 @@ public class RouterManager {
 
     public static final String REVIEW_PURCHASE = ROUTER_HOME + "ReviewPurchaseActivity";
 
-
     public static final String ROUTE_DETAIL = ROUTER_HOME + "RouteDetailActivity";
 
-
     public static final String CONFIRM_PAYMENT = ROUTER_HOME + "ConfirmPaymentActivity";
-
 
     public static final String PAY_STATUS = ROUTER_HOME + "StatusActivity";
 
     public static final String ORDER_DETAILS = ROUTER_HOME + "OrderDetailsActivity";
 
+    public static final String USER_RATINGS = ROUTER_HOME + "UserRatingsActivity";
 
 
     public static void goOrderDetails() {
@@ -123,11 +121,9 @@ public class RouterManager {
         ARouter.getInstance().build(PAY_STATUS).navigation();
     }
 
-
     public static void goConfirmPayment() {
         ARouter.getInstance().build(CONFIRM_PAYMENT).navigation();
     }
-
 
     public static void goSearchRoutes() {
         ARouter.getInstance().build(SEARCH_ROUTES).navigation();
@@ -139,12 +135,13 @@ public class RouterManager {
         ARouter.getInstance().build(ROUTE_DETAIL).navigation();
     }
 
-
     public static void goMain() {
         ARouter.getInstance().build(ROUTER_MAIN).navigation();
     }
 
-
+    public static void goUserRatings() {
+        ARouter.getInstance().build(USER_RATINGS).navigation();
+    }
 
 
 }

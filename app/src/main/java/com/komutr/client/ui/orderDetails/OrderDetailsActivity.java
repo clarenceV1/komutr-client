@@ -41,9 +41,9 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
         mViewBinding.tvRefund.setOnClickListener(this);
         mViewBinding.ivBack.setOnClickListener(this);
 
-        int useStatus = 3;//1:已使用 2:已退票 3:未使用
+        int useStatus = 1;//1:已使用 2:已退票 3:未使用
         if (useStatus == 1) {
-            boolean isComment = true;//判断是否有评论过
+            boolean isComment = false;//判断是否有评论过
 
             if (isComment) {//布局不需要更改
 
@@ -77,8 +77,8 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llRUserRatingLayout://等级评论
+                RouterManager.goUserRatings();
                 break;
-
             case R.id.tvRefundInstructions://退款介绍
                 showRefundInstructionsDialog("0.00");
                 /*  */
@@ -100,14 +100,14 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
         new GodDialog.Builder(this)
                 .setTitle(getString(isDeleteOrder ? R.string.delete_order : R.string.ticket_confirmation))
                 .setMessage(isDeleteOrder ? getString(R.string.delete_order_content) : getString(R.string.ticket_confirmation_content, amount))
-                .setNegativeButton(getString(R.string.btn_cancle), new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 //                                ToastUtils.showShort("点击取消了");
                         dialog.dismiss();
                     }
                 })
-                .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 //                                ToastUtils.showShort("点击确定了");
