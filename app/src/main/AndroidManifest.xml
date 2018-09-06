@@ -52,6 +52,7 @@
         <activity android:name=".ui.aboutUs.AboutUsActivity" />
         <activity android:name=".ui.helpCenter.HelpCenterActivity"/>
         <activity android:name=".ui.email.BindEmailActivity"/>
+        <activity android:name=".ui.bill.BillDetailActivity"/>
     </application>
 
 </manifest>

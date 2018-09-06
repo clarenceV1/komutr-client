@@ -12,8 +12,6 @@
             android:layout_height="44dp"
             android:background="@color/color_main">
 
-
-
             <ImageView
                 android:id="@+id/ivBack"
                 android:layout_width="44dp"

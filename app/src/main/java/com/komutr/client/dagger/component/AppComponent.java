@@ -6,6 +6,7 @@ import com.komutr.client.base.App;
 import com.komutr.client.dagger.module.CommonModule;
 import com.komutr.client.ui.aboutUs.AboutUsActivity;
 import com.komutr.client.ui.Purchase.ReviewPurchaseActivity;
+import com.komutr.client.ui.bill.BillDetailActivity;
 import com.komutr.client.ui.confirmPayment.ConfirmPaymentActivity;
 import com.komutr.client.ui.email.BindEmailActivity;
 import com.komutr.client.ui.feedback.FeedbackActivity;
@@ -56,6 +57,7 @@ public interface AppComponent {
     void inject(AboutUsActivity activity);
     void inject(HelpCenterActivity activity);
     void inject(BindEmailActivity activity);
+    void inject(BillDetailActivity activity);
 
 
     void inject(BindPhoneActivity activity);

@@ -2,25 +2,15 @@ package com.komutr.client.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.cai.framework.permission.RxPermissions;
-import com.example.clarence.utillibrary.ToastUtils;
-import com.komutr.client.BuildConfig;
-import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
-import com.komutr.client.been.AppVersion;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
@@ -149,7 +139,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
         try {
             Uri uri = Uri.parse(url);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
