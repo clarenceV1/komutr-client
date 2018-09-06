@@ -32,11 +32,12 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
 
     @Override
     public void initView() {
+        setBarTitle(getString(R.string.region_title));
         mViewBinding.tvTest.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        presenter.requestBigArea();
-                        presenter.requestNextArea();
+                        presenter.requestBigArea();
+//                        presenter.requestNextArea();
                     }
                 });
     }
