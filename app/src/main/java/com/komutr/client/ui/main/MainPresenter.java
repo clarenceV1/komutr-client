@@ -25,6 +25,7 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
+import com.komutr.client.ui.qrcode.activity.MipcaActivityCapture;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -153,5 +154,20 @@ public class MainPresenter extends AppBasePresenter<MainView> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public void startGoScanPayPage(final FragmentActivity activity) {
+        RxPermissions permissions = new RxPermissions(activity);
+        Disposable disposable = permissions.request(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean granted) throws Exception {
+                if (granted) {
+                    activity.startActivity(new Intent(activity, MipcaActivityCapture.class));
+                }
+            }
+        });
+        mCompositeSubscription.add(disposable);
     }
 }

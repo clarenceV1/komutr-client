@@ -3,13 +3,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/color_f1f1f4"
         android:orientation="vertical">
 
+
+        <EditText
+            android:id="@+id/etFeedBackContent"
+            style="@style/edit_text_style"
+            android:layout_height="185dp"
+            android:gravity="left"
+            android:lines="100"
+            android:padding="11dp"
+            android:maxLength="500"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:hint="@string/comment_content"
+            android:layout_margin="0dp"/>
+
         <TextView
-            android:id="@+id/tvFeedback"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvContentLength"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="feedback"/>
+            android:gravity="right"
+            android:padding="13dp"
+            android:textColor="@color/color_666666"
+            android:textSize="13sp"
+            android:text="0/500"/>
+
+
     </LinearLayout>
 </layout>

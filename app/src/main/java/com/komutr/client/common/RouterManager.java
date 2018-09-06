@@ -121,6 +121,10 @@ public class RouterManager {
 
     public static final String USER_RATINGS = ROUTER_HOME + "UserRatingsActivity";
 
+    public static final String POSITION = ROUTER_HOME + "PositionActivity";
+
+
+
 
     public static void goOrderDetails() {
         ARouter.getInstance().build(ORDER_DETAILS).navigation();
@@ -150,6 +154,10 @@ public class RouterManager {
 
     public static void goUserRatings() {
         ARouter.getInstance().build(USER_RATINGS).navigation();
+    }
+
+    public static void goPosition() {
+        ARouter.getInstance().build(POSITION).navigation();
     }
 
 

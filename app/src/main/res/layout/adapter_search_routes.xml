@@ -151,7 +151,7 @@
                 <TextView
                     android:id="@+id/tvEndLocation"
                     style="@style/my_trips_text_style"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="7dp"
                     android:text="Suntec Tower 5"/>
 
 

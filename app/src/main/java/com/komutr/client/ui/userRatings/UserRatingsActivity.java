@@ -5,6 +5,9 @@ import android.text.TextWatcher;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
+import com.cai.framework.logger.Logger;
+import com.cai.framework.logger.Printer;
+import com.cai.framework.widget.CustomRatingBar;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -19,7 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.USER_RATINGS, name = "搜索-搜索路线-支付确认-状态-订单详情-用户评分")
-public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> implements UserRatingsView, TextWatcher {
+public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> implements UserRatingsView, TextWatcher, CustomRatingBar.OnRatingChangeListener {
     @Inject
     UserRatingsPresenter presenter;
 
@@ -37,6 +40,7 @@ public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> imp
     public void initView() {
         setBarTitle(getString(R.string.user_ratings));
         mViewBinding.etUserCommentContent.addTextChangedListener(this);
+        mViewBinding.crbUserRatings.setOnRatingChangeListener(this);
     }
 
     @Override
@@ -53,11 +57,16 @@ public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> imp
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         int length = charSequence.toString().length();
         mViewBinding.tvContentLength.setText(length + "/60");
-        mViewBinding.btnSubmit.setEnabled(length>0);
+        mViewBinding.btnSubmit.setEnabled(length > 0);
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    @Override
+    public void onRatingChange(float ratingCount) {
+        Logger.i("ratingCount=" + ratingCount);
     }
 }

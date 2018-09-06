@@ -80,7 +80,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         MainPagerAdapter mAdapter = new MainPagerAdapter(getSupportFragmentManager(), mTabs);
         mViewBinding.mainActivityViewpager.setAdapter(mAdapter);
         mViewBinding.mainActivityViewpager.setCurrentItem(0);
-        setFooterTabSelected(mViewBinding.rbMainTabOne, true);
+        setHeaderTabSelected(mViewBinding.rbMainTabOne, true);
         mViewBinding.ivSelf.setOnClickListener(this);
         mViewBinding.ivWallet.setOnClickListener(this);
         mViewBinding.btnLogin.setOnClickListener(this);
@@ -239,22 +239,23 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 break;
             case R.id.rbMainTabOne://地图
                 if (mViewBinding.mainActivityViewpager.getCurrentItem() != 0) {
-                    setFooterTabSelected(mViewBinding.rbMainTabOne, false);
+                    setHeaderTabSelected(mViewBinding.rbMainTabOne, false);
                     mViewBinding.mainActivityViewpager.setCurrentItem(0);
                 }
                 break;
             case R.id.tvMainTabTwo://扫描支付
+                  presenter.startGoScanPayPage(this);
                 break;
             case R.id.rbMainTabThree://我的行程
                 if (mViewBinding.mainActivityViewpager.getCurrentItem() != 1) {
-                    setFooterTabSelected(mViewBinding.rbMainTabThree, false);
+                    setHeaderTabSelected(mViewBinding.rbMainTabThree, false);
                     mViewBinding.mainActivityViewpager.setCurrentItem(1);
                 }
                 break;
         }
     }
 
-    private void setFooterTabSelected(RadioButton btnSelected, boolean isFirst) {
+    private void setHeaderTabSelected(RadioButton btnSelected, boolean isFirst) {
         int dp60 = DimensUtils.dp2px(this, 60f);
         int dp3 = DimensUtils.dp2px(this, 3f);
         Drawable selectedDrawable = StreamUtils.getInstance().resourceToDrawable(R.drawable.main_header_tab_pressed, this);

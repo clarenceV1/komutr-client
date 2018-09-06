@@ -82,7 +82,7 @@
                 android:id="@+id/crbUserRatings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:clickable="false"
+                app:clickable="true"
                 app:starCount="5"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"

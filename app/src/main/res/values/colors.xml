@@ -35,4 +35,10 @@
     <color name="color_e31d1d">#e31d1d</color>
     <color name="color_fe4a3b">#fe4a3b</color>
     <color name="color_dc4c4c">#dc4c4c</color>
+
+
+    <!-- qrcode颜色值 -->
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
 </resources>

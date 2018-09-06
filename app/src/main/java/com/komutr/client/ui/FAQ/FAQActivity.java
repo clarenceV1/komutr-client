@@ -1,10 +1,7 @@
 package com.komutr.client.ui.FAQ;
 
-import android.os.Bundle;
-
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
@@ -23,14 +20,12 @@ public class FAQActivity extends AppBaseActivity<MessageDetailBinding> implement
 
     @Inject
     FAQPresenter presenter;
+
+    //内容类型 获取faq列表中的项目id 1 购票常见问题2 充值常见问题3 提现常见问题6 二维码常见问题8 栏目测试
     @Autowired(name = "contentType")
     int contentType;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        ARouter.getInstance().inject(this);
-        super.onCreate(savedInstanceState);
-    }
+
 
     @Override
     public void initDagger() {
@@ -45,6 +40,7 @@ public class FAQActivity extends AppBaseActivity<MessageDetailBinding> implement
     @Override
     public void initView() {
         setBarTitle(getString(R.string.faq_title));
+
         presenter.requestDetail(contentType);
     }
 

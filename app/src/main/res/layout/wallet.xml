@@ -3,13 +3,127 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/color_f1f1f4"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvTest"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/color_main">
+
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/app_name"
+                android:padding="12dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/arrow_back" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/komutr_pay"
+                android:textColor="@color/color_ffffff"
+                android:textSize="20sp" />
+
+
+
+
+            <TextView
+                android:id="@+id/tvBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/bill"
+                android:textColor="@color/color_ffffff"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="wallet"/>
+            android:gravity="center"
+            android:paddingTop="27dp"
+            android:paddingBottom="16dp"
+            android:background="@color/color_ffffff"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/my_trips_text_style"
+                    android:textColor="@color/color_main"
+                    android:text="₱"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:id="@+id/tvBalance"
+                    style="@style/my_trips_text_style"
+                    android:textColor="@color/color_000000"
+                    android:layout_marginLeft="4dp"
+                    android:text="10"
+                    android:textSize="28sp" />
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/my_trips_text_style"
+                android:textColor="@color/color_666666"
+                android:text="@string/balance"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="28sp" />
+
+
+
+            <Button
+                android:id="@+id/btnRecharge"
+                style="@style/button_style"
+                android:layout_width="123dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="@drawable/recharge_bg"
+                android:enabled="true"
+                android:gravity="center"
+                android:text="@string/recharge"
+                android:textColor="@color/color_main" />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/tvTopFAQ"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:background="@color/color_ffffff"
+            android:textColor="@color/color_333333"
+            android:drawableRight="@drawable/right_arrow_icon"
+            android:paddingRight="13dp"
+            android:text="@string/faq_title"
+            />
+
+
     </LinearLayout>
 </layout>

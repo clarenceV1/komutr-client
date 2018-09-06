@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">komutr-client</string>
+    <string name="recharge">Recharge</string>
+    <string name="balance">balance</string>
+    <string name="komutr_pay">KOMUTRPAY</string>
+    <string name="enter_search_location">Enter search location</string>
+    <string name="bill">BILL</string>
+    <string name="scan_code_payment">Scan code payment</string>
+    <string name="scan_text_one">Scan QR code</string>
+    <string name="scan_text">Put in the box and scan automatically</string>
     <string name="submit">Submit</string>
     <string name="comment_content">Type in what you want to say</string>
     <string name="delete_order_content">The order will not be recovered after it is deleted. Shall we continue to delete it?</string>
