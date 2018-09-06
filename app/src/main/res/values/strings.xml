@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">komutr-client</string>
+
+    <string name="beneficiary">Beneficiary</string>
     <string name="recharge">Recharge</string>
     <string name="balance">balance</string>
     <string name="komutr_pay">KOMUTRPAY</string>

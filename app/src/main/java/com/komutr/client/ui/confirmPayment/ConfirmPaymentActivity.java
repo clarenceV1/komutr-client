@@ -15,7 +15,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.CONFIRM_PAYMENT, name = "搜索-搜索路线-路线详情-确认付款")
-public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBinding> implements ConfirmPaymentView,View.OnClickListener {
+public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBinding> implements ConfirmPaymentView, View.OnClickListener {
 
 
     @Inject
@@ -33,8 +33,21 @@ public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBindin
 
     @Override
     public void initView() {
-      mViewBinding.btnPay.setOnClickListener(this);
-      mViewBinding.ivClosePage.setOnClickListener(this);
+
+
+        boolean isScanPay = true;//是否为扫描支付
+        if (isScanPay) {
+            mViewBinding.llScanPayLayout.setVisibility(View.VISIBLE);
+            mViewBinding.tvPaymentMethod.setVisibility(View.VISIBLE);
+            mViewBinding.tvPaymentMethod.setVisibility(View.VISIBLE);
+            mViewBinding.viewScanPay.setVisibility(View.VISIBLE);
+            mViewBinding.tvPaymentMethodOne.setVisibility(View.GONE);
+            mViewBinding.btnPay.setText(getString(R.string.confirm_payment));
+        }
+
+
+        mViewBinding.btnPay.setOnClickListener(this);
+        mViewBinding.ivClosePage.setOnClickListener(this);
 
     }
 

@@ -17,18 +17,17 @@
             <TextView
                 style="@style/title_text_style"
                 android:layout_centerInParent="true"
-                android:text="@string/confirm_payment"/>
+                android:text="@string/confirm_payment" />
 
 
             <ImageView
                 android:id="@+id/ivClosePage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/shutdown"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="13dp"
-                android:layout_alignParentRight="true"/>
-
+                android:src="@drawable/shutdown" />
 
 
         </RelativeLayout>
@@ -37,23 +36,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="26dp">
+            android:orientation="horizontal">
 
 
             <TextView
                 style="@style/my_trips_text_style"
-                android:textColor="@color/color_main"
                 android:text="₱"
+                android:textColor="@color/color_main"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tvBusPrice"
                 style="@style/my_trips_text_style"
-                android:textColor="@color/color_000000"
                 android:layout_marginLeft="7dp"
                 android:text="10"
+                android:textColor="@color/color_000000"
                 android:textSize="30sp" />
 
 
@@ -64,62 +63,143 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/color_666666"
             android:layout_marginTop="19dp"
-            android:textSize="15sp"
-            android:text="@string/payment_amount"/>
-
+            android:text="@string/payment_amount"
+            android:textColor="@color/color_666666"
+            android:textSize="15sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="21dp"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="13dp"
-            android:background="@color/color_side_line"/>
+            android:layout_marginTop="21dp"
+            android:background="@color/color_side_line" />
+
+
+        <LinearLayout
+            android:id="@+id/llScanPayLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="13dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/beneficiary"
+                    android:textColor="@color/color_666666"
+                    android:textSize="15sp" />
+
+
+                <TextView
+                    android:id="@+id/tvBeneficiary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="NickName"
+                    android:textColor="@color/color_333333"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:background="@color/color_side_line" />
+
+
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="23dp"
+            android:paddingRight="13dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/payment_method"
+                android:textColor="@color/color_666666"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/tvPaymentMethod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:visibility="gone"
+                android:text="@string/komutr_pay"
+                android:textColor="@color/color_333333"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+
+
+        <View
+            android:id="@+id/viewScanPay"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:visibility="gone"
+            android:background="@color/color_side_line" />
+
 
 
         <TextView
+            android:id="@+id/tvPaymentMethodOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_666666"
-            android:layout_marginTop="19dp"
             android:layout_marginLeft="23dp"
-            android:textSize="15sp"
-            android:text="@string/payment_method"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_666666"
             android:layout_marginTop="19dp"
-            android:layout_marginLeft="23dp"
-            android:textSize="15sp"
+            android:drawableLeft="@drawable/pay_icon"
             android:drawablePadding="12dp"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/pay_icon"
-            android:text="@string/payment_method"/>
-
+            android:text="@string/komutr_pay"
+            android:textColor="@color/color_666666"
+            android:textSize="15sp" />
 
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-
+            android:layout_weight="1" />
 
 
         <Button
             android:id="@+id/btnPay"
             style="@style/button_style"
-            android:textAllCaps="true"
-            android:enabled="true"
             android:layout_margin="0dp"
-            android:gravity="center"
             android:background="@drawable/button_rectangle_bg"
-            android:text="@string/pay" />
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/pay"
+            android:textAllCaps="true" />
 
     </LinearLayout>
 </layout>
