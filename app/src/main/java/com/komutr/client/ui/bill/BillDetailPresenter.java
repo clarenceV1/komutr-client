@@ -1,4 +1,4 @@
-package com.komutr.client.ui.wallet;
+package com.komutr.client.ui.bill;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -7,12 +7,8 @@ import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.User;
 import com.komutr.client.been.Wallet;
-import com.komutr.client.common.Constant;
-import com.komutr.client.event.LoginEvent;
-
-import org.greenrobot.eventbus.EventBus;
+import com.komutr.client.ui.wallet.WalletView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +19,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-public class WalletPresenter extends AppBasePresenter<WalletView> {
+public class BillDetailPresenter extends AppBasePresenter<BillDetailView> {
 
     @Inject
-    public WalletPresenter() {
+    public BillDetailPresenter() {
 
     }
 
@@ -37,7 +33,7 @@ public class WalletPresenter extends AppBasePresenter<WalletView> {
     /**
      * 请求用户钱包数据
      */
-    public void requestWallet() {
+    public void requestBillDetail() {
         String authKey = userInfoDao.get().getAppAuth();
         Map<String, String> query = new HashMap<>();
         query.put("m", "payment.customerAmount");
@@ -56,14 +52,14 @@ public class WalletPresenter extends AppBasePresenter<WalletView> {
                     @Override
                     public void accept(RespondDO respondDO) {
                         Log.d("registeredOrLogin", respondDO.toString());
-                        mView.walletCallBack(respondDO);
+//                        mView.walletCallBack(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
-                        mView.walletCallBack(respondDO);
+//                        mView.walletCallBack(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);

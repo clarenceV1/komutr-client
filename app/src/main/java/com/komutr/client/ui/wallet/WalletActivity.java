@@ -8,6 +8,8 @@ import com.example.clarence.utillibrary.CommonUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.Wallet;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.WalletBinding;
 
@@ -20,6 +22,7 @@ import javax.inject.Inject;
 public class WalletActivity extends AppBaseActivity<WalletBinding> implements WalletView, View.OnClickListener {
     @Inject
     WalletPresenter presenter;
+    Wallet wallet;
 
     @Override
     public void initDagger() {
@@ -39,6 +42,8 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
         mViewBinding.tvTopFAQ.setOnClickListener(this);
 
         CommonUtils.setBackground(mViewBinding.tvTopFAQ, CommonUtils.selectorStateColor(this, R.color.white, R.color.color_f1f1f4));
+        presenter.requestWallet();
+
     }
 
     @Override
@@ -59,8 +64,21 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
 
                 break;
             case R.id.tvTopFAQ://充值
-              RouterManager.goFAQ(1);
+                RouterManager.goFAQ(1);
                 break;
         }
+    }
+
+    @Override
+    public void walletCallBack(RespondDO<Wallet> respondDO) {
+        wallet = respondDO.getObject();
+        refreshView();
+    }
+
+    private void refreshView() {
+        if (wallet != null) {
+            mViewBinding.tvBalance.setText(wallet.getBalance());
+        }
+
     }
 }

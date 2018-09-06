@@ -22,10 +22,16 @@ public class RouterManager {
     public static final String ROUTER_HELP_CENTER = ROUTER_HOME + "HelpCenterActivity";
     public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
     public static final String ROUTER_BIND_EMAIL = ROUTER_HOME + "EmailActivity";
+    public static final String ROUTER_BILL_DETAIL = ROUTER_HOME + "BillDetailActivity";
+
+    public static void goBillDetail() {
+        ARouter.getInstance().build(RouterManager.ROUTER_BILL_DETAIL).navigation();
+    }
 
     public static void goBindEmail() {
         ARouter.getInstance().build(RouterManager.ROUTER_BIND_EMAIL).navigation();
     }
+
     public static void goWeb(String url, String title, String paramMap) {
         ARouter.getInstance().build(ROUTER_WEB)
                 .withString("url", url)
