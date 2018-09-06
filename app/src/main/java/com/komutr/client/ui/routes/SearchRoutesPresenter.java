@@ -1,13 +1,30 @@
 package com.komutr.client.ui.routes;
 
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
+import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.SearchRoutes;
+import com.komutr.client.been.User;
+import com.komutr.client.common.Constant;
+import com.komutr.client.event.LoginEvent;
 import com.komutr.client.ui.wallet.WalletView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
 
@@ -43,5 +60,43 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
         newdatas.add(new SearchRoutes());
 
         return newdatas;
+    }
+
+    public void searchRoutes(String startSite, String endSite,int offset,int limit) {
+        Map<String, String> query = new HashMap<>();
+        query.put("m", "station.searchEndAndBegStation");
+        query.put("auth_key", Constant.AUTH_KEY);
+        query.put("value", startSite);
+        query.put("offset", offset+"");
+//        query.put("phone", limit);
+        Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
+            @Override
+            public void accept(RespondDO respondDO) {
+                if (respondDO.isStatus()&& !TextUtils.isEmpty(respondDO.getData())) {
+                    User userInfo = JSON.parseObject(respondDO.getData(), User.class);
+                    respondDO.setObject(userInfo);
+                    if (userInfoDao != null) {
+                        userInfoDao.get().saveAndDelete(userInfo);
+                    }
+                    EventBus.getDefault().post(new LoginEvent(LoginEvent.STATE_LOGIN_SUCCESS, userInfo));
+                }
+            }
+        }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        Log.d("registeredOrLogin", respondDO.toString());
+//                        mView.registeredOrLoginCallBack(respondDO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setFromCallBack(-1);
+//                        mView.registeredOrLoginCallBack(respondDO);
+                    }
+                });
+        mCompositeSubscription.add(disposable);
     }
 }

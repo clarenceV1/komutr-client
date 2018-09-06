@@ -47,15 +47,19 @@ public class RouterManager {
     public static void goHelpCenter() {
         ARouter.getInstance().build(RouterManager.ROUTER_HELP_CENTER).navigation();
     }
+
     public static void goWallet() {
         ARouter.getInstance().build(RouterManager.ROUTER_WALLET).navigation();
     }
+
     public static void goAboutUs() {
         ARouter.getInstance().build(RouterManager.ROUTER_ABOUT_US).navigation();
     }
+
     public static void goConfirmPay() {
         ARouter.getInstance().build(RouterManager.ROUTER_CONFIRM_PAY).navigation();
     }
+
     public static void goBindPhone() {
         ARouter.getInstance().build(ROUTER_BIND_PHONE).navigation();
     }
@@ -64,6 +68,7 @@ public class RouterManager {
         ARouter.getInstance().build(ROUTER_PHONE_NUMBER).navigation();
 
     }
+
     public static void goReplacePhone() {
         ARouter.getInstance().build(ROUTER_REPLACE_PHONE).navigation();
     }
@@ -97,24 +102,6 @@ public class RouterManager {
 //--------------------------------你从顶上添加我从下面添加防止冲突----------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static final String REVIEW_PURCHASE = ROUTER_HOME + "ReviewPurchaseActivity";
 
     public static final String ROUTE_DETAIL = ROUTER_HOME + "RouteDetailActivity";
@@ -130,8 +117,6 @@ public class RouterManager {
     public static final String POSITION = ROUTER_HOME + "PositionActivity";
 
 
-
-
     public static void goOrderDetails() {
         ARouter.getInstance().build(ORDER_DETAILS).navigation();
     }
@@ -140,15 +125,22 @@ public class RouterManager {
         ARouter.getInstance().build(PAY_STATUS).navigation();
     }
 
-    public static void goConfirmPayment() {
-        ARouter.getInstance().build(CONFIRM_PAYMENT).navigation();
+    public static void goConfirmPayment(String scanContent) {
+        ARouter.getInstance().build(CONFIRM_PAYMENT)
+                .withString("scanContent", scanContent)
+                .navigation();
     }
 
-    public static void goSearchRoutes() {
-        ARouter.getInstance().build(SEARCH_ROUTES).navigation();
+    public static void goSearchRoutes(String startSite, String endSite) {
+        ARouter.getInstance().build(SEARCH_ROUTES)
+                .withString("startSite", startSite)
+                .withString("endSite", endSite)
+                .navigation();
     }
 
-    public static void goReviewPurchase() {ARouter.getInstance().build(REVIEW_PURCHASE).navigation();}
+    public static void goReviewPurchase() {
+        ARouter.getInstance().build(REVIEW_PURCHASE).navigation();
+    }
 
     public static void goRouteDetail() {
         ARouter.getInstance().build(ROUTE_DETAIL).navigation();
@@ -165,6 +157,5 @@ public class RouterManager {
     public static void goPosition() {
         ARouter.getInstance().build(POSITION).navigation();
     }
-
 
 }

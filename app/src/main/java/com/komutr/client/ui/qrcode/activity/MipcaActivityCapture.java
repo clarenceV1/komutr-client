@@ -23,6 +23,7 @@ import com.example.clarence.utillibrary.ToastUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.komutr.client.R;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.ui.qrcode.camera.CameraManager;
 import com.komutr.client.ui.qrcode.decoding.CaptureActivityHandler;
 import com.komutr.client.ui.qrcode.decoding.InactivityTimer;
@@ -115,13 +116,14 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
         if (StringUtils.isEmpty(resultString)) {
             ToastUtils.showShort("Content is null!");
         } else {
-            ToastUtils.showLong(resultString);
-            Intent resultIntent = new Intent();
-            Bundle bundle = new Bundle();
-            bundle.putString("result", resultString);
+//            ToastUtils.showLong(resultString);
+//            Intent resultIntent = new Intent();
+//            Bundle bundle = new Bundle();
+//            bundle.putString("result", resultString);
 //            bundle.putParcelable("bitmap", barcode);
-            resultIntent.putExtras(bundle);
-            this.setResult(RESULT_OK, resultIntent);
+//            resultIntent.putExtras(bundle);
+            RouterManager.goConfirmPayment(resultString);
+//            this.setResult(RESULT_OK, resultIntent);
         }
         MipcaActivityCapture.this.finish();
     }
