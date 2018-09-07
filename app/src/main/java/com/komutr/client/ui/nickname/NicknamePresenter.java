@@ -47,11 +47,9 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
                     public void accept(RespondDO respondDO) {
                         Log.d("checkUsername", respondDO.toString());
                         if (respondDO.isStatus()) { //成功
-                            mView.checkUsername(respondDO);
-                        } else {//失败
-                            mView.checkUsername(respondDO);
+                            updateMyData(username, null, -1, -1, -1);
                         }
-                        updateMyData(username, null, -1, -1, -1);
+                        mView.checkUsername(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
