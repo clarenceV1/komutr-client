@@ -124,4 +124,11 @@
     <string name="loading_no_data">Temporarily no data</string>
     <string name="loading_net_error">Network exception, please check the network</string>
     <string name="loading_click_tip">Click to refresh</string>
+    <string name="pull_to_refresh_moment">a moment</string>
+    <string name="pull_to_refresh_first_time">first time</string>
+    <string name="pull_to_refresh_time_ago">A long time ago</string>
+    <string name="pull_to_refresh_day_before">day before</string>
+    <string name="pull_to_refresh_hours_before">hours before</string>
+    <string name="pull_to_refresh_minutes_before">minutes ago</string>
+    <string name="last_refresh_time">last refresh time：</string>
 </resources>
