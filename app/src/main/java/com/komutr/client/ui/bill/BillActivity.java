@@ -1,14 +1,10 @@
-package com.komutr.client.ui.routes;
+package com.komutr.client.ui.bill;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.baseview.LoadingView;
-import com.cai.framework.imageload.ILoadImage;
 import com.cai.pullrefresh.BaseListPtrFrameLayout;
 import com.cai.pullrefresh.PtrRecyclerView;
 import com.cai.pullrefresh.RecycleViewDivider;
@@ -18,38 +14,24 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.been.SearchRoutes;
+import com.komutr.client.been.Bill;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.databinding.SearchRoutesBinding;
-import com.komutr.client.ui.main.fragment.trips.MyTripsAdapter;
+import com.komutr.client.databinding.BillBinding;
+import com.komutr.client.ui.routes.SearchRoutesAdapter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-
-@Route(path = RouterManager.SEARCH_ROUTES, name = "搜索-/路线搜索")
-public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> implements SearchRoutesView, BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener {
+@Route(path = RouterManager.BILL, name = "我的-我的钱包-账单")
+public class BillActivity extends AppBaseActivity<BillBinding> implements BillView, BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener {
 
     @Inject
-    SearchRoutesPresenter presenter;
-    @Inject
-    ILoadImage iLoadImage;
-    @Autowired(name = "startSite")
-    String startSite;//起点站
-    @Autowired(name = "endSite")
-    String endSite;//终点站
-
+    BillPresenter presenter;
 
     PtrRecyclerView mPtrRecyclerView;
 
-    SearchRoutesAdapter adapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        ARouter.getInstance().inject(this);
-        super.onCreate(savedInstanceState);
-    }
+    BillAdapter adapter;
 
     @Override
     public void initDagger() {
@@ -63,13 +45,12 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
 
     @Override
     public void initView() {
-
-        setBarTitle(getString(R.string.search_routes));
+       setBarTitle(getString(R.string.transactions));
 
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
-        mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 10f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
+        mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SearchRoutesAdapter(this, iLoadImage, presenter);
+        adapter = new BillAdapter(this, presenter);
         mPtrRecyclerView.setAdapter(adapter);
         adapter.setDatas(presenter.getTestList());
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
@@ -77,20 +58,13 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
-
-//        presenter.searchRoutes(startSite,endSite);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.search_routes;
+
+        return R.layout.bill;
     }
-
-    @Override
-    public void callback(List<SearchRoutes> dataList) {
-
-    }
-
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
@@ -105,5 +79,10 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
     @Override
     public void onLoadViewClick(int status) {
         presenter.requestList();
+    }
+
+    @Override
+    public void callback(List<Bill> dataList) {
+
     }
 }

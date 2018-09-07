@@ -94,7 +94,7 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
     }
 
     /**
-     * 显示退款对话框
+     * 显示退款、删除订单对话框
      */
     private void showRefundDialog(final boolean isDeleteOrder, String amount) {
         new GodDialog.Builder(this)

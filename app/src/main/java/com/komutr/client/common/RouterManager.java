@@ -102,6 +102,18 @@ public class RouterManager {
 //--------------------------------你从顶上添加我从下面添加防止冲突----------------------
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     public static final String REVIEW_PURCHASE = ROUTER_HOME + "ReviewPurchaseActivity";
 
     public static final String ROUTE_DETAIL = ROUTER_HOME + "RouteDetailActivity";
@@ -117,6 +129,8 @@ public class RouterManager {
     public static final String POSITION = ROUTER_HOME + "PositionActivity";
 
     public static final String RECHARGE = ROUTER_HOME + "RechargeActivity";
+
+    public static final String BILL = ROUTER_HOME + "BillActivity";
 
     public static void goOrderDetails() {
         ARouter.getInstance().build(ORDER_DETAILS).navigation();
@@ -161,5 +175,10 @@ public class RouterManager {
 
     public static void goRecharge() {
         ARouter.getInstance().build(RECHARGE).navigation();
+    }
+
+
+    public static void goBill() {
+        ARouter.getInstance().build(BILL).navigation();
     }
 }
