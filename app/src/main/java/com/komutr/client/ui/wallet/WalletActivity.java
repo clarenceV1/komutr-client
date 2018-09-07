@@ -61,7 +61,7 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
 
                 break;
             case R.id.btnRecharge://充值
-
+                RouterManager.goRecharge();
                 break;
             case R.id.tvTopFAQ://充值
                 RouterManager.goFAQ(1);

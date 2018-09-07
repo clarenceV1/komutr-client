@@ -1,4 +1,4 @@
-package com.komutr.client.ui.bill;
+package com.komutr.client.ui.bill.detail;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -8,7 +8,6 @@ import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Wallet;
-import com.komutr.client.ui.wallet.WalletView;
 
 import java.util.HashMap;
 import java.util.Map;

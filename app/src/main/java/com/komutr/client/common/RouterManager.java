@@ -129,6 +129,7 @@ public class RouterManager {
 
     public static final String POSITION = ROUTER_HOME + "PositionActivity";
 
+    public static final String RECHARGE = ROUTER_HOME + "RechargeActivity";
 
 
 
@@ -166,5 +167,7 @@ public class RouterManager {
         ARouter.getInstance().build(POSITION).navigation();
     }
 
-
+    public static void goRecharge() {
+        ARouter.getInstance().build(RECHARGE).navigation();
+    }
 }

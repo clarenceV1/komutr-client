@@ -31,6 +31,7 @@
         <activity
             android:name=".ui.web.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".ui.recharge.RechargeActivity"/>
         <activity android:name=".ui.qrcode.activity.MipcaActivityCapture"/>
         <activity android:name=".ui.userRatings.UserRatingsActivity" />
         <activity android:name=".ui.orderDetails.OrderDetailsActivity" />
@@ -40,7 +41,7 @@
         <activity android:name=".ui.FAQ.FAQActivity"/>
         <activity android:name=".ui.region.RegionActivity" />
         <activity android:name=".ui.feedback.FeedbackActivity" />
-        <activity android:name=".ui.wallet.WalletActivity" />
+        <activity android:name=".ui.wallet.WalletActivity"/>
         <activity android:name=".ui.nickname.NicknameActivity" />
         <activity android:name=".ui.personInfo.PersonInfoActivity" />
         <activity android:name=".ui.phoneNumber.BindPhoneActivity"/>
@@ -52,7 +53,7 @@
         <activity android:name=".ui.aboutUs.AboutUsActivity" />
         <activity android:name=".ui.helpCenter.HelpCenterActivity"/>
         <activity android:name=".ui.email.BindEmailActivity"/>
-        <activity android:name=".ui.bill.BillDetailActivity"/>
+        <activity android:name=".ui.bill.detail.BillDetailActivity"/>
     </application>
 
 </manifest>

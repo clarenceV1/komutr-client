@@ -1,4 +1,4 @@
-package com.komutr.client.ui.bill;
+package com.komutr.client.ui.bill.detail;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
