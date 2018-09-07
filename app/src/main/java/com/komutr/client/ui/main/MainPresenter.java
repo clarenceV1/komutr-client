@@ -45,7 +45,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
 
     public void logout() {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.logout");
         query.put("auth_key", authKey);
         Disposable disposable = requestStore.get().commonRequest(query)
@@ -103,7 +103,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
     }
 
     public void requestPhoneAndAppVersion() {
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "system.serviceInfo");
         query.put("auth_key", Constant.AUTH_KEY);
         Disposable disposable = requestStore.get().commonRequest(query)

@@ -39,7 +39,7 @@ public class WalletPresenter extends AppBasePresenter<WalletView> {
      */
     public void requestWallet() {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "payment.customerAmount");
         query.put("auth_key", authKey);
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {

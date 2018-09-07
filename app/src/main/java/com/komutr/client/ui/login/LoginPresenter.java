@@ -42,7 +42,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
 
 
     public void registeredOrLogin(String code, String phone, String verTokenKey) {
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.registeredOrLogin");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("ver_token_key", verTokenKey);
@@ -85,7 +85,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
      * @param phone
      */
     public void verificationCode(final String phone) {
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.verification");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("phone", phone);

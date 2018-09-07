@@ -18,6 +18,7 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.SearchRoutesBinding;
@@ -35,15 +36,15 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
     SearchRoutesPresenter presenter;
     @Inject
     ILoadImage iLoadImage;
-    @Autowired(name = "startSite")
-    String startSite;//起点站
-    @Autowired(name = "endSite")
-    String endSite;//终点站
-
-
+    @Autowired(name = "begStationId")
+    int begStationId;//起点站
+    @Autowired(name = "endStationId")
+    int endStationId;//终点站
     PtrRecyclerView mPtrRecyclerView;
 
     SearchRoutesAdapter adapter;
+    int offset;//偏移量
+    int limit;//行数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,19 +79,13 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
         mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
 
-//        presenter.searchRoutes(startSite,endSite);
+        presenter.searchRoutes(begStationId,endStationId,offset,limit);
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.search_routes;
     }
-
-    @Override
-    public void callback(List<SearchRoutes> dataList) {
-
-    }
-
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
@@ -105,5 +100,10 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
     @Override
     public void onLoadViewClick(int status) {
         presenter.requestList();
+    }
+
+    @Override
+    public void searchRoutes(RespondDO respondDO) {
+
     }
 }

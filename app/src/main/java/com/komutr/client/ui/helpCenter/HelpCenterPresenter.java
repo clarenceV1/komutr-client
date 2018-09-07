@@ -35,7 +35,7 @@ public class HelpCenterPresenter extends AppBasePresenter<HelpCenterView> {
      *
      */
     public void requestHelpList() {
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "system.faqItem");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("type", "2");

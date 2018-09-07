@@ -36,7 +36,7 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
      */
     public void checkUsername(final String username) {
         String auth_key = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.checkUsername");
         query.put("auth_key", auth_key);
         query.put("username", username);
@@ -72,7 +72,7 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
      * @param sex      性别 1男 2女
      */
     public void updateMyData(String username, String avatar, int big_area, int province, int sex) {
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         String auth_key = userInfoDao.get().getAppAuth();
         query.put("m", "customer.updateMyData");
         query.put("auth_key", auth_key);
@@ -83,13 +83,13 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
             query.put("username", username);
         }
         if (big_area != -1) {
-            query.put("big_area", big_area + "");
+            query.put("big_area", big_area);
         }
         if (province != -1) {
-            query.put("province", province + "");
+            query.put("province", province);
         }
         if (sex != -1) {
-            query.put("sex", sex + "");
+            query.put("sex", sex);
         }
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override

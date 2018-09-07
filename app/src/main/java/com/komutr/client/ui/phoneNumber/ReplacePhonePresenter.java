@@ -34,7 +34,7 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
 
     public void changePhoneNumber(String phone,String code, PhoneCode phoneCode) {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.changeMyPhoneNumber");
         query.put("auth_key", authKey);
         query.put("phone", phone);
@@ -65,7 +65,7 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
      */
     public void verificationCode(final String phone) {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.verification");
         query.put("auth_key", authKey);
         query.put("phone", phone);

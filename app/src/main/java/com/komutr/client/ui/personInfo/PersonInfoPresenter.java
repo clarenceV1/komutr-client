@@ -36,7 +36,7 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
 
     public void requestUserInfo() {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.myData");
         query.put("auth_key", authKey);
         Disposable disposable = requestStore.get().commonRequest(query)

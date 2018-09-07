@@ -31,7 +31,7 @@ public class FeedbackPresenter extends AppBasePresenter<FeedbackView> {
      */
     public void requestFeedBack(String content) {
         String auth_key = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "system.feedback");
         query.put("auth_key", auth_key);
         query.put("content", content);

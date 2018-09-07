@@ -33,11 +33,11 @@ public class FAQPresenter extends AppBasePresenter<FAQView> {
      *
      */
     public void requestDetail(int contentType) {
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "system.faq");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("user_type", "2");
-        query.put("content_type", contentType + "");
+        query.put("content_type", contentType);
         query.put("limit", "0,10");
         Disposable disposable = requestStore.get().commonRequest(query)
                 .doOnSuccess(new Consumer<RespondDO>() {

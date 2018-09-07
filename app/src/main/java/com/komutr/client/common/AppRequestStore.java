@@ -34,7 +34,7 @@ public class AppRequestStore {
     public AppRequestStore() {
     }
 
-    public Single<RespondDO> commonRequest(Map<String, String> queryMap) {
+    public Single<RespondDO> commonRequest(Map<String, Object> queryMap) {
         Single<RespondDO> respond = retrofit.get().create(ApiService.class)
                 .commonRequest(queryMap)
                 .map(new Function<ResponseBody, RespondDO>() {

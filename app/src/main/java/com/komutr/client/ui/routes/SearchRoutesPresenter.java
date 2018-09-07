@@ -38,7 +38,6 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
     }
 
 
-    
     public void requestMore() {
 
     }
@@ -46,7 +45,7 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
     public void requestList() {
     }
 
-    public List<SearchRoutes> getTestList(){
+    public List<SearchRoutes> getTestList() {
         List<SearchRoutes> newdatas = new ArrayList<>();
         newdatas.add(new SearchRoutes());
         newdatas.add(new SearchRoutes());
@@ -62,23 +61,19 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
         return newdatas;
     }
 
-    public void searchRoutes(String startSite, String endSite,int offset,int limit) {
-        Map<String, String> query = new HashMap<>();
-        query.put("m", "station.searchEndAndBegStation");
+    public void searchRoutes(int begStationId, int endStationId, int offset, int limit) {
+        Map<String, Object> query = new HashMap<>();
+        query.put("m", "station.route");
         query.put("auth_key", Constant.AUTH_KEY);
-        query.put("value", startSite);
-        query.put("offset", offset+"");
-//        query.put("phone", limit);
+        query.put("beg_station", begStationId + "");
+        query.put("end_station", endStationId + "");
+        query.put("offset", offset + "");
+        query.put("limit", limit + "");
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override
             public void accept(RespondDO respondDO) {
-                if (respondDO.isStatus()&& !TextUtils.isEmpty(respondDO.getData())) {
-                    User userInfo = JSON.parseObject(respondDO.getData(), User.class);
-                    respondDO.setObject(userInfo);
-                    if (userInfoDao != null) {
-                        userInfoDao.get().saveAndDelete(userInfo);
-                    }
-                    EventBus.getDefault().post(new LoginEvent(LoginEvent.STATE_LOGIN_SUCCESS, userInfo));
+                if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
+
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +81,7 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
                     @Override
                     public void accept(RespondDO respondDO) {
                         Log.d("registeredOrLogin", respondDO.toString());
-//                        mView.registeredOrLoginCallBack(respondDO);
+                        mView.searchRoutes(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -94,7 +89,7 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
-//                        mView.registeredOrLoginCallBack(respondDO);
+                        mView.searchRoutes(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);
