@@ -36,10 +36,20 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
 
     @Override
     public void initView() {
-        mViewBinding.ivBack.setOnClickListener(this);
-        mViewBinding.tvBill.setOnClickListener(this);
-        mViewBinding.btnRecharge.setOnClickListener(this);
-        mViewBinding.tvTopFAQ.setOnClickListener(this);
+        setBarTitle(getString(R.string.komutr_pay));
+        if(titleBarView!=null){
+            titleBarView.setRightText(getString(R.string.bill));
+            titleBarView.setRightClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //账单
+                }
+            });
+        }
+//        mViewBinding.ivBack.setOnClickListener(this);
+//        mViewBinding.tvBill.setOnClickListener(this);
+//        mViewBinding.btnRecharge.setOnClickListener(this);
+//        mViewBinding.tvTopFAQ.setOnClickListener(this);
 
         CommonUtils.setBackground(mViewBinding.tvTopFAQ, CommonUtils.selectorStateColor(this, R.color.white, R.color.color_f1f1f4));
         presenter.requestWallet();
@@ -54,12 +64,12 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ivBack:
-                finish();
-                break;
-            case R.id.tvBill://账单
-
-                break;
+//            case R.id.ivBack:
+//                finish();
+//                break;
+//            case R.id.tvBill://账单
+//
+//                break;
             case R.id.btnRecharge://充值
                 RouterManager.goRecharge();
                 break;
