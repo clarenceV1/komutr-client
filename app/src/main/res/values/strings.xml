@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+
+    <string name="bill_details">Billing details</string>
+
+    <string name="items">Items</string>
+    <string name="order_number">Order Number</string>
+    <string name="status">Status</string>
+    <string name="time">Time</string>
+    <string name="amount">Amount</string>
+    <string name="transactions">TRANSACTIONS</string>
+    <string name="click_agree">Click top up to indicate that you agree</string>
+    <string name="recharge_agreement">《User recharge agreement》</string>
+    <string name="recharge_mode">recharge mode1,recharge mode2,recharge mode3</string>
+    <string name="echarge">Echarge</string>
     <string name="recharge_amount_list">₱ 50.00,₱ 100.00,₱ 200.00,₱ 500.00,₱ 1000.00,₱ 2000.00</string>
     <string name="select_recharge_amount">Select recharge amount</string>
     <string name="select_recharge_mode">Select recharge mode</string>

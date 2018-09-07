@@ -75,7 +75,7 @@
                 android:id="@+id/tvServiceAgreement"
                 style="@style/reg_log_agree_service"
                 android:text="@string/service_agreement"
-                android:textColor="@color/color_0072ff" />
+                android:textColor="@color/color_main" />
 
         </LinearLayout>
     </LinearLayout>

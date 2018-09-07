@@ -187,7 +187,7 @@
 
 
                                 <TextView
-                                    android:id="@+id/tvorderId"
+                                    android:id="@+id/tvOrderId"
                                     style="@style/my_trips_text_style"
                                     android:layout_marginLeft="7dp"
                                     android:text="4598564542821115"
