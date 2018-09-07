@@ -39,16 +39,35 @@
         </LinearLayout>
 
 
+  <!--android:drawableLeft="@drawable/positioning"-->
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="13dp"
+            android:layout_height="35dp"
+            android:paddingLeft="13dp"
             android:textSize="15sp"
-            android:textColor="@color/color_000000"
+            android:textColor="@color/color_666666"
             android:drawablePadding="7dp"
-            android:text="MANILA"
-            android:background="@color/color_ffffff"
-            android:drawableLeft="@drawable/positioning"/>
+            android:gravity="center_vertical"
+            android:text="@string/top_sites"/>
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_f1f1f4">
+
+            <com.cai.pullrefresh.PtrRecyclerViewFrameLayout
+                android:id="@+id/ptyRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.cai.framework.baseview.LoadingView
+                android:id="@+id/loadView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
 
 
 

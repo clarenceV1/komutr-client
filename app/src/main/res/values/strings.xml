@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
-
+    <string name="top_sites">Top sites</string>
     <string name="bill_details">Billing details</string>
 
     <string name="items">Items</string>
@@ -73,8 +73,8 @@
     <string name="login">login</string>
     <string name="buy">buy</string>
     <string name="ticket_price">Ticket price</string>
-    <string name="start_location_preview">Start location</string>
-    <string name="end_location_preview">Drop off affress</string>
+    <string name="start_location_preview"> Pick up address</string>
+    <string name="end_location_preview">Drop off address</string>
     <string name="book">Book</string>
     <string name="pay">Pay</string>
     <string name="my_trips">My trips</string>

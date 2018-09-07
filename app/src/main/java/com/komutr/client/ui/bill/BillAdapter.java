@@ -57,11 +57,9 @@ public class BillAdapter extends BasePtrAdapter<Bill, BillAdapter.ViewHolder> im
 
     class ViewHolder extends BasePtrViewHold {
 
-        Button btnBuy;
 
         public ViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView, listener);
-            btnBuy = itemView.findViewById(R.id.btnBuy);
         }
     }
 
