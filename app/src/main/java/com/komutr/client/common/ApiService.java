@@ -12,5 +12,5 @@ import retrofit2.http.QueryMap;
  */
 public interface ApiService {
     @GET("sapi")
-    Single<ResponseBody> commonRequest(@QueryMap Map<String, String> map);
+    Single<ResponseBody> commonRequest(@QueryMap Map<String, Object> map);
 }

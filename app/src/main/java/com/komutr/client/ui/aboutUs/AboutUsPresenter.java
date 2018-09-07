@@ -32,7 +32,7 @@ public class AboutUsPresenter extends AppBasePresenter<AboutUsView> {
 
     public void requestContent() {
         String auth= userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "system.aboutUs");
         query.put("auth_key", auth);
         query.put("type", "2");

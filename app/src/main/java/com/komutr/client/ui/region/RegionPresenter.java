@@ -34,7 +34,7 @@ public class RegionPresenter extends AppBasePresenter<RegionView> {
 
     public void requestBigArea() {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.bigArea");
         query.put("auth_key", authKey);
         Disposable disposable = requestStore.get().commonRequest(query)
@@ -68,7 +68,7 @@ public class RegionPresenter extends AppBasePresenter<RegionView> {
 
     public void requestNextArea() {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.province");
         query.put("auth_key", authKey);
         Disposable disposable = requestStore.get().commonRequest(query)

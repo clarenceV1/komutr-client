@@ -72,7 +72,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
             case R.id.ivChangeLocation://位置切换
                 break;
             case R.id.ivSearchRoutes://位置切换
-                RouterManager.goSearchRoutes("ss","bb");
+                RouterManager.goSearchRoutes(1,2);
                 break;
 
         }

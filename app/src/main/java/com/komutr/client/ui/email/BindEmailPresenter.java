@@ -31,7 +31,7 @@ public class BindEmailPresenter extends AppBasePresenter<BindEmailView> {
 
     public void bindEmail(String email, String code, PhoneCode phoneCode) {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.changeEmail");
         query.put("auth_key", authKey);
         query.put("code", code);
@@ -65,7 +65,7 @@ public class BindEmailPresenter extends AppBasePresenter<BindEmailView> {
      */
     public void checkEmail(String email) {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, String> query = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.verificationEmail");
         query.put("auth_key", authKey);
         query.put("email", email);

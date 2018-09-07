@@ -1,6 +1,7 @@
 package com.komutr.client.base;
 
 
+import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.LinearLayout;
 import com.cai.framework.base.GodBasePresenterActivity;
 import com.cai.framework.baseview.TitleBarView;
 import com.komutr.client.R;
+import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.Constant;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -55,6 +58,14 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
         }
     }
 
+    protected <T> T getArouterSerializableData(String key) {
+        Intent intent = getIntent();
+        if (intent != null) {
+            Serializable serializable = intent.getSerializableExtra(key);
+            return (T) serializable;
+        }
+        return null;
+    }
 
     public Map<String, String> getUserParams() {
 

@@ -21,7 +21,7 @@ import com.komutr.client.common.RouterManager;
  *
  * @version 1.0.0.0 2018/9/4 chengaobin
  */
-public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes,SearchRoutesAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener,View.OnClickListener {
+public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes,SearchRoutesAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener{
     ILoadImage iLoadImage;
     SearchRoutesPresenter presenter;
     Context context;
@@ -52,9 +52,15 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes,SearchRoute
     }
 
     @Override
-    protected void onPtrBindViewHolder(ViewHolder holder,  SearchRoutes data, int position) {
+    protected void onPtrBindViewHolder(ViewHolder holder, final SearchRoutes data, int position) {
 
-        holder.btnBuy.setOnClickListener(this);
+        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.setBegStation(1);
+                RouterManager.goReviewPurchase(data);
+            }
+        });
 //        ILoadImageParams imageParams = new ImageForGlideParams.Builder()
 //                .url(data.getToken_icon())
 //                .transformation(new GlideCircleTransform(context))
@@ -62,11 +68,6 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes,SearchRoute
 //        imageParams.setImageView(holder.imageView);
 //        iLoadImage.loadImage(context, imageParams);
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        RouterManager.goReviewPurchase();
     }
 
     class ViewHolder extends BasePtrViewHold {

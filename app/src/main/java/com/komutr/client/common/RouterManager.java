@@ -1,6 +1,7 @@
 package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.komutr.client.been.SearchRoutes;
 
 public class RouterManager {
     public static final String ROUTER_HOME = "/komutr/";
@@ -132,15 +133,16 @@ public class RouterManager {
                 .navigation();
     }
 
-    public static void goSearchRoutes(String startSite, String endSite) {
+    public static void goSearchRoutes(int begStationId, int endStationId) {
         ARouter.getInstance().build(SEARCH_ROUTES)
-                .withString("startSite", startSite)
-                .withString("endSite", endSite)
+                .withInt("begStationId", begStationId)
+                .withInt("endStationId", endStationId)
                 .navigation();
     }
 
-    public static void goReviewPurchase() {
-        ARouter.getInstance().build(REVIEW_PURCHASE).navigation();
+    public static void goReviewPurchase(SearchRoutes data) {
+        ARouter.getInstance().build(REVIEW_PURCHASE)
+                .withSerializable("Routes",data).navigation();
     }
 
     public static void goRouteDetail() {
