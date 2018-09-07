@@ -58,8 +58,8 @@
                 android:orientation="vertical">
 
 
-                <EditText
-                    android:id="@+id/etStartLocation"
+                <TextView
+                    android:id="@+id/tvStartLocation"
                     style="@style/edit_text_style"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -76,8 +76,8 @@
                     android:background="@color/color_side_line" />
 
 
-                <EditText
-                    android:id="@+id/etEndLocation"
+                <TextView
+                    android:id="@+id/tvEndLocation"
                     style="@style/edit_text_style"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

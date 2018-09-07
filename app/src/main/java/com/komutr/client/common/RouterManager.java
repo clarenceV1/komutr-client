@@ -169,8 +169,9 @@ public class RouterManager {
         ARouter.getInstance().build(USER_RATINGS).navigation();
     }
 
-    public static void goPosition() {
-        ARouter.getInstance().build(POSITION).navigation();
+    public static void goPosition(boolean isStartPosition) {
+        ARouter.getInstance().build(POSITION)
+                .withBoolean("isStartPosition",isStartPosition).navigation();
     }
 
     public static void goRecharge() {

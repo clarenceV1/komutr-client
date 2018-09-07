@@ -62,8 +62,8 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
 
         mViewBinding.ivChangeLocation.setOnClickListener(this);
         mViewBinding.ivSearchRoutes.setOnClickListener(this);
-
-
+        mViewBinding.tvStartLocation.setOnClickListener(this);
+        mViewBinding.tvEndLocation.setOnClickListener(this);
     }
 
     @Override
@@ -71,8 +71,16 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         switch (view.getId()) {
             case R.id.ivChangeLocation://位置切换
                 break;
-            case R.id.ivSearchRoutes://位置切换
+            case R.id.ivSearchRoutes://搜索路线
                 RouterManager.goSearchRoutes("ss","bb");
+                break;
+
+            case R.id.tvStartLocation://起点位置
+                RouterManager.goPosition(true);
+                break;
+
+            case R.id.tvEndLocation://终点位置
+                RouterManager.goPosition(false);
                 break;
 
         }
