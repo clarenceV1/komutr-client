@@ -17,6 +17,7 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.Position;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PositionBinding;
 
@@ -28,17 +29,22 @@ import javax.inject.Inject;
 @Route(path = RouterManager.POSITION, name = "搜索位置")
 public class PositionActivity extends AppBaseActivity<PositionBinding> implements PositionView , BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener,View.OnClickListener{
 
-
     @Inject
     PositionPresenter presenter;
-
     @Autowired(name = "isStartPosition")
     boolean isStartPosition;//起点站
-
+    @Autowired(name = "bigArea")
+    int bigArea;//大区 ID
+    @Autowired(name = "province")
+    int province;//大区下面的行政单位 ID
 
     PtrRecyclerView mPtrRecyclerView;
-
     PositionAdapter adapter;
+
+    String value;//搜索的值
+    int offset;//开始行数 0
+    int limit;//条数 10 <offset 0 limit 10 > 取10条数据
+
 
     @Override
     public void initDagger() {
@@ -54,6 +60,7 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     @Override
     public void initView() {
 
+        presenter.initData(isStartPosition,bigArea,province);
 
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
@@ -81,13 +88,18 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     }
 
     @Override
+    public void requestListCallback(RespondDO respondDO) {
+
+    }
+
+    @Override
     public void onLoadViewClick(int status) {
-        presenter.requestList();
+//        presenter.requestList();
     }
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
-        presenter.requestList();
+//        presenter.requestList();
     }
 
     @Override

@@ -72,7 +72,7 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override
             public void accept(RespondDO respondDO) {
-                if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
+               if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
 
                 }
             }

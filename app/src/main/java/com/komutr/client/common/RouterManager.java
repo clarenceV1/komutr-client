@@ -171,9 +171,11 @@ public class RouterManager {
         ARouter.getInstance().build(USER_RATINGS).navigation();
     }
 
-    public static void goPosition(boolean isStartPosition) {
+    public static void goPosition(boolean isStartPosition,int bigArea,int province) {
         ARouter.getInstance().build(POSITION)
-                .withBoolean("isStartPosition",isStartPosition).navigation();
+                .withBoolean("isStartPosition",isStartPosition)
+                .withInt("bigArea",bigArea)
+                .withInt("province",province).navigation();
     }
 
     public static void goRecharge() {

@@ -44,7 +44,7 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
 
     SearchRoutesAdapter adapter;
     int offset;//偏移量
-    int limit;//行数
+    int limit=1;//行数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
