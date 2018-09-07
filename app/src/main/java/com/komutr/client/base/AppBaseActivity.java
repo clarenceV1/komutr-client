@@ -29,7 +29,7 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
 
     @Override
     public void setStatusBar(SystemBarTintManager tintManager) {
-        tintManager.setTintColor(getResources().getColor(R.color.transparent));
+        tintManager.setTintColor(getResources().getColor(R.color.color_main));
     }
 
     public void setStatuBarColor(int color) {
