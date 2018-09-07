@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+    <string name="save">Save</string>
     <string name="top_sites">Top sites</string>
     <string name="bill_details">Billing details</string>
+    <string name="enter_name">Enter name</string>
 
     <string name="items">Items</string>
     <string name="order_number">Order Number</string>

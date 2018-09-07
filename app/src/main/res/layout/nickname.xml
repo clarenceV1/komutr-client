@@ -3,10 +3,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/color_f1f1f4"
         android:orientation="vertical">
 
-        <EditText
+        <!--<EditText
             android:id="@+id/editNicke"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -14,6 +15,78 @@
             android:id="@+id/tvTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="更改昵称"/>
+            android:text="更改昵称"/>-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/color_main">
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/arrow_back"
+                android:padding="12dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="@string/order_details" />
+
+
+
+            <RadioButton
+                android:id="@+id/rbSave"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:gravity="center"
+                android:enabled="false"
+                android:button="@null"
+                android:text="@string/save"
+                android:textColor="@drawable/save_color"
+                android:textSize="20sp" />
+
+
+        </RelativeLayout>
+
+        <!--昵称-->
+        <com.cai.framework.widget.CustomEditText xmlns:editAttrs="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/etNickName"
+            style="@style/edit_text_style"
+            android:layout_height="45dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:textSize="15sp"
+            android:maxLength="20"
+            android:background="@color/color_ffffff"
+            android:hint="@string/enter_name"
+            editAttrs:showDelete="true" />
+
+
+        <TextView
+            android:id="@+id/tvContentLength"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/color_666666"
+            android:textSize="15sp"
+            android:text="0/20"/>
+
+
+
+
     </LinearLayout>
 </layout>
