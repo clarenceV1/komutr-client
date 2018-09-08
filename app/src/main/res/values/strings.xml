@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">komutr-client</string>
-
+    <string name="binding_in">Binding...</string>
+    <string name="please_input_verification_code">Please enter your current phone verification code</string>
+    <string name="enter_a_new_phone_number">Enter a new phone number</string>
+    <string name="binding_text">After the binding is successful, please log in with your new mobile phone number the next time you log in.</string>
+    <string name="binding">Binding</string>
+    <string name="get_code">Get code</string>
+    <string name="enter_confirmation_code">Enter confirmation code</string>
+    <string name="name">Name</string>
+    <string name="updating">updating</string>
+    <string name="loading">loading</string>
+    <string name="reloading">Click the icon to load</string>
+    <string name="request_failed">request failed</string>
+    <string name="network_error">Network connection failed Please check your network settings</string>
     <string name="save">Save</string>
     <string name="top_sites">Top sites</string>
     <string name="bill_details">Billing details</string>

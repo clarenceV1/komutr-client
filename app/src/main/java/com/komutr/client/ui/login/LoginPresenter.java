@@ -11,7 +11,7 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
 import com.komutr.client.dao.UserInfoDao;
-import com.komutr.client.event.LoginEvent;
+import com.komutr.client.event.EventPostInfo;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -57,7 +57,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
                     if (userInfoDao != null) {
                         userInfoDao.get().saveAndDelete(userInfo);
                     }
-                    EventBus.getDefault().post(new LoginEvent(LoginEvent.STATE_LOGIN_SUCCESS, userInfo));
+                    EventBus.getDefault().post(new EventPostInfo(EventPostInfo.UPDATE_PERSON_INFO_SUCCESS));
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())

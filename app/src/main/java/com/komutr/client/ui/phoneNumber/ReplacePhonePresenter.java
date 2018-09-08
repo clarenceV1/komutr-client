@@ -8,6 +8,9 @@ import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
+import com.komutr.client.event.EventPostInfo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +66,7 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
      *
      * @param phone
      */
-    public void verificationCode(final String phone) {
+    public void verificationCode(final String phone,final int fromCallBack) {
         String authKey = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.verification");
@@ -77,6 +80,10 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
                         if(respondDO.isStatus()&&!TextUtils.isEmpty(respondDO.getData())){
                             PhoneCode phoneCode = JSON.parseObject(respondDO.getData(), PhoneCode.class);
                             respondDO.setObject(phoneCode);
+                            User userInfo = new User();
+                            userInfo.setPhone(phone);
+                            userInfoDao.get().updateUser(userInfo);
+                            EventBus.getDefault().post(new EventPostInfo(EventPostInfo.UPDATE_PERSON_INFO_SUCCESS));
                         }
                     }
                 })
@@ -85,6 +92,7 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
                     @Override
                     public void accept(RespondDO respondDO) {
                         Logger.d(respondDO.toString());
+                        respondDO.setFromCallBack(fromCallBack);
                         mView.verificationCodeCallback(respondDO);
                     }
                 }, new Consumer<Throwable>() {
@@ -92,7 +100,7 @@ public class ReplacePhonePresenter extends AppBasePresenter<ReplacePhoneView> {
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
-                        respondDO.setFromCallBack(-1);
+                        respondDO.setFromCallBack(fromCallBack);
                         mView.verificationCodeCallback(respondDO);
                     }
                 });

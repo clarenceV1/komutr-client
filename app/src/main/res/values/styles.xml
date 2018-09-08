@@ -108,6 +108,13 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="dialog_style_theme" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
 
 
 </resources>

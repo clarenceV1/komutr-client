@@ -99,9 +99,7 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
         } else if (mViewBinding.etInputVerificAtionCode.hasFocus()) {//获得焦点时为获取验证码的输入项，登录按钮可点击
             boolean isNotEmpty = !StringUtils.isEmpty(text);
             mViewBinding.btnLogReg.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etPhone)));
-
         }
-
     }
 
     @Override
@@ -127,6 +125,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                     presenter.verificationCode(phone);
                     break;
                 case R.id.btnLogReg://登录
+                    if(StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode))){
+                        ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
+                        return;
+                    }
                     if (this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {//为获取验证码
                         ToastUtils.showShort(getString(R.string.not_get_code));
                         return;
@@ -137,11 +139,13 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                         return;
                     }
                     mViewBinding.btnVerificationCode.setEnabled(false);
-                    mViewBinding.btnVerificationCode.setText(getString(R.string.logging));
+                    mViewBinding.btnVerificationCode.setText(getString(R.string.binding_in));
                     presenter.registeredOrLogin(StringUtils.getString(mViewBinding.etInputVerificAtionCode), phone, this.phoneCode.getVer_token_key());
                     break;
             }
         }
 
     }
+
+
 }

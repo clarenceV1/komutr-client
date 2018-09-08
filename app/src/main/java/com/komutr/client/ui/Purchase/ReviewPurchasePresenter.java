@@ -3,16 +3,9 @@ package com.komutr.client.ui.Purchase;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.User;
-import com.komutr.client.common.Constant;
-import com.komutr.client.event.LoginEvent;
-import com.komutr.client.ui.wallet.WalletView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;

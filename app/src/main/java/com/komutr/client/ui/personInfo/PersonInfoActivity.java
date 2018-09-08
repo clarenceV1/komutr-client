@@ -1,6 +1,5 @@
 package com.komutr.client.ui.personInfo;
 
-import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
@@ -13,9 +12,11 @@ import com.cai.framework.imageload.GlideCircleTransform;
 import com.cai.framework.imageload.ILoadImage;
 import com.cai.framework.imageload.ILoadImageParams;
 import com.cai.framework.imageload.ImageForGlideParams;
+import com.cai.framework.logger.Logger;
 import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -23,6 +24,11 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PersonInfoBinding;
+import com.komutr.client.event.EventPostInfo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -49,21 +55,18 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
 
     @Override
     public void initView() {
+        EventBus.getDefault().register(this);
         setBarTitle(getString(R.string.person_info));
         initData();
         dynamicAddWidget();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         presenter.requestUserInfo();
     }
+
 
     private void initData() {
         User user = presenter.getUserInfo();
         if (user != null) {
-            if (!TextUtils.isEmpty(user.getAvatar_thum())) {
+            if (!StringUtils.isEmpty(user.getAvatar_thum())) {
                 ILoadImageParams imageParams = new ImageForGlideParams.Builder()
                         .url(user.getAvatar_thum())
                         .placeholder(R.drawable.default_avatar)
@@ -76,8 +79,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
                 mViewBinding.ivUserAvatar.setImageResource(R.drawable.default_avatar);
             }
             mViewBinding.tvUserId.setText("ID:" + user.getId());
-            infoList.put(0, user.getPhone());
-            infoList.put(1, user.getUsername());
+            updateData(user, false);
         }
     }
 
@@ -110,17 +112,20 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
             llItemLayout.addView(tvName);
 
             tvName = new TextView(this);
+            tvName.setCompoundDrawablePadding(padding / 2);
             tvName.setTextSize(15f);
             tvName.setGravity(Gravity.CENTER_VERTICAL);
             tvName.setGravity(Gravity.RIGHT);
             tvName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_666666, this));
-            if (!TextUtils.isEmpty(infoList.get(i))) {
+            if (!StringUtils.isEmpty(infoList.get(i))) {
                 tvName.setText(infoList.get(i));
             }
+            llItemLayout.setTag(tvName);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.weight = 1;
             layoutParams.width = 0;
             llItemLayout.addView(tvName, layoutParams);
+
             View view = new View(this);
             view.setBackgroundResource(R.color.color_f1f1f4);
             LinearLayout.LayoutParams viewP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
@@ -131,6 +136,50 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventPostInfo eventPostInfo) {
+        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.UPDATE_PERSON_INFO_SUCCESS) {
+            User user = presenter.getUserInfo();
+            updateData(user, true);
+        }
+    }
+
+    /**
+     * @param user
+     */
+    private void updateData(User user, boolean isUpdateView) {
+        if (user != null) {
+            infoList.put(0, user.getPhone());
+            infoList.put(1, user.getUsername());
+            infoList.put(2, user.getEmail());
+            infoList.put(3, "");
+            infoList.put(4, user.getSex());
+            infoList.put(5, StringUtils.isEmpty(user.getBig_area()) ? "" : user.getBig_area() + (StringUtils.isEmpty(user.getProvince()) ? "" : user.getProvince()));
+            if (isUpdateView) {
+                int countChild = mViewBinding.llPersonInfoLayout.getChildCount();
+                int index=0;
+                for (int i = 0; i < countChild; i++) {
+                    TextView tvName = (TextView) mViewBinding.llPersonInfoLayout.getChildAt(i).getTag();
+                    if(tvName != null){
+                        Logger.i("name=" + infoList.get(index) + ",tvName=" + tvName);
+                        tvName.setText(infoList.get(index));
+                        index ++;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
     @Override
     public int getLayoutId() {
         return R.layout.person_info;
@@ -138,7 +187,9 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
 
     @Override
     public void callbackUserInfo(RespondDO respondDO) {
-
+        if (respondDO.isStatus()) {
+            updateData((User) respondDO.getObject(), true);
+        }
     }
 
 

@@ -4,10 +4,15 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
+import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
+import com.komutr.client.event.EventPostInfo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,13 +53,20 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
                         Log.d("checkUsername", respondDO.toString());
                         if (respondDO.isStatus()) { //成功
                             updateMyData(username, null, -1, -1, -1);
+                        }else {
+                            mView.checkUsername(respondDO);
                         }
-                        mView.checkUsername(respondDO);
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
+                        respondDO.setStatus(false);
+                        mView.checkUsername(respondDO);
+
                     }
                 });
         mCompositeSubscription.add(disposable);
@@ -96,6 +108,7 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
                     User userInfo = JSON.parseObject(respondDO.getData(), User.class);
                     userInfoDao.get().updateUser(userInfo);
                     respondDO.setObject(userInfo);
+                    EventBus.getDefault().post(new EventPostInfo(EventPostInfo.UPDATE_PERSON_INFO_SUCCESS));
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())
@@ -113,6 +126,11 @@ public class NicknamePresenter extends AppBasePresenter<NicknameView> {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
+                        respondDO.setStatus(false);
+                        mView.updateMyData(respondDO);
+
                     }
                 });
         mCompositeSubscription.add(disposable);
