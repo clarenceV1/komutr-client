@@ -36,7 +36,6 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
     @Override
     public void initView() {
 
-
         mViewBinding.tvRefundInstructions.setOnClickListener(this);
         mViewBinding.tvRefund.setOnClickListener(this);
         mViewBinding.ivBack.setOnClickListener(this);

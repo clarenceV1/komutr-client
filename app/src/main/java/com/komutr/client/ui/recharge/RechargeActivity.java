@@ -18,6 +18,8 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.RechargePackage;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RechargeBinding;
 
@@ -30,6 +32,8 @@ public class RechargeActivity extends AppBaseActivity<RechargeBinding> implement
 
     @Inject
     RechargePresenter presenter;
+    TextView tvCurrentMode;
+    RechargePackage rechargePackage;
 
     @Override
     public void initDagger() {
@@ -51,10 +55,9 @@ public class RechargeActivity extends AppBaseActivity<RechargeBinding> implement
         dynamicAddWidget();
         addRechargeModeView();
         mViewBinding.tvRechargeAgreement.setOnClickListener(this);
+        presenter.requestRechargePackage();
 
     }
-
-    TextView tvCurrentMode;
 
     /**
      * 添加充值模式选择
@@ -76,16 +79,14 @@ public class RechargeActivity extends AppBaseActivity<RechargeBinding> implement
             tvName.setText(modeList[i]);
             tvName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_000000, this));
             tvName.setCompoundDrawablePadding(height / 4);
-            tvName.setCompoundDrawablesWithIntrinsicBounds(StreamUtils.getInstance().resourceToDrawable(R.drawable.pay_icon,this), null, StreamUtils.getInstance().resourceToDrawable(i==0?R.drawable.checked_icon:R.drawable.unchecked_icon,this), null);
+            tvName.setCompoundDrawablesWithIntrinsicBounds(StreamUtils.getInstance().resourceToDrawable(R.drawable.pay_icon, this), null, StreamUtils.getInstance().resourceToDrawable(i == 0 ? R.drawable.checked_icon : R.drawable.unchecked_icon, this), null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
             params.gravity = Gravity.CENTER_VERTICAL;
-            mViewBinding.llRechargeModeLayout.addView(tvName,params);
+            mViewBinding.llRechargeModeLayout.addView(tvName, params);
         }
         tvCurrentMode = (TextView) mViewBinding.llRechargeModeLayout.getChildAt(0);
 
     }
-
-
 
 
     /**
@@ -105,6 +106,7 @@ public class RechargeActivity extends AppBaseActivity<RechargeBinding> implement
 
 
         String[] amountList = getResources().getString(R.string.recharge_amount_list).split(",");
+
         int length = amountList.length;
         ColorStateList colorStateList = CommonUtils.selectorColorState(StreamUtils.getInstance().resourceToColor(R.color.color_000000, this), StreamUtils.getInstance().resourceToColor(R.color.color_ffffff, this));
         Drawable normalD = CommonUtils.getGradientDrawable(StreamUtils.getInstance().resourceToColor(R.color.color_c6c6c6, this), StreamUtils.getInstance().resourceToColor(R.color.transparent, this), dp1, dp1 * 3);
@@ -122,7 +124,7 @@ public class RechargeActivity extends AppBaseActivity<RechargeBinding> implement
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(width, dp1 * 40);
             params.bottomMargin = dp10;
             int index = i + 1;
-            params.leftMargin = (index == 1 || index % 3 == 0+1 ? dp10 * 2 : dp10 / 2);
+            params.leftMargin = (index == 1 || index % 3 == 0 + 1 ? dp10 * 2 : dp10 / 2);
             params.rightMargin = (index == length || (index != 0 && index % 3 == 0) ? dp10 * 2 : dp10 / 2);
 
             params.gravity = Gravity.CENTER;
@@ -142,12 +144,19 @@ public class RechargeActivity extends AppBaseActivity<RechargeBinding> implement
         switch (view.getId()) {
 
             case com.cai.framework.R.id.tvRight://账单
-                RouterManager. goBill();
+                RouterManager.goBill();
                 break;
-           case R.id.tvRechargeAgreement://充值协议
-               break;
+            case R.id.tvRechargeAgreement://充值协议
+                break;
 
 
+        }
+    }
+
+    @Override
+    public void rechargePackageCallback(RespondDO<RechargePackage> respondDO) {
+        if (respondDO.isStatus()) {
+            rechargePackage = respondDO.getObject();
         }
     }
 
@@ -164,9 +173,9 @@ public class RechargeActivity extends AppBaseActivity<RechargeBinding> implement
         public void onClick(View view) {
 
             TextView tv = (TextView) view;
-            if(!tv.getText().toString().equals(tvCurrentMode.getText().toString())){
-                tvCurrentMode.setCompoundDrawablesWithIntrinsicBounds(StreamUtils.getInstance().resourceToDrawable(R.drawable.pay_icon,RechargeActivity.this), null, StreamUtils.getInstance().resourceToDrawable(R.drawable.unchecked_icon,RechargeActivity.this), null);
-                tv.setCompoundDrawablesWithIntrinsicBounds(StreamUtils.getInstance().resourceToDrawable(R.drawable.pay_icon,RechargeActivity.this), null, StreamUtils.getInstance().resourceToDrawable(R.drawable.checked_icon,RechargeActivity.this), null);
+            if (!tv.getText().toString().equals(tvCurrentMode.getText().toString())) {
+                tvCurrentMode.setCompoundDrawablesWithIntrinsicBounds(StreamUtils.getInstance().resourceToDrawable(R.drawable.pay_icon, RechargeActivity.this), null, StreamUtils.getInstance().resourceToDrawable(R.drawable.unchecked_icon, RechargeActivity.this), null);
+                tv.setCompoundDrawablesWithIntrinsicBounds(StreamUtils.getInstance().resourceToDrawable(R.drawable.pay_icon, RechargeActivity.this), null, StreamUtils.getInstance().resourceToDrawable(R.drawable.checked_icon, RechargeActivity.this), null);
                 tvCurrentMode = tv;
             }
         }
