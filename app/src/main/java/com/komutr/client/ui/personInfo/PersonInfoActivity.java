@@ -63,6 +63,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         initData();
         dynamicAddWidget();
         presenter.requestUserInfo();
+//        presenter.uploadImage();
     }
 
 

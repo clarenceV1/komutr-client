@@ -27,7 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.POSITION, name = "搜索位置")
-public class PositionActivity extends AppBaseActivity<PositionBinding> implements PositionView , BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener,View.OnClickListener{
+public class PositionActivity extends AppBaseActivity<PositionBinding> implements PositionView, BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener, View.OnClickListener {
 
     @Inject
     PositionPresenter presenter;
@@ -42,8 +42,8 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     PositionAdapter adapter;
 
     String value;//搜索的值
-    int offset;//开始行数 0
-    int limit;//条数 10 <offset 0 limit 10 > 取10条数据
+    int offset = 0;//开始行数 0
+    int limit = 10;//条数 10 <offset 0 limit 10 > 取10条数据
 
 
     @Override
@@ -60,7 +60,7 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     @Override
     public void initView() {
 
-        presenter.initData(isStartPosition,bigArea,province);
+        presenter.initData(isStartPosition, bigArea, province);
 
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
@@ -74,6 +74,7 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
         mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
 
+        presenter.requestList("厦门站", offset, limit);
     }
 
     @Override
