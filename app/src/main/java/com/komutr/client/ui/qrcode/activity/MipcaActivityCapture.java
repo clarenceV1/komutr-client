@@ -122,7 +122,7 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
 //            bundle.putString("result", resultString);
 //            bundle.putParcelable("bitmap", barcode);
 //            resultIntent.putExtras(bundle);
-            RouterManager.goConfirmPayment(resultString);
+            RouterManager.goConfirmPayment(resultString,null);
 //            this.setResult(RESULT_OK, resultIntent);
         }
         MipcaActivityCapture.this.finish();

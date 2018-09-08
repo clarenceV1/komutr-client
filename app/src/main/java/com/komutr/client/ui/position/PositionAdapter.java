@@ -59,7 +59,7 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
 
     @Override
     public void onItemClick(View v, int position) {
-        RouterManager.goBillDetail();
+//        RouterManager.goBillDetail();
     }
 
     @Override

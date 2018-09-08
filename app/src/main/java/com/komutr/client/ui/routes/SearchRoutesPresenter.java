@@ -6,6 +6,8 @@ import android.util.Log;
 import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.Routes;
+import com.komutr.client.been.RoutesShift;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.Constant;
 
@@ -67,7 +69,27 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
             @Override
             public void accept(RespondDO respondDO) {
                 if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-
+                    List<Routes> routesList = JSON.parseArray(respondDO.getData(), Routes.class);
+                    List<SearchRoutes> searchRoutesList = new ArrayList<>();
+                    if (routesList != null && routesList.size() > 0) {
+                        SearchRoutes searchRoutes = null;
+                        for (Routes routes : routesList) {
+                            if (routes.getShift() != null && routes.getShift().size() > 0) {
+                                for (RoutesShift routesShift : routes.getShift()) {
+                                    if (routesShift == null) {
+                                        continue;
+                                    }
+                                    searchRoutes = new SearchRoutes();
+                                    searchRoutes.setRoute_id(routes.getRoute_id());
+                                    searchRoutes.setRoutesShift(routesShift);
+                                    searchRoutes.setStation(routes.getStation());
+                                    searchRoutes.setTicket(routes.getTicket());
+                                    searchRoutesList.add(searchRoutes);
+                                }
+                            }
+                        }
+                        respondDO.setObject(searchRoutesList);
+                    }
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())

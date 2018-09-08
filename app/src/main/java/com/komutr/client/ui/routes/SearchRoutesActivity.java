@@ -19,6 +19,8 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.Routes;
+import com.komutr.client.been.RoutesShift;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.SearchRoutesBinding;
@@ -44,7 +46,8 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
 
     SearchRoutesAdapter adapter;
     int offset;//偏移量
-    int limit;//行数
+    int limit = 1;//行数
+    List<SearchRoutes> searchRoutesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +75,14 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SearchRoutesAdapter(this, iLoadImage, presenter);
         mPtrRecyclerView.setAdapter(adapter);
-        adapter.setDatas(presenter.getTestList());
+
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
 
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
 
-        presenter.searchRoutes(begStationId,endStationId,offset,limit);
+        presenter.searchRoutes(begStationId, endStationId, offset, limit);
     }
 
     @Override
@@ -103,7 +106,10 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
     }
 
     @Override
-    public void searchRoutes(RespondDO respondDO) {
-
+    public void searchRoutes(RespondDO<List<SearchRoutes>> respondDO) {
+        if (respondDO.isStatus()) {
+            searchRoutesList = respondDO.getObject();
+            adapter.setDatas(searchRoutesList);
+        }
     }
 }

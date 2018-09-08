@@ -1,6 +1,7 @@
 package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.komutr.client.been.BuyTicket;
 import com.komutr.client.been.SearchRoutes;
 
 public class RouterManager {
@@ -18,15 +19,16 @@ public class RouterManager {
     public static final String ROUTER_PERSON_INFO = ROUTER_HOME + "PersonInfoActivity";
     public static final String ROUTER_REPLACE_PHONE = ROUTER_HOME + "ReplacePhoneActivity";
     public static final String ROUTER_BIND_PHONE = ROUTER_HOME + "BindPhoneActivity";
-    public static final String ROUTER_CONFIRM_PAY = ROUTER_HOME + "ConfirmPayActivity";
     public static final String ROUTER_ABOUT_US = ROUTER_HOME + "AboutUsActivity";
     public static final String ROUTER_HELP_CENTER = ROUTER_HOME + "HelpCenterActivity";
     public static final String ROUTER_PHONE_NUMBER = ROUTER_HOME + "PhoneNumberActivity";
     public static final String ROUTER_BIND_EMAIL = ROUTER_HOME + "EmailActivity";
     public static final String ROUTER_BILL_DETAIL = ROUTER_HOME + "BillDetailActivity";
 
-    public static void goBillDetail() {
-        ARouter.getInstance().build(RouterManager.ROUTER_BILL_DETAIL).navigation();
+    public static void goBillDetail(String billId) {
+        ARouter.getInstance().build(RouterManager.ROUTER_BILL_DETAIL)
+                .withString("BillId",billId)
+                .navigation();
     }
 
     public static void goBindEmail() {
@@ -55,10 +57,6 @@ public class RouterManager {
 
     public static void goAboutUs() {
         ARouter.getInstance().build(RouterManager.ROUTER_ABOUT_US).navigation();
-    }
-
-    public static void goConfirmPay() {
-        ARouter.getInstance().build(RouterManager.ROUTER_CONFIRM_PAY).navigation();
     }
 
     public static void goBindPhone() {
@@ -141,9 +139,10 @@ public class RouterManager {
         ARouter.getInstance().build(PAY_STATUS).navigation();
     }
 
-    public static void goConfirmPayment(String scanContent) {
+    public static void goConfirmPayment(String scanContent,BuyTicket buyTicket) {
         ARouter.getInstance().build(CONFIRM_PAYMENT)
                 .withString("scanContent", scanContent)
+                .withSerializable("BuyTicket",buyTicket)
                 .navigation();
     }
 
@@ -171,9 +170,11 @@ public class RouterManager {
         ARouter.getInstance().build(USER_RATINGS).navigation();
     }
 
-    public static void goPosition(boolean isStartPosition) {
+    public static void goPosition(boolean isStartPosition,int bigArea,int province) {
         ARouter.getInstance().build(POSITION)
-                .withBoolean("isStartPosition",isStartPosition).navigation();
+                .withBoolean("isStartPosition",isStartPosition)
+                .withInt("bigArea",bigArea)
+                .withInt("province",province).navigation();
     }
 
     public static void goRecharge() {

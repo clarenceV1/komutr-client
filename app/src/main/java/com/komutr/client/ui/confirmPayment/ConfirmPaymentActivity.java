@@ -11,6 +11,7 @@ import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.BuyTicket;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.dagger.component.DaggerCommonComponent;
 import com.komutr.client.databinding.ConfirmPaymentBinding;
@@ -25,6 +26,8 @@ public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBindin
     String scanContent;//扫描二维码内容
     @Inject
     ConfirmPaymentPresenter presenter;
+    @Autowired(name = "BuyTicket")
+    BuyTicket buyTicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBindin
 
     @Override
     public void initView() {
+        buyTicket = getArouterSerializableData("BuyTicket");
         if (!TextUtils.isEmpty(scanContent)) {
             mViewBinding.llScanPayLayout.setVisibility(View.VISIBLE);
             mViewBinding.tvPaymentMethod.setVisibility(View.VISIBLE);
@@ -51,8 +55,9 @@ public class ConfirmPaymentActivity extends AppBaseActivity<ConfirmPaymentBindin
             mViewBinding.viewScanPay.setVisibility(View.VISIBLE);
             mViewBinding.tvPaymentMethodOne.setVisibility(View.GONE);
             mViewBinding.btnPay.setText(getString(R.string.confirm_payment));
+        } else if (buyTicket != null) {
+            mViewBinding.tvBusPrice.setText(buyTicket.getAmount());
         }
-
 
         mViewBinding.btnPay.setOnClickListener(this);
         mViewBinding.ivClosePage.setOnClickListener(this);

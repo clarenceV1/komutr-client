@@ -3,40 +3,40 @@ package com.komutr.client.been;
 import java.io.Serializable;
 
 public class SearchRoutes implements Serializable {
-    private int routeId;
-    private int shiftId;
-    private int begStation;
-    private  int endStation;
+    private String route_id;
+    private RouterStation station;
+    private Ticket ticket;
+    private RoutesShift routesShift;//班次
 
-    public int getRouteId() {
-        return routeId;
+    public RoutesShift getRoutesShift() {
+        return routesShift;
     }
 
-    public void setRouteId(int routeId) {
-        this.routeId = routeId;
+    public void setRoutesShift(RoutesShift routesShift) {
+        this.routesShift = routesShift;
     }
 
-    public int getShiftId() {
-        return shiftId;
+    public String getRoute_id() {
+        return route_id;
     }
 
-    public void setShiftId(int shiftId) {
-        this.shiftId = shiftId;
+    public void setRoute_id(String route_id) {
+        this.route_id = route_id;
     }
 
-    public int getBegStation() {
-        return begStation;
+    public RouterStation getStation() {
+        return station;
     }
 
-    public void setBegStation(int begStation) {
-        this.begStation = begStation;
+    public void setStation(RouterStation station) {
+        this.station = station;
     }
 
-    public int getEndStation() {
-        return endStation;
+    public Ticket getTicket() {
+        return ticket;
     }
 
-    public void setEndStation(int endStation) {
-        this.endStation = endStation;
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 }
