@@ -23,6 +23,7 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PersonInfoBinding;
+import com.komutr.client.ui.nickname.NicknamePresenter;
 
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
 
     @Inject
     PersonInfoPresenter presenter;
+    @Inject
+    NicknamePresenter nicknamePresenter;
     @Inject
     ILoadImage loadImage;
     SparseArray<String> infoList = new SparseArray<>();
@@ -45,6 +48,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
     @Override
     public void addPresenters(List<GodBasePresenter> observerList) {
         observerList.add(presenter);
+        observerList.add(nicknamePresenter);
     }
 
     @Override
