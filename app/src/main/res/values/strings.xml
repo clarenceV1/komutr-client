@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">komutr-client</string>
+    <string name="please_input_correct_email_address">Please enter the correct email address</string>
+    <string name="not_get_email_code">You have not yet obtained a email code</string>
+    <string name="enter_email_address">Enter E-mail address</string>
+    <string name="enter_security_code">Enter security Code</string>
+    <string name="bind_failed">bind failed</string>
+    <string name="please_enter_your_vaild_email">please enter your vaild email</string>
     <string name="binding_in">Binding...</string>
     <string name="please_input_verification_code">Please enter your current phone verification code</string>
     <string name="enter_a_new_phone_number">Enter a new phone number</string>

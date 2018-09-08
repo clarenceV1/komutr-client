@@ -181,8 +181,8 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
                     ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
                     return;
                 }
-                mViewBinding.btnVerificationCode.setEnabled(false);
-                mViewBinding.btnVerificationCode.setText(getString(R.string.logging));
+                mViewBinding.btnBinding.setEnabled(false);
+                mViewBinding.btnBinding.setText(getString(R.string.binding_in));
                 presenter.changePhoneNumber(StringUtils.getString(mViewBinding.etInputVerificAtionCode), newPhoneNum, this.phoneCode);
                 break;
         }
