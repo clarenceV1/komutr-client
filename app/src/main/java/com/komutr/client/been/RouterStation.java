@@ -1,6 +1,8 @@
 package com.komutr.client.been;
 
-public class RouterStation {
+import java.io.Serializable;
+
+public class RouterStation implements Serializable {
     //"station":{"beg":{"id":8,"latitude":"24.63618","longitude":"118.07404","name":"厦门站"},"end":{"id":20,"latitude":"25.98584","longitude":"25.98584","name":"福州北站"}}
     private Station beg;
     private Station end;

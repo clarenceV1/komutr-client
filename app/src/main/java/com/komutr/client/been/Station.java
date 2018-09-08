@@ -1,17 +1,19 @@
 package com.komutr.client.been;
 
-public class Station {
+import java.io.Serializable;
+
+public class Station implements Serializable {
     //[{"id":1,"latitude":"26.11395","longitude":"118.07404","name":"厦门站"}]
-    private int id;
+    private String id;
     private double latitude;
     private double longitude;
     private String name;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

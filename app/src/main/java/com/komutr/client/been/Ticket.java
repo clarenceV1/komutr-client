@@ -1,6 +1,8 @@
 package com.komutr.client.been;
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
     //"ticket":{"discount":"0.00","price":"0.00"}
     private String discount;
     private String price;

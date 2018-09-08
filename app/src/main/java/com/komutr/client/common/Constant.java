@@ -13,7 +13,7 @@ public class Constant {
     private static final String IS_TEST_ENV = "is_test_env";//是否是测试环境
 
     public static final String AUTH_KEY = "d511D54i5Odb6WT";
-
+   //tel 211111101 测试账号
     /**
      * 设置是否是测试环境
      *

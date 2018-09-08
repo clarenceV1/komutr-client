@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
+import com.komutr.client.been.BuyTicket;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
@@ -36,12 +37,13 @@ public class ReviewPurchasePresenter extends AppBasePresenter<ReviewPurchaseView
 
     /**
      * 购票
-     * @param routeId 路线id
-     * @param shiftId 班次id
+     *
+     * @param routeId    路线id
+     * @param shiftId    班次id
      * @param begStation 开始站
      * @param endStation 结束站
      */
-    public void purchaseTicket(int routeId,int shiftId,int begStation,int endStation) {
+    public void purchaseTicket(String routeId, String shiftId, String begStation, String endStation) {
         String authkey = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
         query.put("m", "sales.buyTicket");
@@ -54,8 +56,10 @@ public class ReviewPurchasePresenter extends AppBasePresenter<ReviewPurchaseView
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override
             public void accept(RespondDO respondDO) {
+                //{"amount":40,"order_id":"65","qty":"1","ticket_record":29}
                 if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-
+                    BuyTicket buyTicket = JSON.parseObject(respondDO.getData(), BuyTicket.class);
+                    respondDO.setObject(buyTicket);
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())

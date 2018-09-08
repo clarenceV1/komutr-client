@@ -15,7 +15,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTE_DETAIL, name = "搜索-搜索路线-路线详情")
-public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> implements RouteDetailView,View.OnClickListener {
+public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> implements RouteDetailView, View.OnClickListener {
 
     @Inject
     RouteDetailPresenter presenter;
@@ -44,6 +44,6 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
 
     @Override
     public void onClick(View view) {
-        RouterManager.goConfirmPayment(null);
+        RouterManager.goConfirmPayment(null, null);
     }
 }
