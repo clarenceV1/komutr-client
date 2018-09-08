@@ -10,6 +10,7 @@ import com.cai.framework.base.GodBasePresenter;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.BuySellTicketComment;
 import com.komutr.client.been.BuyTicket;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.RouterStation;
@@ -52,7 +53,7 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
     public void initView() {
         setBarTitle(getString(R.string.review_purchase));
         routes = getArouterSerializableData("Routes");
-
+        presenter.requestComment();
         mViewBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +82,15 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
         if (respondDO.isStatus()) {
             BuyTicket buyTicket = respondDO.getObject();
             RouterManager.goConfirmPayment(null, buyTicket);
+        }
+    }
+
+    @Override
+    public void commentCallBack(RespondDO<BuySellTicketComment> respondDO) {
+        if (respondDO.isStatus() && respondDO.getObject() != null) {
+            BuySellTicketComment comment = respondDO.getObject();
+            mViewBinding.tvImportantNotes.setText(comment.getContent());
+            mViewBinding.tvImportantTitle.setText(comment.getTitle());
         }
     }
 }

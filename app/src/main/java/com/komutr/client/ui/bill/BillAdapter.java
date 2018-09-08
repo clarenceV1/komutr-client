@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.cai.pullrefresh.BasePtrAdapter;
@@ -11,6 +12,7 @@ import com.cai.pullrefresh.BasePtrViewHold;
 import com.cai.pullrefresh.BaseViewHold;
 import com.komutr.client.R;
 import com.komutr.client.been.Bill;
+import com.komutr.client.been.BillItem;
 import com.komutr.client.common.RouterManager;
 
 
@@ -52,14 +54,23 @@ public class BillAdapter extends BasePtrAdapter<Bill, BillAdapter.ViewHolder> im
     @Override
     protected void onPtrBindViewHolder(ViewHolder holder, Bill data, int position) {
 
+        BillItem billItem = data.getItem();
+        if (billItem != null) {
+            holder.tvBillMethod.setText(billItem.getItem_name());
+            holder.tvBillAmount.setText("+ ₱ " + billItem.getAmount());
+        }
+        holder.tvBillName.setText(data.getCreated());
 
     }
 
     class ViewHolder extends BasePtrViewHold {
-
+        TextView tvBillMethod, tvBillName, tvBillAmount;
 
         public ViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView, listener);
+            tvBillMethod = itemView.findViewById(R.id.tvBillMethod);
+            tvBillName = itemView.findViewById(R.id.tvBillName);
+            tvBillAmount = itemView.findViewById(R.id.tvBillAmount);
         }
     }
 

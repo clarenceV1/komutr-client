@@ -15,6 +15,7 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.Bill;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.BillBinding;
 import com.komutr.client.ui.routes.SearchRoutesAdapter;
@@ -32,6 +33,7 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
     PtrRecyclerView mPtrRecyclerView;
 
     BillAdapter adapter;
+    List<Bill> billList;
 
     @Override
     public void initDagger() {
@@ -52,12 +54,13 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BillAdapter(this, presenter);
         mPtrRecyclerView.setAdapter(adapter);
-        adapter.setDatas(presenter.getTestList());
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
 
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
+
+        presenter.requestList();
     }
 
     @Override
@@ -84,5 +87,13 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
     @Override
     public void callback(List<Bill> dataList) {
 
+    }
+
+    @Override
+    public void billListCallback(RespondDO<List<Bill>> respondDO) {
+        if(respondDO.isStatus() && respondDO.getObject()!=null){
+            billList = respondDO.getObject();
+            adapter.setDatas(billList);
+        }
     }
 }
