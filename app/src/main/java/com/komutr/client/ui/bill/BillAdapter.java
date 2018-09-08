@@ -43,7 +43,8 @@ public class BillAdapter extends BasePtrAdapter<Bill, BillAdapter.ViewHolder> im
 
     @Override
     public void onItemClick(View v, int position) {
-        RouterManager.goBillDetail();
+        Bill bill = datas.get(position);
+        RouterManager.goBillDetail(bill.getId());
     }
 
     @Override

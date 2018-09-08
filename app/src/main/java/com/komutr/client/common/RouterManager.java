@@ -25,8 +25,10 @@ public class RouterManager {
     public static final String ROUTER_BIND_EMAIL = ROUTER_HOME + "EmailActivity";
     public static final String ROUTER_BILL_DETAIL = ROUTER_HOME + "BillDetailActivity";
 
-    public static void goBillDetail() {
-        ARouter.getInstance().build(RouterManager.ROUTER_BILL_DETAIL).navigation();
+    public static void goBillDetail(String billId) {
+        ARouter.getInstance().build(RouterManager.ROUTER_BILL_DETAIL)
+                .withString("BillId",billId)
+                .navigation();
     }
 
     public static void goBindEmail() {

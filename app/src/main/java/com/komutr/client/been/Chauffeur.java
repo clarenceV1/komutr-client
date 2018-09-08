@@ -9,6 +9,15 @@ public class Chauffeur implements Serializable {
     private String phone;
     private String avatar;
     private String avatar_thum;
+    private String name;//账单详情才用
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getAvatar_thum() {
         return avatar_thum;
