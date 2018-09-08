@@ -13,6 +13,7 @@ import com.cai.framework.baseview.TitleBarView;
 import com.komutr.client.R;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.Constant;
+import com.komutr.client.ui.dialog.LoadingDialog;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.Serializable;
@@ -72,5 +73,35 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
         Map<String, String> query = new HashMap<>();
         query.put("auth_key", Constant.AUTH_KEY);
         return query;
+    }
+
+
+    LoadingDialog loadingDialog;
+
+    public void showDialog(String content, boolean cancel) {
+
+        if (loadingDialog == null || !loadingDialog.isShowing())
+            loadingDialog = new LoadingDialog(this, cancel, content, null);
+        else {
+            loadingDialog.setText(content);
+        }
+    }
+
+    public void hiddenDialog() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismissDialog(loadingDialog);
+            loadingDialog = null;
+        }
+    }
+
+
+    public void onShowLoadDialog(View.OnClickListener onClickListener) {
+        if (loadingDialog == null || !loadingDialog.isShowing())
+            loadingDialog = new LoadingDialog(this, true, null, onClickListener);
+    }
+
+    public void onShowLoadError() {
+        if (loadingDialog != null)
+            loadingDialog.onLoadError();
     }
 }

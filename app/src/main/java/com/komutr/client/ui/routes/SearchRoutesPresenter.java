@@ -10,12 +10,7 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Routes;
 import com.komutr.client.been.RoutesShift;
 import com.komutr.client.been.SearchRoutes;
-import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
-import com.komutr.client.event.LoginEvent;
-import com.komutr.client.ui.wallet.WalletView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

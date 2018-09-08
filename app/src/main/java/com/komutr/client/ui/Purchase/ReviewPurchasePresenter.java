@@ -10,12 +10,7 @@ import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.BuySellTicketComment;
 import com.komutr.client.been.BuyTicket;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
-import com.komutr.client.event.LoginEvent;
-import com.komutr.client.ui.wallet.WalletView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;

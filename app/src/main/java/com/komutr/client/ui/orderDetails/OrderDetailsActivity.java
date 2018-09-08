@@ -57,7 +57,7 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
         mViewBinding.tvRefund.setOnClickListener(this);
         mViewBinding.ivBack.setOnClickListener(this);
 
-        int useStatus = 2;//1:已使用 2:已退票 3:未使用
+        int useStatus = 3;//1:已使用 2:已退票 3:未使用
         if (useStatus == 1) {
             boolean isComment = false;//判断是否有评论过
 

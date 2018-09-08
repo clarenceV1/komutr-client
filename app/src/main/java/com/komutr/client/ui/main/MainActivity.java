@@ -32,7 +32,7 @@ import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MainBinding;
-import com.komutr.client.event.LoginEvent;
+import com.komutr.client.event.EventPostInfo;
 import com.komutr.client.ui.main.fragment.book.BookFragment;
 import com.komutr.client.ui.main.fragment.trips.MyTripsFragment;
 
@@ -195,9 +195,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(LoginEvent loginEvent) {
-        if (loginEvent != null && loginEvent.getStateType() == LoginEvent.STATE_LOGIN_SUCCESS) {
-            initLeftData(loginEvent.getUserInfo());
+    public void onMessageEvent(EventPostInfo eventPostInfo) {
+        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.UPDATE_PERSON_INFO_SUCCESS) {
+            User user = presenter.switcher();
+            initLeftData(user);
         }
     }
 

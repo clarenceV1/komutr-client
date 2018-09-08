@@ -64,7 +64,10 @@ public class FeedbackActivity extends AppBaseActivity<FeedbackBinding> implement
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
 
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            Logger.i("搜索操作执行");
+            Logger.i("完成操作执行");
+            if(!StringUtils.isEmpty(mViewBinding.etFeedBackContent.getText().toString())){
+                presenter.requestFeedBack(mViewBinding.etFeedBackContent.getText().toString());
+            }
         }
         return false;
     }
@@ -82,9 +85,6 @@ public class FeedbackActivity extends AppBaseActivity<FeedbackBinding> implement
 
     @Override
     public void afterTextChanged(Editable editable) {
-      String text = mViewBinding.etFeedBackContent.getText().toString();
-        if(!StringUtils.isEmpty(text)){
-            presenter.requestFeedBack(text);
-        }
+
     }
 }

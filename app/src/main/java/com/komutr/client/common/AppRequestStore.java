@@ -5,7 +5,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.dagger.ActivityScope;
+import com.example.clarence.utillibrary.NetWorkUtil;
+import com.example.clarence.utillibrary.ToastUtils;
+import com.komutr.client.R;
 import com.komutr.client.been.RespondDO;
 
 import java.util.Map;
@@ -35,6 +39,11 @@ public class AppRequestStore {
     }
 
     public Single<RespondDO> commonRequest(Map<String, Object> queryMap) {
+
+//        if(NetWorkUtil.isNetConnected(GodBaseApplication.getAppContext())){
+//            ToastUtils.showShort(GodBaseApplication.getAppContext().getString(R.string.network_error));
+//            return null;
+//        }
         Single<RespondDO> respond = retrofit.get().create(ApiService.class)
                 .commonRequest(queryMap)
                 .map(new Function<ResponseBody, RespondDO>() {
