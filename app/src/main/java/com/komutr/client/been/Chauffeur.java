@@ -10,6 +10,24 @@ public class Chauffeur implements Serializable {
     private String avatar;
     private String avatar_thum;
     private String name;//账单详情才用
+    private String username;//订单列表里用
+    private String id;//订单列表里用
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

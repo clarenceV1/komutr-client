@@ -16,7 +16,8 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
-import com.komutr.client.been.MyTrips;
+import com.komutr.client.been.OrderDetail;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.databinding.FragmentMyTripsBinding;
 
 import java.util.List;
@@ -29,17 +30,16 @@ import javax.inject.Inject;
  * Use the {@link MyTripsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> implements MyTripsView,BaseListPtrFrameLayout.OnPullLoadListener,LoadingView.LoadViewClickListener {
+public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> implements MyTripsView, BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener {
 
     @Inject
     MyTripsPresenter presenter;
 
 
     PtrRecyclerView mPtrRecyclerView;
-
-
     MyTripsAdapter adapter;
-
+    int start = 0;
+    int size = 10;
 
     @Inject
     ILoadImage iLoadImage;
@@ -79,30 +79,35 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
     @Override
     public void initView(View view) {
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
-        mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(activity, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(activity,10f), StreamUtils.getInstance().resourceToColor(R.color.transparent,activity)));
+        mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(activity, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(activity, 10f), StreamUtils.getInstance().resourceToColor(R.color.transparent, activity)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new MyTripsAdapter(activity, iLoadImage, presenter);
         mPtrRecyclerView.setAdapter(adapter);
-        adapter.setDatas(presenter.getTestList());
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
 
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
 //      mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
+        presenter.requestList(start, size);
     }
 
     @Override
-    public void callback(List<MyTrips> data) {
-        if (data != null && data.size() > 0) {//有数据
-//            if (timestamp == 0) {
-//                adapter.setDatas(data.getList());//下拉
-//            } else {
-//                adapter.addDatas(data.getList());//上啦
-//            }
-            mViewBinding.ptyRecycle.setCloseLoadMore(false);
-            mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(true);
-        } else {
+    public void orderListCallback(RespondDO<List<OrderDetail>> respondDO) {
+        if (respondDO.isStatus()) {
+            List<OrderDetail> data = respondDO.getObject();
+            if (data != null && data.size() > 0) {//有数据
+                if (start == 0) {
+                    adapter.setDatas(data);//下拉
+                } else {
+                    adapter.addDatas(data);//上啦
+                }
+                mViewBinding.ptyRecycle.setCloseLoadMore(false);
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(true);
+            } else {
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
+            }
+        }else{
             mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
         }
 
@@ -115,7 +120,7 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
-        presenter.requestList();
+        presenter.requestList(start, size);
     }
 
     @Override
@@ -125,6 +130,6 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
 
     @Override
     public void onLoadViewClick(int status) {
-        presenter.requestList();
+        presenter.requestList(start, size);
     }
 }

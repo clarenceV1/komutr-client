@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class StatusActivity extends AppBaseActivity<StatusBinding> implements StatusView, View.OnClickListener {
     @Inject
     StatusPresenter presenter;
-
+    String orderId;
 
     boolean isPayStatus = true;//true为支付状态 false为退票状态
 
@@ -92,7 +92,7 @@ public class StatusActivity extends AppBaseActivity<StatusBinding> implements St
                 break;
             case R.id.btnViewOrder://查看订单
                  if(isPayStatus){//跳订单详情
-                     RouterManager.goOrderDetails();
+                     RouterManager.goOrderDetails(orderId,false);
                  }else {//跳账单详情
 
                  }

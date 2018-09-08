@@ -1,9 +1,12 @@
 package com.komutr.client.ui.orderDetails;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.widget.dialog.GodDialog;
 import com.example.clarence.utillibrary.StreamUtils;
@@ -11,6 +14,8 @@ import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.OrderDetail;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.OrderDetailsBinding;
 
@@ -22,6 +27,18 @@ import javax.inject.Inject;
 public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> implements OrderDetailsView, View.OnClickListener {
     @Inject
     OrderDetailsPresenter presenter;
+    @Autowired(name = "orderId")
+    String orderId;
+    @Autowired(name = "hasComment")
+    boolean hasComment;// 是否带评论
+
+    OrderDetail orderDetail;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        ARouter.getInstance().inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void initDagger() {
@@ -40,7 +57,7 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
         mViewBinding.tvRefund.setOnClickListener(this);
         mViewBinding.ivBack.setOnClickListener(this);
 
-        int useStatus = 1;//1:已使用 2:已退票 3:未使用
+        int useStatus = 3;//1:已使用 2:已退票 3:未使用
         if (useStatus == 1) {
             boolean isComment = false;//判断是否有评论过
 
@@ -65,6 +82,8 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
             mViewBinding.ivUseStatus.setVisibility(View.VISIBLE);
             mViewBinding.ivUseStatus.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.refunded, this));
         }
+
+        presenter.getOrderDetail(orderId, true);
     }
 
     @Override
@@ -110,6 +129,7 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 //                                ToastUtils.showShort("点击确定了");
+                        presenter.refundTicket(orderId, 1);
                         dialog.dismiss();
                     }
                 }).build().show();
@@ -135,4 +155,11 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
     }
 
 
+    @Override
+    public void orderDetailCallback(RespondDO<OrderDetail> respondDO) {
+        if (respondDO.isStatus()) {
+            orderDetail = respondDO.getObject();
+        }
+
+    }
 }
