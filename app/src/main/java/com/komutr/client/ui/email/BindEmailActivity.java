@@ -38,13 +38,13 @@ public class BindEmailActivity extends AppBaseActivity<BindEmailBinding> impleme
         setBarTitle(getString(R.string.bind_email_title));
         email = "763287516@qq.com";
         presenter.checkEmail(email);
-        mViewBinding.tvTest.setOnClickListener(new View.OnClickListener() {
+       /* mViewBinding.tvTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String code = phoneCode.getCode();//测试的时候才可以这样获取code
                 presenter.bindEmail(email, code, phoneCode);
             }
-        });
+        });*/
     }
 
     @Override

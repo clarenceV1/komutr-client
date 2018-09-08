@@ -24,7 +24,6 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PersonInfoBinding;
-<<<<<<< HEAD
 import com.komutr.client.event.EventPostInfo;
 
 import org.greenrobot.eventbus.EventBus;
