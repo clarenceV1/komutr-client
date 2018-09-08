@@ -14,7 +14,7 @@
             android:layout_marginTop="10dp"
             android:inputType="text"
             android:lines="1"
-            android:hint="@string/enter_a_new_phone_number" />
+            android:hint="@string/enter_email_address" />
 
         <!--邮箱验证码-->
         <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
                 android:digits="1234567890"
-                android:hint="@string/enter_confirmation_code"
+                android:hint="@string/enter_security_code"
                 android:inputType="number"
                 android:lines="1"
                 android:paddingRight="0dp" />

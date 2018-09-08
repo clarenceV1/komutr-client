@@ -58,9 +58,13 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
     public void verificationCodeCallback(RespondDO<PhoneCode> respondDO) {
         mViewBinding.btnVerificationCode.setText(getString(R.string.verification_code));
         mViewBinding.btnVerificationCode.setEnabled(true);
-        this.phoneCode = respondDO.getObject();
-        if (this.phoneCode != null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {
-            new SMSCountDownTimer(mViewBinding.btnVerificationCode, 60000, 1000);
+        if (respondDO.isStatus()) {
+            this.phoneCode = respondDO.getObject();
+            if (this.phoneCode != null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {
+                new SMSCountDownTimer(mViewBinding.btnVerificationCode, 60000, 1000);
+            }
+        }else {
+            ToastUtils.showShort(respondDO.getMsg());
         }
         if (BuildConfig.DEBUG) {
             ToastUtils.showShort("验证码：" + phoneCode.getCode());
@@ -125,10 +129,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                     presenter.verificationCode(phone);
                     break;
                 case R.id.btnLogReg://登录
-                    if(StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode))){
+                    /*if(StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode))){
                         ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
                         return;
-                    }
+                    }*/
                     if (this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {//为获取验证码
                         ToastUtils.showShort(getString(R.string.not_get_code));
                         return;
@@ -138,8 +142,8 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                         ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
                         return;
                     }
-                    mViewBinding.btnVerificationCode.setEnabled(false);
-                    mViewBinding.btnVerificationCode.setText(getString(R.string.binding_in));
+                    mViewBinding.btnLogReg.setEnabled(false);
+                    mViewBinding.btnLogReg.setText(getString(R.string.binding_in));
                     presenter.registeredOrLogin(StringUtils.getString(mViewBinding.etInputVerificAtionCode), phone, this.phoneCode.getVer_token_key());
                     break;
             }

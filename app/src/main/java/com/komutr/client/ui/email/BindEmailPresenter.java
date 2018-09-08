@@ -3,7 +3,9 @@ package com.komutr.client.ui.email;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
+import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
@@ -51,6 +53,7 @@ public class BindEmailPresenter extends AppBasePresenter<BindEmailView> {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
                         mView.bindEmailCallback(respondDO);
                     }
                 });
@@ -93,6 +96,7 @@ public class BindEmailPresenter extends AppBasePresenter<BindEmailView> {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
                         mView.checkEmail(respondDO);
                     }
                 });
