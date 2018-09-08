@@ -27,7 +27,7 @@ public class RouterManager {
 
     public static void goBillDetail(String billId) {
         ARouter.getInstance().build(RouterManager.ROUTER_BILL_DETAIL)
-                .withString("BillId",billId)
+                .withString("BillId", billId)
                 .navigation();
     }
 
@@ -101,18 +101,6 @@ public class RouterManager {
 //--------------------------------你从顶上添加我从下面添加防止冲突----------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     public static final String REVIEW_PURCHASE = ROUTER_HOME + "ReviewPurchaseActivity";
 
     public static final String ROUTE_DETAIL = ROUTER_HOME + "RouteDetailActivity";
@@ -131,18 +119,27 @@ public class RouterManager {
 
     public static final String BILL = ROUTER_HOME + "BillActivity";
 
-    public static void goOrderDetails() {
-        ARouter.getInstance().build(ORDER_DETAILS).navigation();
+    /**
+     * 订单详情
+     *
+     * @param orderId    订单好
+     * @param hasComment 是否有评论
+     */
+    public static void goOrderDetails(String orderId, boolean hasComment) {
+        ARouter.getInstance().build(ORDER_DETAILS)
+                .withString("orderId", orderId)
+                .withBoolean("hasComment", hasComment)
+                .navigation();
     }
 
     public static void goPayStatus() {
         ARouter.getInstance().build(PAY_STATUS).navigation();
     }
 
-    public static void goConfirmPayment(String scanContent,BuyTicket buyTicket) {
+    public static void goConfirmPayment(String scanContent, BuyTicket buyTicket) {
         ARouter.getInstance().build(CONFIRM_PAYMENT)
                 .withString("scanContent", scanContent)
-                .withSerializable("BuyTicket",buyTicket)
+                .withSerializable("BuyTicket", buyTicket)
                 .navigation();
     }
 
@@ -155,7 +152,7 @@ public class RouterManager {
 
     public static void goReviewPurchase(SearchRoutes data) {
         ARouter.getInstance().build(REVIEW_PURCHASE)
-                .withSerializable("Routes",data).navigation();
+                .withSerializable("Routes", data).navigation();
     }
 
     public static void goRouteDetail() {
@@ -170,11 +167,11 @@ public class RouterManager {
         ARouter.getInstance().build(USER_RATINGS).navigation();
     }
 
-    public static void goPosition(boolean isStartPosition,int bigArea,int province) {
+    public static void goPosition(boolean isStartPosition, int bigArea, int province) {
         ARouter.getInstance().build(POSITION)
-                .withBoolean("isStartPosition",isStartPosition)
-                .withInt("bigArea",bigArea)
-                .withInt("province",province).navigation();
+                .withBoolean("isStartPosition", isStartPosition)
+                .withInt("bigArea", bigArea)
+                .withInt("province", province).navigation();
     }
 
     public static void goRecharge() {
