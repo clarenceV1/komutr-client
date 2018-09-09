@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">komutr-client</string>
+    <string name="sure">Sure</string>
+
+    <string name="sex_list">Male,Female</string>
+    <string name="year_mouth_day">year,mouth,day</string>
+    <string name="manually_selected_area">Manually selected area</string>
+    <string name="the_current_location">The current location</string>
     <string name="please_input_correct_email_address">Please enter the correct email address</string>
     <string name="not_get_email_code">You have not yet obtained a email code</string>
     <string name="enter_email_address">Enter E-mail address</string>
@@ -98,7 +104,7 @@
     <string name="book">Book</string>
     <string name="pay">Pay</string>
     <string name="my_trips">My trips</string>
-    <string name="city">ManilaManila</string>
+    <string name="city">Manila</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="input_verific_ation_code">input verific ation code</string>
     <string name="verification_code">Verification code</string>

@@ -14,4 +14,15 @@
     <item name="return_scan_result" type="id"/>
     <item name="search_book_contents_failed" type="id"/>
     <item name="search_book_contents_succeeded" type="id"/>
+
+
+    <item name="tag_first" type="id" />
+    <item name="tag_second" type="id" />
+    <item name="tag_three" type="id" />
+    <item name="tag_four" type="id" />
+    <item name="tag_five" type="id" />
+    <item name="tag_six" type="id" />
+    <item name="tag_seven" type="id" />
+    <item name="tag_eight" type="id" />
+    <item name="tag_nine" type="id" />
 </resources>

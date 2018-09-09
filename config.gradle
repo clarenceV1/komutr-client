@@ -7,6 +7,8 @@ ext {
                versionName      : "1.0.0.1"]
 
     dependencies = [
+            "wheelview"                     : "com.contrarywind:wheelview:4.0.8",
+            "pickerView"                    : "com.contrarywind:Android-PickerView:4.1.6",
             "recyclerview"                  : "com.android.support:recyclerview-v7:26.1.0",
             "appcompat-v7"                  : "com.android.support:appcompat-v7:26.1.0",
             "android-support-percent"       : "com.android.support:percent:26.1.0",
