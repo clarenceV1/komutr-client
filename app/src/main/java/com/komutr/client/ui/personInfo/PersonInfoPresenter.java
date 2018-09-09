@@ -70,4 +70,33 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
                 });
         mCompositeSubscription.add(disposable);
     }
+
+    /**
+     * 上传头像
+     * @param imagePath
+     */
+    public void uploadImage(String imagePath) {
+        String authKey = userInfoDao.get().getAppAuth();
+        Map<String, Object> query = new HashMap<>();
+        query.put("m", "customer.uploadImage");
+        query.put("auth_key", authKey);
+        query.put("image", imagePath);
+        Disposable disposable = requestStore.get().commonRequest(query)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        Logger.d(respondDO.toString());
+                        mView.callbackUserInfo(respondDO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        mView.callbackUserInfo(respondDO);
+                    }
+                });
+        mCompositeSubscription.add(disposable);
+    }
 }

@@ -77,20 +77,11 @@ public class OrderDetailsPresenter extends AppBasePresenter<OrderDetailsView> {
     public void refundTicket(String orderId, int type) {
         String authKey = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
-        query.put("m", "sales.getOrderData");
+        query.put("m", "sales.refundTicket");
         query.put("auth_key", authKey);
         query.put("id", orderId);
         query.put("type", type);
         Disposable disposable = requestStore.get().commonRequest(query)
-                .doOnSuccess(new Consumer<RespondDO>() {
-                    @Override
-                    public void accept(RespondDO respondDO) {
-                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                            OrderDetail orderDetail = JSON.parseObject(respondDO.getData(), OrderDetail.class);
-                            respondDO.setObject(orderDetail);
-                        }
-                    }
-                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
