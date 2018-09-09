@@ -303,14 +303,14 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
      */
     private OptionsPickerView getSexDialog(final View view) {
 
-         List<String> options1Items = new ArrayList();
+        final List<String> options1Items = new ArrayList();
         String[] sexList = getResources().getString(R.string.sex_list).split(",");
         options1Items.addAll(Arrays.asList(sexList));
         OptionsPickerView optionsPickerView = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-
+                ((TextView) view.getTag()).setText(options1Items.get(options1));
             }
         })
                 .setCancelText(getString(R.string.btn_cancle))//取消按钮文字
