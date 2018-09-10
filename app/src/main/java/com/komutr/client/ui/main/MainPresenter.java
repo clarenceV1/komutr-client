@@ -2,14 +2,19 @@ package com.komutr.client.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.cai.framework.permission.RxPermissions;
+import com.cai.framework.widget.dialog.GodDialog;
+import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Service;
@@ -43,6 +48,10 @@ public class MainPresenter extends AppBasePresenter<MainView> {
         return userInfoDao.get().getUser();
     }
 
+
+    /**
+     * 退出登录
+     */
     public void logout() {
         String authKey = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
@@ -80,26 +89,49 @@ public class MainPresenter extends AppBasePresenter<MainView> {
     }
 
 
-    public void callPhone(FragmentActivity activity, final String phoneNum) {
+    public void callPhone(final FragmentActivity activity, final String phoneNum) {
         RxPermissions permissions = new RxPermissions(activity);
         Disposable disposable = permissions.request(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean granted) throws Exception {
-                if (granted) {
-                    callPhone(phoneNum);
-                }
+                showCallPhoneDialog(activity,granted,phoneNum);
             }
         });
         mCompositeSubscription.add(disposable);
     }
 
-    @SuppressLint("MissingPermission")
-    public void callPhone(String phoneNum) {
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        Uri data = Uri.parse("tel:" + phoneNum);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setData(data);
-        context.startActivity(intent);
+
+
+
+    /**
+     * 显示退款、删除订单对话框
+     */
+    private void showCallPhoneDialog(final Activity activity,final boolean granted, final String phone) {
+        new GodDialog.Builder(activity)
+                .setTitle(activity.getString(granted ? R.string.phone_call : R.string.permissions_des))
+                .setMessage(granted ? activity.getString(R.string.make_call,phone) : activity.getString(R.string.authorize_permissions_prompt))
+                .setNegativeButton(activity.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                      ToastUtils.showShort("点击取消了");
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton(activity.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent;
+                        if (!granted){
+                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            intent.setData(Uri.parse("package:" + activity.getPackageName()));
+                        }else {
+                            intent = new Intent(Intent.ACTION_CALL);// 创建一个意图,指定其动作为拨打电话
+                            intent.setData(Uri.parse("tel:" + phone));// 指定将要拨出的号码
+                        }
+                        activity.startActivity(intent);
+                    }
+                }).build().show();
     }
 
     public void requestPhoneAndAppVersion() {
@@ -150,9 +182,9 @@ public class MainPresenter extends AppBasePresenter<MainView> {
 
     public void startGoScanPayPage(final FragmentActivity activity) {
         RxPermissions permissions = new RxPermissions(activity);
-        Disposable disposable = permissions.request(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Boolean>() {
+        Disposable disposable = permissions.request(Manifest.permission.CAMERA).subscribe(new Consumer<Boolean>() {
             @Override
-            public void accept(Boolean granted) throws Exception {
+            public void accept(Boolean granted) {
                 if (granted) {
                     activity.startActivity(new Intent(activity, MipcaActivityCapture.class));
                 }

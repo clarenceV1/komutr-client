@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+    <string name="phone_call">Call Phone</string>
+    <string name="permissions_des">Permissions description</string>
+
+    <string name="make_call">Are you sure to make a call %s？</string>
+    <string name="authorize_permissions_prompt">You have not authorized this permission, do you jump into the settings page for authorization?</string>
+
     <string name="submitting">submitting</string>
     <string name="sure">Sure</string>
     <string name="message_details">Message details</string>

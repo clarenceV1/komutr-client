@@ -51,4 +51,26 @@ public class Constant {
         int FLAG_6 = 6;
 
     }
+
+
+
+
+    /**
+     * 传递值的名称
+     */
+    public static final class SharedPrefer {
+        /**
+         * sp存在本地的名称
+         */
+        public static final String SHARE_MENU = "clientSp";
+
+
+        /**
+         * 手机号
+         */
+        public static final String TEL_NUMBER = "telNum";
+    }
+
+
+
 }
