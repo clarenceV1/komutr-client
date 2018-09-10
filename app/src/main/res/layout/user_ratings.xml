@@ -36,7 +36,6 @@
                 <TextView
                     android:id="@+id/tvDriverName"
                     style="@style/my_trips_text_style"
-                    android:text="NickName"
                     android:textColor="@color/color_000000"
                     android:textSize="17sp" />
 
@@ -45,7 +44,6 @@
                     android:id="@+id/tvDriverPhoneNum"
                     style="@style/my_trips_text_style"
                     android:layout_marginTop="8dp"
-                    android:text="12****12445"
                     android:textColor="@color/color_000000"
                     android:textSize="13sp" />
 
@@ -62,7 +60,7 @@
                 app:starFill="@drawable/star_full"
                 app:starImageSize="13dp"
                 app:starPadding="2dp"
-                app:starStep="3"
+                app:starStep="0"
                 app:stepSize="Full" />
 
         </LinearLayout>

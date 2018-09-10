@@ -1,10 +1,15 @@
 package com.komutr.client.ui.orderDetails;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
+import com.example.clarence.utillibrary.StringUtils;
+import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
+import com.komutr.client.been.BuySellTicketDetails;
 import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
@@ -62,6 +67,7 @@ public class OrderDetailsPresenter extends AppBasePresenter<OrderDetailsView> {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
                         mView.orderDetailCallback(respondDO);
                     }
                 });
@@ -96,6 +102,41 @@ public class OrderDetailsPresenter extends AppBasePresenter<OrderDetailsView> {
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
                         mView.orderDetailCallback(respondDO);
+                    }
+                });
+        mCompositeSubscription.add(disposable);
+    }
+
+
+    /**
+     * 获取买票下的备注信息
+     */
+    public void requestImportant() {
+        Map<String, Object> query = new HashMap<>();
+        query.put("m", "system.ticketNote");
+        query.put("auth_key", Constant.AUTH_KEY);
+        Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
+            @Override
+            public void accept(RespondDO respondDO) {
+                if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
+                    respondDO.setObject(JSON.parseObject(respondDO.getData(), BuySellTicketDetails.class));
+                }
+            }
+        }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        Log.d("requestBuy", respondDO.toString());
+                        mView.importantCallBack(respondDO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+
+                        respondDO.setFromCallBack(-1);
+                        mView.importantCallBack(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);

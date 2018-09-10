@@ -5,6 +5,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
 import com.example.clarence.utillibrary.CommonUtils;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -21,7 +22,7 @@ import javax.inject.Inject;
 public class WalletActivity extends AppBaseActivity<WalletBinding> implements WalletView, View.OnClickListener {
     @Inject
     WalletPresenter presenter;
-    Wallet wallet;
+
 
     @Override
     public void initDagger() {
@@ -44,6 +45,7 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
         mViewBinding.tvTopFAQ.setOnClickListener(this);
 
         CommonUtils.setBackground(mViewBinding.tvTopFAQ, CommonUtils.selectorStateColor(this, R.color.white, R.color.color_f1f1f4));
+        showDialog(getString(R.string.please_wait), true);
         presenter.requestWallet();
 
     }
@@ -56,11 +58,8 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.ivBack:
-//                finish();
-//                break;
             case com.cai.framework.R.id.tvRight://账单
-                RouterManager. goBill();
+                RouterManager.goBill();
                 break;
             case R.id.btnRecharge://充值
                 RouterManager.goRecharge();
@@ -73,14 +72,18 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
 
     @Override
     public void walletCallBack(RespondDO<Wallet> respondDO) {
-        wallet = respondDO.getObject();
-        refreshView();
-    }
 
-    private void refreshView() {
-        if (wallet != null) {
-            mViewBinding.tvBalance.setText(wallet.getBalance());
+        hiddenDialog();
+        if (respondDO.isStatus()) {
+            Wallet wallet = respondDO.getObject();
+            if (wallet != null) {
+                mViewBinding.tvBalance.setText(wallet.getBalance());
+            }
+        } else {
+            ToastUtils.showShort(respondDO.getMsg());
         }
 
+
     }
+
 }

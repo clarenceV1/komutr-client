@@ -97,6 +97,7 @@
                                     android:id="@+id/tvDate"
                                     style="@style/my_trips_text_style"
                                     android:text="11/10/2018"
+                                    android:visibility="gone"
                                     android:textColor="@color/color_dc4c4c"
                                     android:textSize="15sp" />
 
@@ -105,7 +106,6 @@
                                     android:id="@+id/tvTime"
                                     style="@style/my_trips_text_style"
                                     android:layout_marginLeft="7dp"
-                                    android:text="10:30 am"
                                     android:textColor="@color/color_000000"
                                     android:textSize="15sp" />
                             </LinearLayout>
@@ -132,7 +132,6 @@
                                 <TextView
                                     android:id="@+id/tvLicensePlateNo"
                                     style="@style/my_trips_text_style"
-                                    android:text="DX00001"
                                     android:textColor="@color/color_dc4c4c"
                                     android:textSize="15sp" />
                             </LinearLayout>
@@ -161,7 +160,6 @@
                                     android:id="@+id/tvTicketPriceNum"
                                     style="@style/my_trips_text_style"
                                     android:layout_marginLeft="7dp"
-                                    android:text="1Ticket ₱21.00"
                                     android:textColor="@color/color_000000"
                                     android:textSize="15sp" />
                             </LinearLayout>
@@ -190,7 +188,6 @@
                                     android:id="@+id/tvOrderId"
                                     style="@style/my_trips_text_style"
                                     android:layout_marginLeft="7dp"
-                                    android:text="4598564542821115"
                                     android:textColor="@color/color_000000"
                                     android:textSize="15sp" />
                             </LinearLayout>
@@ -213,8 +210,7 @@
                                 <TextView
                                     android:id="@+id/tvBusNumber"
                                     style="@style/my_trips_text_style"
-                                    android:drawablePadding="10dp"
-                                    android:text="A192" />
+                                    android:drawablePadding="10dp" />
 
 
                                 <ImageView
@@ -235,15 +231,13 @@
                                     <TextView
                                         android:id="@+id/tvStartLocation"
                                         style="@style/my_trips_text_style"
-                                        android:layout_marginTop="2dp"
-                                        android:text="Heron Bay" />
+                                        android:layout_marginTop="2dp" />
 
 
                                     <TextView
                                         android:id="@+id/tvEndLocation"
                                         style="@style/my_trips_text_style"
-                                        android:layout_marginTop="10dp"
-                                        android:text="Suntec Tower 5" />
+                                        android:layout_marginTop="10dp"/>
 
 
                                 </LinearLayout>
@@ -305,7 +299,6 @@
                             <TextView
                                 android:id="@+id/tvDriverName"
                                 style="@style/my_trips_text_style"
-                                android:text="NickName"
                                 android:textColor="@color/color_000000"
                                 android:textSize="13sp" />
 
@@ -314,7 +307,6 @@
                                 android:id="@+id/tvDriverPhoneNum"
                                 style="@style/my_trips_text_style"
                                 android:layout_marginTop="8dp"
-                                android:text="12****12445"
                                 android:textColor="@color/color_000000"
                                 android:textSize="13sp" />
 
@@ -331,7 +323,7 @@
                             app:starFill="@drawable/star_full"
                             app:starImageSize="18dp"
                             app:starPadding="2dp"
-                            app:starStep="3"
+                            app:starStep="0"
                             app:stepSize="Full" />
 
 
@@ -346,9 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
-                    android:orientation="vertical"
-                    android:paddingLeft="13dp"
-                    android:paddingRight="13dp">
+                    android:orientation="vertical">
 
                     <!--用户评级-->
                     <LinearLayout
@@ -356,6 +346,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:gravity="center_vertical"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -377,7 +369,7 @@
                             app:starFill="@drawable/star_full"
                             app:starImageSize="13dp"
                             app:starPadding="2dp"
-                            app:starStep="3"
+                            app:starStep="0"
                             app:stepSize="Full" />
 
 
@@ -405,6 +397,8 @@
                         android:id="@+id/viewCommentLine"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginRight="13dp"
                         android:background="@color/color_side_line" />
 
 
@@ -415,6 +409,8 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
                         android:text="“Because of your evaluation, today we unwittingly became the Crown seller. Continue to take the high-end route, independent design, independent production, reasonable pricing, I hope to be able to support the store as always, thank you!”"
                         android:textColor="@color/color_666666"
                         android:textSize="12sp" />
@@ -423,6 +419,8 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginRight="13dp"
                         android:background="@color/color_side_line" />
 
 
@@ -434,6 +432,8 @@
                         android:layout_height="40dp"
                         android:drawableRight="@drawable/right_arrow_icon"
                         android:gravity="center_vertical"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
                         android:text="@string/refund_instructions"
                         android:textColor="@color/color_666666"
                         android:textSize="15sp" />
@@ -451,6 +451,17 @@
                     android:orientation="vertical"
                     android:padding="15dp">
 
+                    <TextView
+                        android:id="@+id/tvImportantTitle"
+                        style="@style/my_trips_text_style"
+                        android:textColor="@color/color_666666" />
+
+
+                    <TextView
+                        android:id="@+id/tvImportantNotes"
+                        style="@style/my_trips_text_small_style" />
+
+<!--
 
                     <TextView
                         style="@style/my_trips_text_style"
@@ -462,6 +473,7 @@
                         android:id="@+id/tvImportantNotes"
                         style="@style/my_trips_text_small_style"
                         android:text="• This ticket is valid for the same day only\n• Guaranteed seats when booked\n• Please arrive at the bus stop 5 min in  advance\n• Look out for KOMUTR bus number and route information\n• Service tel：1111 1111 1111" />
+-->
 
 
                 </LinearLayout>

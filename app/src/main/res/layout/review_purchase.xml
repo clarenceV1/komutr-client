@@ -25,14 +25,12 @@
                 <TextView
                     android:id="@+id/tvMyTripsTime"
                     style="@style/my_trips_text_style"
-                    android:text="6:23pm"
                     android:textColor="@color/color_d93e3e" />
 
                 <TextView
                     android:id="@+id/tvMyTripsDate"
                     style="@style/my_trips_text_style"
-                    android:layout_marginLeft="10dp"
-                    android:text="11/9/2018" />
+                    android:layout_marginLeft="10dp" />
 
             </LinearLayout>
 
@@ -50,76 +48,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp">
 
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
                         style="@style/my_trips_text_small_style"
                         android:text="@string/license_plate_no" />
 
 
-                    <!--路线编号-->
                     <TextView
-                        style="@style/my_trips_text_small_style"
-                        android:layout_marginLeft="18dp"
-                        android:text="DS210001" />
+                        android:id="@+id/tvBusNumber"
+                        style="@style/my_trips_text_style"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/bus_icon"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
 
 
-                <!--行程-->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp">
 
+                    <!--路线编号-->
                     <TextView
-                        android:id="@+id/tvBusNumber"
-                        style="@style/my_trips_text_style"
-                        android:drawableLeft="@drawable/bus_icon"
-                        android:drawablePadding="10dp"
-                        android:text="A192" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvLicensePlateNo"
+                        style="@style/my_trips_text_small_style"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="10dp"
-                        android:paddingBottom="5dp"
-                        android:src="@drawable/bus_path_icon" />
+                        android:layout_marginLeft="16dp" />
 
 
+                    <!--行程-->
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
 
-                        <TextView
-                            android:id="@+id/tvStartLocation"
-                            style="@style/my_trips_text_style"
-                            android:text="Heron Bay" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:paddingBottom="5dp"
+                            android:src="@drawable/bus_path_icon" />
 
 
-                        <TextView
-                            android:id="@+id/tvEndLocation"
-                            style="@style/my_trips_text_style"
-                            android:text="Suntec Tower 5" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvStartLocation"
+                                style="@style/my_trips_text_style" />
 
 
+                            <TextView
+                                android:id="@+id/tvEndLocation"
+                                style="@style/my_trips_text_style" />
+
+
+                        </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
 
 
@@ -133,16 +139,16 @@
             style="@style/my_trips_text_style"
             android:padding="15dp"
             android:text="@string/payment" />
-        
-        
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:background="@color/color_ffffff">
-            
+            android:paddingRight="15dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -152,24 +158,20 @@
 
                 <TextView
                     style="@style/my_trips_text_style"
-                    android:text="1 Ticket × P120.00"
+                    android:text="1 Ticket"
                     android:textColor="@color/color_000000"
-                    android:textSize="13sp"/>
-
-
-
+                    android:textSize="13sp" />
 
 
                 <TextView
                     android:id="@+id/tvSinglePrice"
                     style="@style/my_trips_text_style"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:gravity="right"
                     android:layout_height="wrap_content"
-                    android:text="₱120.00"
+                    android:layout_weight="1"
+                    android:gravity="right"
                     android:textColor="@color/color_000000"
-                    android:textSize="13sp"/>
+                    android:textSize="13sp" />
 
 
             </LinearLayout>
@@ -177,7 +179,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_side_line"/>
+                android:background="@color/color_side_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -190,22 +192,18 @@
                     style="@style/my_trips_text_style"
                     android:text="@string/total"
                     android:textColor="@color/color_000000"
-                    android:textSize="17sp"/>
-
-
-
+                    android:textSize="17sp" />
 
 
                 <TextView
                     android:id="@+id/tvTotalPrice"
                     style="@style/my_trips_text_style"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:gravity="right"
                     android:layout_height="wrap_content"
-                    android:text="₱120.00"
+                    android:layout_weight="1"
+                    android:gravity="right"
                     android:textColor="@color/color_000000"
-                    android:textSize="17sp"/>
+                    android:textSize="17sp" />
 
 
             </LinearLayout>
@@ -215,27 +213,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginTop="5dp"
             android:background="@color/color_ffffff"
-            android:padding="15dp"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="15dp">
 
 
             <TextView
                 android:id="@+id/tvImportantTitle"
                 style="@style/my_trips_text_style"
-                android:text="@string/important_notes"
-                android:textColor="@color/color_333333"/>
-
-
-
+                android:textColor="@color/color_333333" />
 
 
             <TextView
                 android:id="@+id/tvImportantNotes"
-                style="@style/my_trips_text_small_style"
-                android:text="• This ticket is valid for the same day only\n• Guaranteed seats when booked\n• Please arrive at the bus stop 5 min in  advance\n• Look out for KOMUTR bus number and route information\n• Service tel：1111 1111 1111"/>
+                style="@style/my_trips_text_small_style" />
 
 
         </LinearLayout>
@@ -244,16 +237,16 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
 
         <Button
             android:id="@+id/btnConfirm"
             style="@style/button_style"
-            android:enabled="true"
             android:layout_margin="0dp"
-            android:gravity="center"
             android:background="@drawable/button_rectangle_bg"
+            android:enabled="true"
+            android:gravity="center"
             android:text="@string/confirm" />
 
 

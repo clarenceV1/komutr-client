@@ -18,7 +18,12 @@ import com.komutr.client.been.Bill;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.BillBinding;
+import com.komutr.client.event.EventPostInfo;
 import com.komutr.client.ui.routes.SearchRoutesAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -33,7 +38,6 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
     PtrRecyclerView mPtrRecyclerView;
 
     BillAdapter adapter;
-    List<Bill> billList;
 
     @Override
     public void initDagger() {
@@ -47,6 +51,7 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
 
     @Override
     public void initView() {
+        EventBus.getDefault().register(this);
        setBarTitle(getString(R.string.transactions));
 
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
@@ -58,7 +63,7 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
 
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
-        mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
 
         presenter.requestList();
     }
@@ -67,6 +72,19 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
     public int getLayoutId() {
 
         return R.layout.bill;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventPostInfo eventPostInfo) {
+        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.ORDER_DELETE_SUCCESS) {
+            presenter.requestList();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -84,16 +102,16 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
         presenter.requestList();
     }
 
-    @Override
-    public void callback(List<Bill> dataList) {
-
-    }
 
     @Override
     public void billListCallback(RespondDO<List<Bill>> respondDO) {
         if(respondDO.isStatus() && respondDO.getObject()!=null){
-            billList = respondDO.getObject();
-            adapter.setDatas(billList);
+            adapter.setDatas(respondDO.getObject());
+        }
+        if (adapter.getDatas().isEmpty()) {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_NODATA);
+        } else {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
         }
     }
 }

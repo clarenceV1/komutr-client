@@ -18,6 +18,7 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Routes;
 import com.komutr.client.been.RoutesShift;
@@ -45,9 +46,8 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
     PtrRecyclerView mPtrRecyclerView;
 
     SearchRoutesAdapter adapter;
-    int offset;//偏移量
-    int limit = 1;//行数
-    List<SearchRoutes> searchRoutesList;
+    int offset = 0;//偏移量
+    int limit = 10;//行数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,6 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
     public void initView() {
 
         setBarTitle(getString(R.string.search_routes));
-
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 10f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -80,8 +79,7 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
 
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
-        mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
-
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
         presenter.searchRoutes(begStationId, endStationId, offset, limit);
     }
 
@@ -92,24 +90,48 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
-        presenter.requestList();
+        offset = 0;
+        presenter.searchRoutes(begStationId, endStationId, offset, limit);
     }
 
     @Override
     public void onLoadMore() {
-        presenter.requestMore();
+        if (adapter.getCount() > offset) {
+            offset = adapter.getCount();
+        }
+        presenter.searchRoutes(begStationId, endStationId, offset, limit);
     }
 
     @Override
     public void onLoadViewClick(int status) {
-        presenter.requestList();
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
+        presenter.searchRoutes(begStationId, endStationId, offset, limit);
     }
 
     @Override
     public void searchRoutes(RespondDO<List<SearchRoutes>> respondDO) {
+
+
         if (respondDO.isStatus()) {
-            searchRoutesList = respondDO.getObject();
-            adapter.setDatas(searchRoutesList);
+            List<SearchRoutes> searchRoutesList = respondDO.getObject();
+            if (searchRoutesList != null && searchRoutesList.size() > 0) {//有数据
+                if (offset == 0) {
+                    adapter.setDatas(searchRoutesList);//下拉
+                } else {
+                    adapter.addDatas(searchRoutesList);//上啦
+                }
+                mViewBinding.ptyRecycle.setCloseLoadMore(false);
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(true);
+            } else {
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
+            }
+        } else {
+            mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
+        }
+        if (adapter.getDatas().isEmpty()) {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_NODATA);
+        } else {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
         }
     }
 }

@@ -1,13 +1,14 @@
 package com.komutr.client.ui.Purchase;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
+import com.example.clarence.utillibrary.StringUtils;
+import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
-import com.komutr.client.been.BuySellTicketComment;
+import com.komutr.client.been.BuySellTicketDetails;
 import com.komutr.client.been.BuyTicket;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.Constant;
@@ -54,7 +55,7 @@ public class ReviewPurchasePresenter extends AppBasePresenter<ReviewPurchaseView
             @Override
             public void accept(RespondDO respondDO) {
                 //{"amount":40,"order_id":"65","qty":"1","ticket_record":29}
-                if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
+                if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
                     BuyTicket buyTicket = JSON.parseObject(respondDO.getData(), BuyTicket.class);
                     respondDO.setObject(buyTicket);
                 }
@@ -72,6 +73,7 @@ public class ReviewPurchasePresenter extends AppBasePresenter<ReviewPurchaseView
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
                         mView.purchaseTicketCallBack(respondDO);
                     }
                 });
@@ -81,7 +83,7 @@ public class ReviewPurchasePresenter extends AppBasePresenter<ReviewPurchaseView
     /**
      * 获取买票下的备注信息
      */
-    public void requestComment() {
+    public void requestBuySellTicketDetails() {
         Map<String, Object> query = new HashMap<>();
         query.put("m", "system.ticketNote");
         query.put("auth_key", Constant.AUTH_KEY);
@@ -89,32 +91,27 @@ public class ReviewPurchasePresenter extends AppBasePresenter<ReviewPurchaseView
             @Override
             public void accept(RespondDO respondDO) {
                 //{"buy":{"content":"dsfdsfsf","created_at":"0000-00-00 00:00:00","id":1,"title":"dcvdsfsf"},"refund":{"content":"dsfdsfsf","created_at":"0000-00-00 00:00:00","id":1,"title":"dcvdsfsf"}}
-                if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                    JSONObject jsonObject = JSON.parseObject(respondDO.getData());
-                    String buy = jsonObject.getString("buy");
-                    if (!TextUtils.isEmpty(buy)) {
-                        BuySellTicketComment comment = JSON.parseObject(buy, BuySellTicketComment.class);
-                        respondDO.setObject(comment);
-                    }
+                if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
+                    respondDO.setObject(JSON.parseObject(respondDO.getData(), BuySellTicketDetails.class));
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        Log.d("registeredOrLogin", respondDO.toString());
-                        mView.commentCallBack(respondDO);
+                        Log.d("requestBuy", respondDO.toString());
+                        mView.buySellTicketDetailsCallBack(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
+
                         respondDO.setFromCallBack(-1);
-                        mView.commentCallBack(respondDO);
+                        mView.buySellTicketDetailsCallBack(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);
-
     }
 }

@@ -38,7 +38,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="+ ₱ 30"
                     android:textColor="@color/color_fe4a3b"
                     android:textSize="25sp" />
 
@@ -72,7 +71,6 @@
                     android:id="@+id/tvItems"
                     style="@style/my_trips_text_style"
                     android:layout_marginLeft="7dp"
-                    android:text="KOMUTRPAY top-up"
                     android:textColor="@color/color_000000"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -97,7 +95,6 @@
                     android:id="@+id/tvOrderNum"
                     style="@style/my_trips_text_style"
                     android:layout_marginLeft="7dp"
-                    android:text="4598564542821115"
                     android:textColor="@color/color_000000"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -122,7 +119,6 @@
                     android:id="@+id/tvStatus"
                     style="@style/my_trips_text_style"
                     android:layout_marginLeft="7dp"
-                    android:text="Recharge successful"
                     android:textColor="@color/color_000000"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -147,7 +143,6 @@
                     android:id="@+id/tvPaymentMethod"
                     style="@style/my_trips_text_style"
                     android:layout_marginLeft="7dp"
-                    android:text="Online payment method xxx"
                     android:textColor="@color/color_000000"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -172,7 +167,6 @@
                     android:id="@+id/tvTime"
                     style="@style/my_trips_text_style"
                     android:layout_marginLeft="7dp"
-                    android:text="2018-09-11  16:33:51"
                     android:textColor="@color/color_000000"
                     android:textSize="13sp" />
             </LinearLayout>
