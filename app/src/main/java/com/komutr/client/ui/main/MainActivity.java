@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -26,7 +25,6 @@ import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.example.clarence.utillibrary.StringUtils;
 import com.example.clarence.utillibrary.ToastUtils;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.komutr.client.BuildConfig;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
@@ -60,13 +58,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     RadioButton lastFooterRadioButton;
     Service service;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        int has = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-        Log.d("MainActivity", "是否无效:" + (has==9));
-    }
 
     @Override
     public void initDagger() {
