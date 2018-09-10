@@ -1,210 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <android.support.v4.widget.DrawerLayout
-            android:id="@+id/drawerLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/color_f1f1f4"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_f1f1f4"
-                android:orientation="vertical">
+                android:layout_height="45dp"
+                android:background="@color/color_main"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp">
 
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/ivSelf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/self_icon" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/home_title_icon" />
+
+
+                <ImageView
+                    android:id="@+id/ivWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/wallet_icon" />
+
+            </RelativeLayout>
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/color_main"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbMainTabOne"
+                    style="@style/radio_button_main"
+                    android:checked="true"
+                    android:text="@string/book" />
+
+                <TextView
+                    android:id="@+id/tvMainTabTwo"
+                    style="@style/radio_button_main"
+                    android:text="@string/pay" />
+
+
+                <RadioButton
+                    android:id="@+id/rbMainTabThree"
+                    style="@style/radio_button_main"
+                    android:text="@string/my_trips" />
+
+            </RadioGroup>
+
+
+            <com.cai.framework.widget.NoScrollViewPager
+                android:id="@+id/mainActivityViewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+
+        <!--侧滑布局-->
+        <LinearLayout
+            android:id="@+id/llMainLeftLayout"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/color_ffffff"
+            android:orientation="vertical">
+
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/llLeftLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@color/color_main"
-                    android:paddingLeft="13dp"
-                    android:paddingRight="13dp">
-
-
-                    <ImageView
-                        android:id="@+id/ivSelf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/self_icon" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/home_title_icon" />
-
-
-                    <ImageView
-                        android:id="@+id/ivWallet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/wallet_icon" />
-
-                </RelativeLayout>
-
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/color_main"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rbMainTabOne"
-                        style="@style/radio_button_main"
-                        android:checked="true"
-                        android:text="@string/book" />
-
-                    <TextView
-                        android:id="@+id/tvMainTabTwo"
-                        style="@style/radio_button_main"
-                        android:text="@string/pay" />
-
-
-                    <RadioButton
-                        android:id="@+id/rbMainTabThree"
-                        style="@style/radio_button_main"
-                        android:text="@string/my_trips" />
-
-                </RadioGroup>
-
-
-                <com.cai.framework.widget.NoScrollViewPager
-                    android:id="@+id/mainActivityViewpager"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-
-
-            </LinearLayout>
-
-
-            <!--侧滑布局-->
-            <LinearLayout
-                android:id="@+id/llMainLeftLayout"
-                android:layout_width="260dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:background="@color/color_ffffff"
-                android:orientation="vertical">
-
-
-                <android.support.v4.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/llLeftLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="171dp"
+                        android:background="@color/color_main"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="171dp"
-                            android:background="@color/color_main"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
 
-
-                            <ImageView
-                                android:id="@+id/ivUserAvatar"
-                                android:layout_width="63dp"
-                                android:layout_height="63dp"
-                                android:layout_marginBottom="19dp"
-                                android:layout_marginTop="31dp"
-                                android:src="@drawable/default_avatar" />
-
-
-                            <Button
-                                android:id="@+id/btnLogin"
-                                android:layout_width="140dp"
-                                android:layout_height="35dp"
-                                android:background="@drawable/log_in_bg"
-                                android:text="@string/log_in"
-                                android:textColor="@color/color_main"
-                                android:textSize="15sp" />
-
-
-                            <LinearLayout
-                                android:id="@+id/llUserInfoLayout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:id="@+id/tvUserNickName"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="gakes"
-                                    android:textColor="@color/color_ffffff"
-                                    android:textSize="20sp" />
-
-
-                                <TextView
-                                    android:id="@+id/tvUserId"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="ID:00001"
-                                    android:textColor="@color/color_ffffff"
-                                    android:textSize="15sp" />
-
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/llLeftListLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical" />
+                        <ImageView
+                            android:id="@+id/ivUserAvatar"
+                            android:layout_width="63dp"
+                            android:layout_height="63dp"
+                            android:layout_marginBottom="19dp"
+                            android:layout_marginTop="31dp"
+                            android:src="@drawable/default_avatar" />
 
 
                         <Button
-                            android:id="@+id/btnLogout"
-                            android:layout_width="119dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="29dp"
-                            android:layout_marginTop="30dp"
-                            android:background="@drawable/log_out_bg"
-                            android:text="@string/log_out"
+                            android:id="@+id/btnLogin"
+                            android:layout_width="140dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/log_in_bg"
+                            android:text="@string/log_in"
                             android:textColor="@color/color_main"
                             android:textSize="15sp" />
 
 
+                        <LinearLayout
+                            android:id="@+id/llUserInfoLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tvUserNickName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="gakes"
+                                android:textColor="@color/color_ffffff"
+                                android:textSize="20sp" />
 
 
-                           <TextView
-                               android:id="@+id/tvLocation"
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:paddingLeft="32dp"
-                               android:layout_gravity="bottom"
-                               android:textColor="@color/color_000000"
-                               android:text="@string/city"
-                               android:drawableLeft="@drawable/location"
-                               android:drawablePadding="10dp"
-                               android:textSize="15sp"/>
+                            <TextView
+                                android:id="@+id/tvUserId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="ID:00001"
+                                android:textColor="@color/color_ffffff"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
-                </android.support.v4.widget.NestedScrollView>
 
-            </LinearLayout>
-        </android.support.v4.widget.DrawerLayout>
-    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llLeftListLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+
+
+                    <Button
+                        android:id="@+id/btnLogout"
+                        android:layout_width="119dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="29dp"
+                        android:layout_marginTop="30dp"
+                        android:background="@drawable/log_out_bg"
+                        android:text="@string/log_out"
+                        android:textColor="@color/color_main"
+                        android:textSize="15sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:drawableLeft="@drawable/location"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="32dp"
+                        android:text="@string/city"
+                        android:textColor="@color/color_000000"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
 </layout>
