@@ -1,16 +1,17 @@
-package com.komutr.client.ui.message;
+package com.komutr.client.ui.message.details;
 
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.Message;
-import com.komutr.client.been.PhoneCode;
+import com.komutr.client.been.MessageDetails;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.common.Constant;
+import com.komutr.client.ui.message.MessageView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,10 +23,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-public class MessagePresenter extends AppBasePresenter<MessageView> {
+public class MessageDetailsPresenter extends AppBasePresenter<MessageView> {
 
     @Inject
-    public MessagePresenter() {
+    public MessageDetailsPresenter() {
 
     }
 
@@ -33,7 +34,7 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
     public void onAttached() {
     }
 
-    public void requestMessage() {
+    public void requestMessageDetails(String id) {
         String auth_key = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
         query.put("m", "system.message");
@@ -42,9 +43,9 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                            List<Message> messageList = JSON.parseArray(respondDO.getData(), Message.class);
-                            respondDO.setObject(messageList);
+                        if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
+                            MessageDetails messageDetails = JSON.parseObject(respondDO.getData(), MessageDetails.class);
+                            respondDO.setObject(messageDetails);
                         }
                     }
                 })

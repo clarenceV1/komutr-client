@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
@@ -306,7 +307,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         final List<String> options1Items = new ArrayList();
         String[] sexList = getResources().getString(R.string.sex_list).split(",");
         options1Items.addAll(Arrays.asList(sexList));
-        OptionsPickerView optionsPickerView = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+       final OptionsPickerView optionsPickerView = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -326,12 +327,36 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
                 .setBgColor(StreamUtils.getInstance().resourceToColor(R.color.color_f1f1f4, this))//滚轮背景颜色 Night mode
                 .setDividerColor(StreamUtils.getInstance().resourceToColor(R.color.color_side_line, this))
                 .setTextColorCenter(StreamUtils.getInstance().resourceToColor(R.color.color_333333, this)) //设置选中项文字颜色
-                .isCenterLabel(true ) //是否只显示中间选中项的 label 文字，false 则每项 item 全部都带有 label。
+                .isCenterLabel(true) //是否只显示中间选中项的 label 文字，false 则每项 item 全部都带有 label。
                 .isDialog(false)//是否显示为对话框样式
+                /*.setLayoutRes(R.layout.pop_custom_layout, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+
+                        //自定义布局中的控件初始化及事件处理
+                        final TextView tvSubmit =  v.findViewById(R.id.tvSure);
+                        final TextView tvCancel =  v.findViewById(R.id.tvCancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                optionsPickerView.returnData();
+                                optionsPickerView.dismiss();
+                            }
+                        });
+                        tvCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                optionsPickerView.dismiss();
+                            }
+                        });
+                    }
+                })*/
                 .build();
         optionsPickerView.setPicker(options1Items);
         view.setTag(R.id.tag_first, optionsPickerView);
         return optionsPickerView;
     }
+
+
 
 }

@@ -94,7 +94,7 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_dialog_reloading_text:
+            case R.id.tv_dialog_reloading_text://刷新重新获取数据
                 onShowLoadDialog(getString(R.string.loading), this);
                 presenter.requestBigArea();
                 break;

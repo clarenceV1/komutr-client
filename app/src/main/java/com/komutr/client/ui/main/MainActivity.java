@@ -68,7 +68,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
-//        setBarTitle("首页");
         EventBus.getDefault().register(this);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//防止布局被顶上去
         dynamicAddLeftListView();
@@ -92,19 +91,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
 
         mViewBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mViewBinding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-//                setStatuBarColor(R.color.color_main);
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-//                setStatuBarColor(R.color.color_00ffffff);
-                super.onDrawerClosed(drawerView);
-            }
-        });
         User user = presenter.switcher();
         initLeftData(user);
         presenter.requestPhoneAndAppVersion();

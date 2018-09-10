@@ -31,6 +31,7 @@
         <activity
             android:name=".ui.web.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".ui.message.details.MessageDetailsActivity"/>
         <activity android:name=".ui.position.PositionActivity"/>
         <activity android:name=".ui.bill.BillActivity"/>
         <activity android:name=".ui.recharge.RechargeActivity"/>

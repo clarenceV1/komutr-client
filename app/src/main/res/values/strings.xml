@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">komutr-client</string>
-    <string name="sure">Sure</string>
 
+    <string name="submitting">submitting</string>
+    <string name="sure">Sure</string>
+    <string name="message_details">Message details</string>
     <string name="sex_list">Male,Female</string>
     <string name="year_mouth_day">year,mouth,day</string>
     <string name="manually_selected_area">Manually selected area</string>
