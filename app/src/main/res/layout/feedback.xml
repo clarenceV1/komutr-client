@@ -32,5 +32,19 @@
             android:text="0/500"/>
 
 
+        <Button
+            android:id="@+id/btnSubmit"
+            style="@style/button_style"
+            android:layout_width="180dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/submit_bg"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="@string/submit" />
+
+
     </LinearLayout>
 </layout>

@@ -17,11 +17,13 @@ import com.cai.framework.imageload.GlideCircleTransform;
 import com.cai.framework.imageload.ILoadImage;
 import com.cai.framework.imageload.ILoadImageParams;
 import com.cai.framework.imageload.ImageForGlideParams;
+import com.cai.framework.utils.SharedPreUtils;
 import com.cai.framework.widget.dialog.GodDialog;
 import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.DeviceUtils;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
+import com.example.clarence.utillibrary.StringUtils;
 import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.BuildConfig;
 import com.komutr.client.R;
@@ -30,6 +32,7 @@ import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
+import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MainBinding;
 import com.komutr.client.event.EventPostInfo;
@@ -68,7 +71,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
-//        setBarTitle("首页");
         EventBus.getDefault().register(this);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//防止布局被顶上去
         dynamicAddLeftListView();
@@ -92,19 +94,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
 
         mViewBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mViewBinding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-//                setStatuBarColor(R.color.color_main);
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-//                setStatuBarColor(R.color.color_00ffffff);
-                super.onDrawerClosed(drawerView);
-            }
-        });
         User user = presenter.switcher();
         initLeftData(user);
         presenter.requestPhoneAndAppVersion();
@@ -159,7 +148,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
             llItemLayout.setOnClickListener(new OnClickListener(i));
             TextView tvName = new TextView(this);
-//            tvName.setPadding(dp13, dp13, dp13, dp13);
+//          tvName.setPadding(dp13, dp13, dp13, dp13);
             tvName.setTextSize(14);
             tvName.setGravity(Gravity.CENTER_VERTICAL);
             tvName.setText(selfList[i]);
@@ -245,7 +234,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 }
                 break;
             case R.id.tvMainTabTwo://扫描支付
-                  presenter.startGoScanPayPage(this);
+                presenter.startGoScanPayPage(this);
                 break;
             case R.id.rbMainTabThree://我的行程
                 if (mViewBinding.mainActivityViewpager.getCurrentItem() != 1) {
@@ -256,6 +245,13 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
         }
     }
 
+
+    /**
+     * 设置选中的下划背景条
+     *
+     * @param btnSelected
+     * @param isFirst
+     */
     private void setHeaderTabSelected(RadioButton btnSelected, boolean isFirst) {
         int dp60 = DimensUtils.dp2px(this, 60f);
         int dp3 = DimensUtils.dp2px(this, 3f);
@@ -288,6 +284,9 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
     public void serviceCallBack(RespondDO<Service> respondDO) {
         if (respondDO.isStatus()) {
             service = respondDO.getObject();
+            if (service != null && !StringUtils.isEmpty(service.getTelphone())) {
+                SharedPreUtils.putString(Constant.SharedPrefer.TEL_NUMBER, service.getTelphone());
+            }
         }
     }
 
@@ -313,8 +312,9 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                     }
                     break;
                 case 1://Service tel
-                    if (service != null) {
-                        presenter.callPhone(MainActivity.this, service.getTelphone());
+                    String tel = null;
+                    if ((service != null && !StringUtils.isEmpty(service.getTelphone())) || !(StringUtils.isEmpty(tel = SharedPreUtils.getString(Constant.SharedPrefer.TEL_NUMBER)))) {
+                        presenter.callPhone(MainActivity.this, tel != null ? tel : service.getTelphone());
                     }
                     break;
                 case 2:// Help center

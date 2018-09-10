@@ -119,10 +119,23 @@ public class RouterManager {
 
     public static final String BILL = ROUTER_HOME + "BillActivity";
 
+    public static final String MESSAGE_DETAILS = ROUTER_HOME + "MessageDetailsActivity";
+
+    /**
+     * 消息详情
+     *
+     * @param msgContent 消息内容
+     */
+    public static void goMessageDetails(String msgContent) {
+        ARouter.getInstance().build(MESSAGE_DETAILS)
+                .withString("msgContent", msgContent)
+                .navigation();
+    }
+
     /**
      * 订单详情
      *
-     * @param orderId    订单好
+     * @param orderId    订单号
      * @param hasComment 是否有评论
      */
     public static void goOrderDetails(String orderId, boolean hasComment) {

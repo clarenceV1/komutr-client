@@ -19,6 +19,7 @@ import com.komutr.client.ui.main.fragment.book.BookFragment;
 import com.komutr.client.ui.main.fragment.empty.EmptyFragment;
 import com.komutr.client.ui.main.fragment.trips.MyTripsFragment;
 import com.komutr.client.ui.message.MessageActivity;
+import com.komutr.client.ui.message.details.MessageDetailsActivity;
 import com.komutr.client.ui.nickname.NicknameActivity;
 import com.komutr.client.ui.orderDetails.OrderDetailsActivity;
 import com.komutr.client.ui.position.PositionActivity;
@@ -90,6 +91,8 @@ public interface AppComponent {
     void inject(PositionActivity activity);
     void inject(RechargeActivity activity);
     void inject(BillActivity activity);
+    void inject(MessageDetailsActivity activity);
+
 
 
 }

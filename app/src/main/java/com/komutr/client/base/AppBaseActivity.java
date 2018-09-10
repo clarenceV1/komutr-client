@@ -95,9 +95,9 @@ public abstract class AppBaseActivity<M extends ViewDataBinding> extends GodBase
     }
 
 
-    public void onShowLoadDialog(View.OnClickListener onClickListener) {
+    public void onShowLoadDialog(String content,View.OnClickListener onClickListener) {
         if (loadingDialog == null || !loadingDialog.isShowing())
-            loadingDialog = new LoadingDialog(this, true, null, onClickListener);
+            loadingDialog = new LoadingDialog(this, true, content, onClickListener);
     }
 
     public void onShowLoadError() {
