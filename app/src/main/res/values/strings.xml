@@ -165,4 +165,8 @@
     <string name="pull_to_refresh_hours_before">hours before</string>
     <string name="pull_to_refresh_minutes_before">minutes ago</string>
     <string name="last_refresh_time">last refresh time：</string>
+
+    <string name="no_more_data">no more data</string>
+    <string name="load_error">load error</string>
+    <string name="loading_more_data">loading more data</string>
 </resources>
