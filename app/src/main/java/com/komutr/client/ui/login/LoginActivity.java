@@ -117,10 +117,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
 
         } else {
             String phone = mViewBinding.etPhone.getText().toString();
-            if (phone.length() != 11) {
-                ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
-                return;
-            }
+//            if (phone.length() != 11) {
+//                ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
+//                return;
+//            }
             switch (view.getId()) {
                 case R.id.btnVerificationCode://获取验证码
                     view.setTag(phone);
@@ -129,10 +129,10 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
                     presenter.verificationCode(phone);
                     break;
                 case R.id.btnLogReg://登录
-                    /*if(StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode))){
+                    if(StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode))){
                         ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
                         return;
-                    }*/
+                    }
                     if (this.phoneCode == null || StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {//为获取验证码
                         ToastUtils.showShort(getString(R.string.not_get_code));
                         return;

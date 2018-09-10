@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface BillView extends GodBaseView {
 
-    void callback(List<Bill> dataList);
 
     void billListCallback(RespondDO<List<Bill>> respondDO);
 }

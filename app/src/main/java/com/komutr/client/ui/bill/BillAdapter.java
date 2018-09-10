@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.cai.pullrefresh.BasePtrAdapter;
 import com.cai.pullrefresh.BasePtrViewHold;
 import com.cai.pullrefresh.BaseViewHold;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.been.Bill;
 import com.komutr.client.been.BillItem;
@@ -58,7 +59,7 @@ public class BillAdapter extends BasePtrAdapter<Bill, BillAdapter.ViewHolder> im
         BillItem billItem = data.getItem();
         if (billItem != null) {
             holder.tvBillMethod.setText(billItem.getItem_name());
-            holder.tvBillAmount.setText("+ ₱ " + billItem.getAmount());
+            holder.tvBillAmount.setText("+ ₱ " + (StringUtils.isEmpty(billItem.getAmount()) ? context.getString(R.string.default_amount) : billItem.getAmount()));
         }
         holder.tvBillName.setText(data.getCreated());
 

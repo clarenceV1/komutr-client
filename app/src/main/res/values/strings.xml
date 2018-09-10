@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+    <string name="deleting">deleting</string>
+
+    <string name="please_wait">please wait</string>
+    <string name="has_use">Has Use</string>
+    <string name="effective">Effective</string>
+    <string name="ticket_price_price">1Ticket ₱ %s</string>
+    <string name="buying">buying</string>
+    <string name="default_amount">0.00</string>
+    <string name="am_pm">am,pm</string>
+    <string name="min">min</string>
     <string name="phone_call">Call Phone</string>
     <string name="permissions_des">Permissions description</string>
 

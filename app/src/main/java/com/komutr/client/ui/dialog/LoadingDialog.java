@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cai.framework.utils.CPResourceUtils;
 import com.example.clarence.utillibrary.StreamUtils;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 
 
@@ -41,7 +42,7 @@ public class LoadingDialog extends Dialog {
 //        Glide.with(activity).load(R.drawable.loading).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivLoading);
 
         playAnimation();
-        if (!TextUtils.isEmpty(loadingText))
+        if (!StringUtils.isEmpty(loadingText))
             tvMsg.setText(loadingText);
         tvReloading.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -81,14 +81,13 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(activity, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(activity, 10f), StreamUtils.getInstance().resourceToColor(R.color.transparent, activity)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new MyTripsAdapter(activity, iLoadImage, presenter);
+        adapter = new MyTripsAdapter(activity);
         mPtrRecyclerView.setAdapter(adapter);
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
 
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
-        mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
-//      mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
         presenter.requestList(start, size);
     }
 
@@ -107,7 +106,7 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
             } else {
                 mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
             }
-        }else{
+        } else {
             mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
         }
 
@@ -120,16 +119,21 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
+        start = 0;
         presenter.requestList(start, size);
     }
 
     @Override
     public void onLoadMore() {
+        if (adapter.getCount() > size) {
+            start = adapter.getCount();
+        }
         presenter.requestMore();
     }
 
     @Override
     public void onLoadViewClick(int status) {
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
         presenter.requestList(start, size);
     }
 }

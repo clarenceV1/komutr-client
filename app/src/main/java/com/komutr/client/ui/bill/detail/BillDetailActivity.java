@@ -10,13 +10,22 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.widget.dialog.GodDialog;
 import com.example.clarence.utillibrary.StreamUtils;
+import com.example.clarence.utillibrary.StringUtils;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.BillDetail;
+import com.komutr.client.been.BillDetailItem;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.BillDetailBinding;
+import com.komutr.client.event.EventPostInfo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -28,7 +37,6 @@ public class BillDetailActivity extends AppBaseActivity<BillDetailBinding> imple
     BillDetailPresenter presenter;
     @Autowired(name = "BillId")
     String billId;
-    BillDetail billDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,7 @@ public class BillDetailActivity extends AppBaseActivity<BillDetailBinding> imple
             titleBarView.setRightImage(StreamUtils.getInstance().resourceToDrawable(R.drawable.delete, this));
             titleBarView.setRightClickListener(this);
         }
+        onShowLoadDialog(getString(R.string.please_wait),this);
         presenter.requestBillDetail(billId);
 
 
@@ -69,6 +78,9 @@ public class BillDetailActivity extends AppBaseActivity<BillDetailBinding> imple
         switch (view.getId()) {
             case com.cai.framework.R.id.tvRight://删除订单
                 showRefundDialog();
+                break;
+            case R.id.tv_dialog_reloading_text://刷新
+                presenter.requestBillDetail(billId);
                 break;
         }
     }
@@ -92,25 +104,43 @@ public class BillDetailActivity extends AppBaseActivity<BillDetailBinding> imple
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 //                                ToastUtils.showShort("点击确定了");
-                        if (billDetail != null) {
-                            presenter.deleteBill(billDetail.getBill_id());
-                        }
                         dialog.dismiss();
+                        if (!StringUtils.isEmpty(billId)) {
+                            showDialog(getString(R.string.deleting),true);
+                            presenter.deleteBill(billId);
+                        }
+
                     }
                 }).build().show();
     }
 
     @Override
     public void billDetailCallBack(RespondDO<BillDetail> respondDO) {
+        hiddenDialog();
         if (respondDO.isStatus()) {
-            billDetail = respondDO.getObject();
+            BillDetail billDetail = respondDO.getObject();
+            mViewBinding.tvOrderNum.setText(billDetail.getOrder_number());
+            mViewBinding.tvStatus.setText(billDetail.getStatus());
+            mViewBinding.tvTime.setText(billDetail.getCreate_at());
+            mViewBinding.tvBillAmount.setText("+ ₱ " + (StringUtils.isEmpty(billDetail.getAmount()) ? getString(R.string.default_amount) : billDetail.getAmount()));
+            BillDetailItem billDetailItem = billDetail.getItem();
+            if(billDetailItem != null){
+                mViewBinding.tvItems.setText(billDetailItem.getName());
+            }
+        }else {
+            ToastUtils.showShort(respondDO.getMsg());
         }
     }
 
     @Override
     public void deleteBillCallBack(RespondDO<String> respondDO) {
+        hiddenDialog();
+        ToastUtils.showShort(respondDO.getMsg());
         if (respondDO.isStatus()) {
+            EventBus.getDefault().post(new EventPostInfo(EventPostInfo.ORDER_DELETE_SUCCESS));
             String deleteId = respondDO.getObject();
+            finish();
         }
+
     }
 }

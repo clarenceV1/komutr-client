@@ -2,6 +2,7 @@ package com.komutr.client.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.komutr.client.been.BuyTicket;
+import com.komutr.client.been.Chauffeur;
 import com.komutr.client.been.SearchRoutes;
 
 public class RouterManager {
@@ -169,15 +170,17 @@ public class RouterManager {
     }
 
     public static void goRouteDetail() {
-        ARouter.getInstance().build(ROUTE_DETAIL).navigation();
+        ARouter.getInstance().build(ROUTE_DETAIL)
+                .navigation();
     }
 
     public static void goMain() {
         ARouter.getInstance().build(ROUTER_MAIN).navigation();
     }
 
-    public static void goUserRatings() {
-        ARouter.getInstance().build(USER_RATINGS).navigation();
+    public static void goUserRatings(Chauffeur chauffeur) {
+        ARouter.getInstance().build(USER_RATINGS)
+                .withSerializable("chauffeur", chauffeur).navigation();
     }
 
     public static void goPosition(boolean isStartPosition, int bigArea, int province) {

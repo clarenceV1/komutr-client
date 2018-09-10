@@ -15,6 +15,7 @@ import com.cai.framework.imageload.ImageForGlideParams;
 import com.cai.pullrefresh.BasePtrAdapter;
 import com.cai.pullrefresh.BasePtrViewHold;
 import com.cai.pullrefresh.BaseViewHold;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.been.Chauffeur;
 import com.komutr.client.been.RouterStation;
@@ -67,19 +68,20 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
                 RouterManager.goReviewPurchase(data);
             }
         });
-        holder.tvBusPrice.setText(data.getTicket().getPrice());
+        holder.tvBusPrice.setText(data.getTicket() != null ? data.getTicket().getPrice() : context.getString(R.string.default_amount));
         holder.tvBusNumber.setText(data.getRoute_id());
         String time = routesShift.getBeg_time_int();
-        if (!TextUtils.isEmpty(time) && time.length() == 4) {
+        if (!StringUtils.isEmpty(time) && time.length() == 4) {
             boolean isAm = false;
             if (Integer.valueOf(time.substring(0, 2)) < 12) {
                 isAm = true;
             }
+            String[] ams = context.getString(R.string.am_pm).split(",");
             time = time.substring(0, 2) + ":" + time.substring(2, 4);
-            holder.tvBusStartTime.setText(time + (isAm ? "am" : "pm"));
+            holder.tvBusStartTime.setText(time + (isAm ? ams[0] : ams[1]));
         }
 
-        holder.tvBusStatus.setText(routesShift.getInterval() + "min");
+        holder.tvBusStatus.setText(routesShift.getInterval() + context.getString(R.string.min));
         RouterStation routerStation = data.getStation();
         if (routerStation != null) {
             if (routerStation.getBeg() != null) {
@@ -92,7 +94,7 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
 
         Chauffeur chauffeur = routesShift.getChauffeur();
         if (chauffeur != null) {
-            if (!TextUtils.isEmpty(chauffeur.getAvatar())) {
+            if (!StringUtils.isEmpty(chauffeur.getAvatar())) {
                 String icon = Constant.OFFICIAL_BASE_URL.substring(0, Constant.OFFICIAL_BASE_URL.length() - 1) + chauffeur.getAvatar_thum();
                 ILoadImageParams imageParams = new ImageForGlideParams.Builder()
                         .url(icon)

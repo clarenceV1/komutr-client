@@ -8,14 +8,24 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
+import com.cai.framework.imageload.GlideCircleTransform;
+import com.cai.framework.imageload.ILoadImage;
+import com.cai.framework.imageload.ILoadImageParams;
+import com.cai.framework.imageload.ImageForGlideParams;
 import com.cai.framework.widget.dialog.GodDialog;
+import com.example.clarence.utillibrary.CommonUtils;
+import com.example.clarence.utillibrary.DateUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
+import com.komutr.client.been.BuySellTicketDetails;
+import com.komutr.client.been.Chauffeur;
 import com.komutr.client.been.OrderDetail;
+import com.komutr.client.been.OrderDetailDepartureTime;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.OrderDetailsBinding;
 
@@ -25,14 +35,18 @@ import javax.inject.Inject;
 
 @Route(path = RouterManager.ORDER_DETAILS, name = "搜索-搜索路线-支付确认-状态-订单详情")
 public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> implements OrderDetailsView, View.OnClickListener {
+
     @Inject
     OrderDetailsPresenter presenter;
+    @Inject
+    ILoadImage iLoadImage;
     @Autowired(name = "orderId")
     String orderId;
     @Autowired(name = "hasComment")
     boolean hasComment;// 是否带评论
 
     OrderDetail orderDetail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,37 +67,46 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
     @Override
     public void initView() {
 
+        CommonUtils.setBackground(mViewBinding.tvRefundInstructions, CommonUtils.selectorStateColor(this, R.color.white, R.color.color_f1f1f4));
         mViewBinding.tvRefundInstructions.setOnClickListener(this);
         mViewBinding.tvRefund.setOnClickListener(this);
         mViewBinding.ivBack.setOnClickListener(this);
 
-        int useStatus = 3;//1:已使用 2:已退票 3:未使用
+        int useStatus = 2;//1:未使用 2:已使用 3:已退票
         if (useStatus == 1) {
-            boolean isComment = false;//判断是否有评论过
-
-            if (isComment) {//布局不需要更改
-
-            } else {
-                mViewBinding.viewCommentLine.setVisibility(View.GONE);
-                mViewBinding.tvUserComment.setVisibility(View.GONE);
-                mViewBinding.crbUserRatings.setVisibility(View.GONE);
-                mViewBinding.tvDidNoScore.setVisibility(View.VISIBLE);
-                mViewBinding.llRUserRatingLayout.setOnClickListener(this);
-            }
+            hiddenCommentLayout();
         } else if (useStatus == 2) {
-            mViewBinding.llRUserRatingLayout.setVisibility(View.GONE);
+
             mViewBinding.ivUseStatus.setVisibility(View.VISIBLE);
             mViewBinding.ivUseStatus.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.used, this));
-            mViewBinding.viewCommentLine.setVisibility(View.GONE);
-            mViewBinding.tvUserComment.setVisibility(View.GONE);
+            boolean isComment = false;//判断是否有评论过
+            if (isComment) {//布局不需要更改
+            } else {
+                hiddenCommentLayout();
+                CommonUtils.setBackground(mViewBinding.llRUserRatingLayout, CommonUtils.selectorStateColor(this, R.color.white, R.color.color_f1f1f4));
+                mViewBinding.llRUserRatingLayout.setOnClickListener(this);
+            }
         } else if (useStatus == 3) {
+            hiddenCommentLayout();
             mViewBinding.tvRefund.setText(getString(R.string.refund));
             mViewBinding.tvRefund.setCompoundDrawables(null, null, null, null);
             mViewBinding.ivUseStatus.setVisibility(View.VISIBLE);
             mViewBinding.ivUseStatus.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.refunded, this));
         }
-
+        onShowLoadDialog(getString(R.string.please_wait), this);
         presenter.getOrderDetail(orderId, true);
+        presenter.requestImportant();
+    }
+
+    /**
+     * 隐藏评论试图
+     */
+    private void hiddenCommentLayout() {
+        mViewBinding.viewCommentLine.setVisibility(View.GONE);
+        mViewBinding.tvUserComment.setVisibility(View.GONE);
+        mViewBinding.crbUserRatings.setVisibility(View.GONE);
+        mViewBinding.tvDidNoScore.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -95,7 +118,7 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llRUserRatingLayout://等级评论
-                RouterManager.goUserRatings();
+                RouterManager.goUserRatings((Chauffeur) view.getTag());
                 break;
             case R.id.tvRefundInstructions://退款介绍
                 showRefundInstructionsDialog("0.00");
@@ -107,6 +130,10 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
                 break;
             case R.id.ivBack://
                 finish();
+                break;
+            case R.id.tv_dialog_reloading_text:
+                presenter.getOrderDetail(orderId, true);
+                presenter.requestImportant();
                 break;
         }
     }
@@ -157,9 +184,55 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
 
     @Override
     public void orderDetailCallback(RespondDO<OrderDetail> respondDO) {
+        hiddenDialog();
         if (respondDO.isStatus()) {
             orderDetail = respondDO.getObject();
+            if (orderDetail != null) {
+                mViewBinding.tvTicketPriceNum.setText(getString(R.string.ticket_price_price, orderDetail.getAmount()));
+                mViewBinding.tvOrderId.setText(orderDetail.getOrder_number());
+                mViewBinding.tvBusNumber.setText(orderDetail.getRoute_id());
+                mViewBinding.tvStartLocation.setText(orderDetail.getStation() != null ? orderDetail.getStation().getBeg_station() : "");
+                mViewBinding.tvEndLocation.setText(orderDetail.getStation() != null ? orderDetail.getStation().getEnd_station() : "");
+                OrderDetailDepartureTime detailDepartureTime = orderDetail.getDeparture_time();
+                if (detailDepartureTime != null) {
+                    int hour = Integer.valueOf(detailDepartureTime.getHour());
+                    String[] ams = getString(R.string.am_pm).split(",");
+                    mViewBinding.tvTime.setText(detailDepartureTime.getHour() + ":" + detailDepartureTime.getMinute() + (hour > 12 ? ams[1] : ams[0]));
+                }
+                Chauffeur chauffeur = orderDetail.getChauffeur();
+                if (chauffeur != null) {
+                    mViewBinding.tvLicensePlateNo.setText(chauffeur.getLicence_plate());
+                    if (!StringUtils.isEmpty(chauffeur.getAvatar())) {
+//                    String icon = Constant.OFFICIAL_BASE_URL.substring(0, Constant.OFFICIAL_BASE_URL.length() - 1) + chauffeur.getAvatar_thum();
+                        ILoadImageParams imageParams = new ImageForGlideParams.Builder()
+                                .url(chauffeur.getAvatar())
+                                .error(R.drawable.default_avatar)
+                                .placeholder(R.drawable.default_avatar)
+                                .transformation(new GlideCircleTransform(this))
+                                .build();
+                        imageParams.setImageView(mViewBinding.ivDriverAvatar);
+                        iLoadImage.loadImage(this, imageParams);
+                        mViewBinding.tvDriverName.setText(chauffeur.getUsername());
+                        mViewBinding.tvDriverPhoneNum.setText(chauffeur.getPhone());
+                        mViewBinding.llRUserRatingLayout.setTag(chauffeur);
+                    }
+                }
+
+
+            }
         }
 
+    }
+
+    @Override
+    public void importantCallBack(RespondDO<BuySellTicketDetails> respondDO) {
+        if (respondDO.isStatus() && respondDO.getObject() != null) {
+            BuySellTicketDetails buySellTicketDetails = respondDO.getObject();
+            BuySellTicketDetails.Refund refund = buySellTicketDetails.getRefund();
+            if (refund != null) {
+                mViewBinding.tvImportantNotes.setText(refund.getContent());
+                mViewBinding.tvImportantTitle.setText(refund.getTitle());
+            }
+        }
     }
 }
