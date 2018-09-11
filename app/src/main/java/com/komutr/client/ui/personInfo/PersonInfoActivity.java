@@ -86,7 +86,6 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         dynamicAddWidget();
         presenter.requestUserInfo();
         mViewBinding.ivUserAvatar.setOnClickListener(this);
-//        presenter.uploadImage();
     }
 
 

@@ -17,6 +17,7 @@ import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.UploadImage;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
 import com.komutr.client.event.EventPostInfo;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import okhttp3.ResponseBody;
 
 public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
 
@@ -70,7 +72,6 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
                                 respondDO.setObject(user);
                                 EventBus.getDefault().post(new EventPostInfo(EventPostInfo.REFRESH_PERSON_INFO_SUCCESS));
                             }
-
                         }
                     }
                 })
@@ -99,12 +100,20 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
      */
     public void uploadImage(File imageFile) {
         String authKey = userInfoDao.get().getAppAuth();
-        Map<String, Object> query = new HashMap<>();
+        Map<String, String> query = new HashMap<>();
         query.put("m", "customer.uploadImage");
         query.put("auth_key", authKey);
-        query.put("image", imageFile);
-        Disposable disposable = requestStore.get().commonRequest(query)
+        Disposable disposable = requestStore.get().uploadFile(query,"image",imageFile)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
+                            UploadImage uploadImage = JSON.parseObject(respondDO.getData(), UploadImage.class);
+                            respondDO.setObject(uploadImage);
+                        }
+                    }
+                })
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
