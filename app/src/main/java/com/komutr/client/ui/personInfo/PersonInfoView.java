@@ -7,4 +7,6 @@ public interface PersonInfoView extends GodBaseView {
 
 
     void callbackUserInfo(RespondDO respondDO);
+
+    void callbackAvatar(RespondDO respondDO);
 }

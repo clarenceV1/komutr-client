@@ -1,6 +1,5 @@
 package com.komutr.client.ui.personInfo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
@@ -28,23 +26,28 @@ import com.cai.framework.logger.Logger;
 import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.DateUtils;
 import com.example.clarence.utillibrary.DimensUtils;
+import com.example.clarence.utillibrary.FileUtils;
+import com.example.clarence.utillibrary.PrivateConstant;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.example.clarence.utillibrary.StringUtils;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.User;
+import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PersonInfoBinding;
 import com.komutr.client.event.EventPostInfo;
+import com.komutr.client.ui.dialog.ChoosePicPopupWindow;
+import com.komutr.client.ui.nickname.NicknamePresenter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import com.komutr.client.ui.nickname.NicknamePresenter;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -54,7 +57,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTER_PERSON_INFO, name = "我的-个人信息")
-public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> implements PersonInfoView {
+public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> implements PersonInfoView, View.OnClickListener {
 
     @Inject
     PersonInfoPresenter presenter;
@@ -82,6 +85,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         initData();
         dynamicAddWidget();
         presenter.requestUserInfo();
+        mViewBinding.ivUserAvatar.setOnClickListener(this);
 //        presenter.uploadImage();
     }
 
@@ -190,8 +194,6 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
                 }
             }
         }
-
-
     }
 
 
@@ -212,6 +214,62 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         if (respondDO.isStatus()) {
             updateData((User) respondDO.getObject(), true);
         }
+    }
+
+    @Override
+    public void callbackAvatar(RespondDO respondDO) {
+        hiddenDialog();
+        if (respondDO.isStatus()) {
+
+        }else {
+            ToastUtils.showShort(respondDO.getMsg());
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        new ChoosePicPopupWindow(this, presenter);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.ActivityReqAndRes.CHOOSE_OPEN_CAMERA://拍照返回结果
+                    final String photoPath = FileUtils.getSaveFilePath(PrivateConstant.FileInfo.TYPE_PHOTO, this) + ".takePic.jpg";
+                    if (new File(photoPath).exists()) {
+                        presenter.cropAvatar(photoPath, this);
+                    }
+                    break;
+                case Constant.ActivityReqAndRes.CHOOSE_SELECT_ALBUM://选择图库返回结果
+                    if (data != null) {
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumns = {MediaStore.Images.Media.DATA};
+                        Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+                        c.moveToFirst();
+                        int columnIndex = c.getColumnIndex(filePathColumns[0]);
+                        String imagePath = c.getString(columnIndex);
+                        c.close();
+                        if (!StringUtils.isEmpty(imagePath)) {
+                            presenter.cropAvatar(imagePath, this);
+                        }
+
+                    }
+                    break;
+                case Constant.ActivityReqAndRes.START_CUT_AVATAR://裁剪返回结果
+                    final String cutPath = FileUtils.getSaveFilePath(PrivateConstant.FileInfo.TYPE_PHOTO, this) + "cutAvatar.png";
+                    File file = new File(cutPath);
+                    if (file.exists()) {//上传头像
+                        showDialog(getString(R.string.updating), true);
+                        presenter.uploadImage(file);
+                    }
+                    break;
+
+            }
+        }
+
     }
 
 
@@ -253,24 +311,11 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
 
         }
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //获取图片路径
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumns = {MediaStore.Images.Media.DATA};
-            Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
-            c.moveToFirst();
-            int columnIndex = c.getColumnIndex(filePathColumns[0]);
-            String imagePath = c.getString(columnIndex);
-            c.close();
-        }
-    }
 
 
     /**
      * 显示生日的选择器
+     *
      * @param view
      * @return
      */
@@ -326,7 +371,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         final List<String> options1Items = new ArrayList();
         String[] sexList = getResources().getString(R.string.sex_list).split(",");
         options1Items.addAll(Arrays.asList(sexList));
-       final OptionsPickerView optionsPickerView = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+        final OptionsPickerView optionsPickerView = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -375,7 +420,6 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         view.setTag(R.id.tag_first, optionsPickerView);
         return optionsPickerView;
     }
-
 
 
 }

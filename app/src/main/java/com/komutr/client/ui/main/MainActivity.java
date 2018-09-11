@@ -185,7 +185,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventPostInfo eventPostInfo) {
-        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.UPDATE_PERSON_INFO_SUCCESS) {
+        if (eventPostInfo != null && (eventPostInfo.getStateType() == EventPostInfo.UPDATE_PERSON_INFO_SUCCESS || eventPostInfo.getStateType() == EventPostInfo.REFRESH_PERSON_INFO_SUCCESS)) {
             User user = presenter.switcher();
             initLeftData(user);
         }
@@ -275,8 +275,11 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void logout(RespondDO respondDO) {
+        hiddenDialog();
         if (respondDO.isStatus()) {
             initLeftData(null);
+        }else {
+            ToastUtils.showShort(respondDO.getMsg());
         }
     }
 
@@ -366,8 +369,10 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                 .setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        presenter.logout();
+
                         dialog.dismiss();
+                        showDialog(getString(R.string.please_wait),true);
+                        presenter.logout();
                     }
                 }).build().show();
     }

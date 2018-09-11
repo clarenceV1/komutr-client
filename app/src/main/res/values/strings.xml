@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+    <string name="price_sign">₱</string>
+    <string name="upload_failed">upload failed</string>
     <string name="deleting">deleting</string>
+    <string name="album">Select album</string>
+    <string name="camera">Camera</string>
 
     <string name="please_wait">please wait</string>
     <string name="has_use">Has Use</string>

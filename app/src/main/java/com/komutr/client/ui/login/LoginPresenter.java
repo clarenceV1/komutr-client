@@ -4,7 +4,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
+import com.example.clarence.utillibrary.UniqueIdUtils;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
@@ -46,6 +48,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
         query.put("m", "customer.registeredOrLogin");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("ver_token_key", verTokenKey);
+        query.put("app_key", UniqueIdUtils.getDeviceInfo(GodBaseApplication.getAppContext(),UniqueIdUtils.DEVICES_INFO.IMEI));
         query.put("code", code);
         query.put("phone", phone);
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {

@@ -66,7 +66,7 @@ public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> imp
         if (chauffeur != null) {
 
             if (!StringUtils.isEmpty(chauffeur.getAvatar())) {
-//                    String icon = Constant.OFFICIAL_BASE_URL.substring(0, Constant.OFFICIAL_BASE_URL.length() - 1) + chauffeur.getAvatar_thum();
+//              String icon = Constant.OFFICIAL_BASE_URL.substring(0, Constant.OFFICIAL_BASE_URL.length() - 1) + chauffeur.getAvatar_thum();
                 ILoadImageParams imageParams = new ImageForGlideParams.Builder()
                         .url(chauffeur.getAvatar())
                         .error(R.drawable.default_avatar)

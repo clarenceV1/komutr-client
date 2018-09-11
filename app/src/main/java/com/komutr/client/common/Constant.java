@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.komutr.client.base.App;
 
+import java.io.File;
+
 
 public class Constant {
     public static boolean IS_DEBUG = true;
@@ -54,6 +56,25 @@ public class Constant {
 
 
 
+    /**
+     * activity请求和响应码
+     */
+    public static final class ActivityReqAndRes {
+        /**
+         * 打开相机
+         */
+        public static final int CHOOSE_OPEN_CAMERA = 1;
+        /**
+         * 选择相册图片
+         */
+        public static final int CHOOSE_SELECT_ALBUM = 2;
+
+        /**
+         * 裁剪头像
+         */
+        public static final int START_CUT_AVATAR = 3;
+
+    }
 
     /**
      * 传递值的名称
