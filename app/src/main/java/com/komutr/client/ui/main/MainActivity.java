@@ -73,7 +73,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
-        requestPermission();
+        presenter.requestPermissions(this);
         EventBus.getDefault().register(this);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//防止布局被顶上去
         dynamicAddLeftListView();
@@ -192,18 +192,6 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             User user = presenter.switcher();
             initLeftData(user);
         }
-    }
-
-    @Permission(value = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE,
-            Manifest.permission.ACCESS_WIFI_STATE})
-    private void requestPermission() {
-
     }
 
     @Override
