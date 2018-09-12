@@ -23,6 +23,9 @@ import com.komutr.client.been.RoutesShift;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
+import com.komutr.client.event.EventStation;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 搜索路线适配器
@@ -32,9 +35,9 @@ import com.komutr.client.common.RouterManager;
 public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRoutesAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener {
     ILoadImage iLoadImage;
     SearchRoutesPresenter presenter;
-    Context context;
+    SearchRoutesActivity context;
 
-    public SearchRoutesAdapter(Context context, ILoadImage iLoadImage, SearchRoutesPresenter presenter) {
+    public SearchRoutesAdapter(SearchRoutesActivity context, ILoadImage iLoadImage, SearchRoutesPresenter presenter) {
         this.iLoadImage = iLoadImage;
         this.presenter = presenter;
         this.context = context;
@@ -49,9 +52,13 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
 
     }
 
+
     @Override
     public void onItemClick(View v, int position) {
-        RouterManager.goRouteDetail();
+//        RouterManager.goRouteDetail();
+        SearchRoutes data = getData(position);
+        EventBus.getDefault().post(new EventStation(data));
+        context.finish();
     }
 
     @Override

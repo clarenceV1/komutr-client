@@ -1,12 +1,14 @@
 package com.komutr.client.ui.main.fragment.book;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.RoutesInfo;
 import com.komutr.client.been.Station;
 import com.komutr.client.common.Constant;
 
@@ -74,6 +76,39 @@ public class BookPresenter extends AppBasePresenter<BookView> {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         mView.requestNearbyCallback(respondDO);
+                    }
+                });
+        mCompositeSubscription.add(disposable);
+    }
+
+    public void routesInfo(final String routeId, String shiftId) {
+        Map<String, Object> query = new HashMap<>();
+        query.put("m", "station.viewRoute");
+        query.put("auth_key", Constant.AUTH_KEY);
+        query.put("route_id", routeId);
+        query.put("shift_id", shiftId);
+        Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
+            @Override
+            public void accept(RespondDO respondDO) {
+                if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
+                    RoutesInfo routesInfo = JSON.parseObject(respondDO.getData(),RoutesInfo.class);
+                    respondDO.setObject(routesInfo);
+                }
+            }
+        }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        Log.d("registeredOrLogin", respondDO.toString());
+                        mView.routesInfoCallback(respondDO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setFromCallBack(-1);
+                      mView.routesInfoCallback(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);

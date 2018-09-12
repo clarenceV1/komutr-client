@@ -1,45 +1,31 @@
 package com.komutr.client.ui.main.fragment.book;
 
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.cai.framework.permission.RxPermissions;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.JointType;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.RoutesInfo;
+import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.been.Station;
+import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.FragmentBookBinding;
+import com.komutr.client.event.EventPostInfo;
+import com.komutr.client.event.EventStation;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import io.reactivex.functions.Consumer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,6 +65,17 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         return fragment;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public void initDagger() {
@@ -94,6 +91,18 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     @Override
     public int getLayoutId() {
         return R.layout.fragment_book;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapHelp.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapHelp.onPause();
     }
 
     @Override
@@ -177,6 +186,21 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
                 }
 
             }
+        }
+    }
+
+    @Override
+    public void routesInfoCallback(RespondDO<RoutesInfo> respondDO) {
+        if (respondDO.isStatus() && respondDO.getObject() != null && mapHelp != null) {
+            mapHelp.drawRoutes(respondDO.getObject());
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventStation eventStation) {
+        SearchRoutes routes = eventStation.routes;
+        if (routes != null && routes.getRoutesShift() != null) {
+            presenter.routesInfo(routes.getRoute_id(), routes.getRoutesShift().getId());
         }
     }
 }

@@ -110,8 +110,6 @@ public class SearchRoutesActivity extends AppBaseActivity<SearchRoutesBinding> i
 
     @Override
     public void searchRoutes(RespondDO<List<SearchRoutes>> respondDO) {
-
-
         if (respondDO.isStatus()) {
             List<SearchRoutes> searchRoutesList = respondDO.getObject();
             if (searchRoutesList != null && searchRoutesList.size() > 0) {//有数据

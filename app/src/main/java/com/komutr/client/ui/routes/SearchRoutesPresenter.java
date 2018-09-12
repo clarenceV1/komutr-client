@@ -34,30 +34,6 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
     public void onAttached() {
     }
 
-
-    public void requestMore() {
-
-    }
-
-    public void requestList() {
-    }
-
-    public List<SearchRoutes> getTestList() {
-        List<SearchRoutes> newdatas = new ArrayList<>();
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-        newdatas.add(new SearchRoutes());
-
-        return newdatas;
-    }
-
     public void searchRoutes(int begStationId, int endStationId, int offset, int limit) {
         Map<String, Object> query = new HashMap<>();
         query.put("m", "station.route");

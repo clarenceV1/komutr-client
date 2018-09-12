@@ -22,7 +22,7 @@
     <color name="color_00ffffff">#00ffffff</color>
     <color name="color_d93e3e">#d93e3e</color>
 
-
+    <color name="color_2196f3">#2196f3</color>
 
 
     <!--主色调-->
@@ -41,4 +41,5 @@
     <color name="result_view">#b0000000</color>
     <color name="viewfinder_mask">#60000000</color>
     <color name="possible_result_points">#c0ffff00</color>
+
 </resources>
