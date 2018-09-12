@@ -1,5 +1,6 @@
 package com.komutr.client.ui.main;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cai.framework.annotation.aspect.Permission;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.imageload.GlideCircleTransform;
 import com.cai.framework.imageload.ILoadImage;
@@ -71,6 +73,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void initView() {
+        requestPermission();
         EventBus.getDefault().register(this);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//防止布局被顶上去
         dynamicAddLeftListView();
@@ -189,6 +192,18 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             User user = presenter.switcher();
             initLeftData(user);
         }
+    }
+
+    @Permission(value = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.ACCESS_WIFI_STATE})
+    private void requestPermission() {
+
     }
 
     @Override

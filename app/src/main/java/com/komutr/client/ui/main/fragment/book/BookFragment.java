@@ -1,7 +1,6 @@
 package com.komutr.client.ui.main.fragment.book;
 
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -10,18 +9,9 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.RoutesInfo;
-import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.been.Station;
-import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.FragmentBookBinding;
-import com.komutr.client.event.EventPostInfo;
-import com.komutr.client.event.EventStation;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -66,18 +56,6 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void initDagger() {
         App.getAppComponent().inject(this);
     }
@@ -91,18 +69,6 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     @Override
     public int getLayoutId() {
         return R.layout.fragment_book;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapHelp.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapHelp.onPause();
     }
 
     @Override
@@ -124,9 +90,8 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     }
 
     private void initMap() {
-        mapHelp = new MapHelp();
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapHelp.init(this, mapFragment);
+        mapHelp = new MapHelp(getContext(), mapFragment);
     }
 
     @Override
@@ -189,18 +154,4 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         }
     }
 
-    @Override
-    public void routesInfoCallback(RespondDO<RoutesInfo> respondDO) {
-        if (respondDO.isStatus() && respondDO.getObject() != null && mapHelp != null) {
-            mapHelp.drawRoutes(respondDO.getObject());
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(EventStation eventStation) {
-        SearchRoutes routes = eventStation.routes;
-        if (routes != null && routes.getRoutesShift() != null) {
-            presenter.routesInfo(routes.getRoute_id(), routes.getRoutesShift().getId());
-        }
-    }
 }

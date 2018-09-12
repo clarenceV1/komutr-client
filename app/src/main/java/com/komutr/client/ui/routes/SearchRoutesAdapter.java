@@ -1,7 +1,5 @@
 package com.komutr.client.ui.routes;
 
-import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,9 +21,6 @@ import com.komutr.client.been.RoutesShift;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.event.EventStation;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * 搜索路线适配器
@@ -55,10 +50,10 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
 
     @Override
     public void onItemClick(View v, int position) {
-//        RouterManager.goRouteDetail();
         SearchRoutes data = getData(position);
-        EventBus.getDefault().post(new EventStation(data));
-        context.finish();
+        if (data != null && data.getRoutesShift() != null) {
+            RouterManager.goRouteDetail(data.getRoute_id(), data.getRoutesShift().getId());
+        }
     }
 
     @Override

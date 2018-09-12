@@ -169,8 +169,10 @@ public class RouterManager {
                 .withSerializable("Routes", data).navigation();
     }
 
-    public static void goRouteDetail() {
+    public static void goRouteDetail(String routeId, String shiftId) {
         ARouter.getInstance().build(ROUTE_DETAIL)
+                .withString("routeId",routeId)
+                .withString("shiftId",shiftId)
                 .navigation();
     }
 

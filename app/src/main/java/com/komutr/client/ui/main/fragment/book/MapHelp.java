@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -12,12 +11,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cai.framework.logger.Logger;
-import com.cai.framework.permission.RxPermissions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -44,16 +40,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.komutr.client.R;
-import com.komutr.client.been.RouterStation;
+import com.komutr.client.base.App;
 import com.komutr.client.been.RoutesInfo;
-import com.komutr.client.been.SearchRoutes;
-import com.komutr.client.been.Station;
 import com.komutr.client.been.StationDetail;
 
 import java.util.List;
-
-import io.reactivex.functions.Consumer;
-
 
 public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
@@ -63,26 +54,30 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
     private final String TAG = "BookFragment222";
 
     private GoogleMap mMap;
-    private Fragment fragment;
+    private Context context;
     FusedLocationProviderClient mFusedLocationClient;
     LocationCallback mLocationCallback;
     LocationRequest mLocationRequest;
 
-    @SuppressLint("MissingPermission")
-    public void init(Fragment fragment, SupportMapFragment mapFragment) {
-        this.fragment = fragment;
+    public MapHelp(Context context, SupportMapFragment mapFragment) {
+        this.context = context;
         mapFragment.getMapAsync(this);
     }
 
-    @SuppressLint("MissingPermission")
+    /**
+     * 时时定位
+     */
     protected void createLocationRequest() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest);
-        SettingsClient client = LocationServices.getSettingsClient(fragment.getContext());
+        SettingsClient client = LocationServices.getSettingsClient(context);
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
         task.addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
             @SuppressLint("MissingPermission")
@@ -100,7 +95,7 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
             }
         });
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(fragment.getContext());
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -122,50 +117,26 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMyLocationClickListener(this);
-        enableMyLocation();
-
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setIndoorEnabled(false);
         mMap.setMinZoomPreference(0.0f);
         mMap.setMaxZoomPreference(20.0f);
+        mMap.setOnMyLocationButtonClickListener(this);
+        mMap.setOnMyLocationClickListener(this);
 
-
+        loadMyLocation();
+//        createLocationRequest();
         //地图定位
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 10));
     }
 
-
-    @SuppressLint("CheckResult")
-    private void enableMyLocation() {
-        new RxPermissions(fragment).request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean granted) {
-                if (mMap != null) {
-                    if (ActivityCompat.checkSelfPermission(fragment.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                            && ActivityCompat.checkSelfPermission(fragment.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                    }
-                    mMap.setMyLocationEnabled(true);
-                    reloadMyLocation();
-                    createLocationRequest();
-                }
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        });
-    }
-
-    private void reloadMyLocation() {
-        LocationManager lm = (LocationManager) fragment.getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(fragment.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(fragment.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private void loadMyLocation() {
+        LocationManager lm = (LocationManager) App.getAppContext().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        mMap.setMyLocationEnabled(true);
         Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (myLocation == null) {
             Criteria criteria = new Criteria();
@@ -179,14 +150,13 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
 
     @Override
     public boolean onMyLocationButtonClick() {
-        reloadMyLocation();
-        Toast.makeText(fragment.getContext(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        loadMyLocation();
         return false;
     }
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(fragment.getContext(), "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Current location:\n" + location, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -204,21 +174,13 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
 
     }
 
-    @SuppressLint("MissingPermission")
-    public void onResume() {
-
-    }
-
-    public void onPause() {
-    }
-
     public void drawRoutes(RoutesInfo routes) {
         List<StationDetail> stations = routes.getAll_station();
 
         if (stations != null && stations.size() > 0) {
             PolylineOptions polylineOptions = new PolylineOptions()
                     .width(5)
-                    .color(fragment.getResources().getColor(R.color.color_2196f3));
+                    .color(context.getResources().getColor(R.color.color_2196f3));
             LatLng point = null;
             BitmapDescriptor bitmapDescriptor = null;
             for (int i = 0; i < stations.size(); i++) {
@@ -228,7 +190,7 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
                     bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.point_start);
                 } else if (i == stations.size() - 1) {
                     bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.point_end);
-                }else{
+                } else {
                     bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.point_center);
                 }
                 mMap.addMarker(new MarkerOptions().icon(bitmapDescriptor).position(point).title(detail.getStation_name()));
