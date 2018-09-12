@@ -4,11 +4,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/color_f1f1f4">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="message detail" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.cai.pullrefresh.PtrRecyclerViewFrameLayout
+                android:id="@+id/ptyRecycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.cai.framework.baseview.LoadingView
+                android:id="@+id/loadView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </LinearLayout>
 </layout>

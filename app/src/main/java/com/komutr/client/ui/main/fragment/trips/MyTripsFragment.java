@@ -148,7 +148,7 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventPostInfo eventPostInfo) {
-        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.REFRESH_MY_TRIPS) {
+        if (eventPostInfo != null && (eventPostInfo.getStateType() == EventPostInfo.REFRESH_MY_TRIPS || eventPostInfo.getStateType() == EventPostInfo.UPDATE_PERSON_INFO_SUCCESS)) {
             start = 0;
             presenter.requestList(start, size);
         }
