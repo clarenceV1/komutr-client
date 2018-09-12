@@ -11,6 +11,8 @@ import com.komutr.client.been.Message;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.Constant;
+import com.komutr.client.dao.MessageDao;
+import com.komutr.client.dao.UserInfoDao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +20,16 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import dagger.Lazy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 public class MessagePresenter extends AppBasePresenter<MessageView> {
 
+    @Inject
+    public Lazy<MessageDao> messageDao;
+    
     @Inject
     public MessagePresenter() {
 
@@ -33,11 +39,12 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
     public void onAttached() {
     }
 
-    public void requestMessage() {
+    public void requestMessage(int start, int size) {
         String auth_key = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
         query.put("m", "system.message");
         query.put("auth_key", auth_key);
+        query.put("limit", start + "," + size);
         Disposable disposable = requestStore.get().commonRequest(query)
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override

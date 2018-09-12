@@ -13,6 +13,15 @@ public class Message {
     private String content;
     private String create_at;
     private String title;
+    private boolean unRead;
+
+    public boolean isUnRead() {
+        return unRead;
+    }
+
+    public void setUnRead(boolean unRead) {
+        this.unRead = unRead;
+    }
 
     public long getMsgId() {
         return msgId;

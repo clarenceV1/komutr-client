@@ -5,8 +5,11 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
+import com.cai.framework.baseview.LoadingView;
+import com.cai.pullrefresh.BaseListPtrFrameLayout;
 import com.cai.pullrefresh.PtrRecyclerView;
 import com.cai.pullrefresh.RecycleViewDivider;
+import com.cai.pullrefresh.lib.PtrFrameLayout;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.example.clarence.utillibrary.ToastUtils;
@@ -23,12 +26,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTER_MESSAGE, name = "消息")
-public class MessageActivity extends AppBaseActivity<MessageBinding> implements MessageView, View.OnClickListener {
+public class MessageActivity extends AppBaseActivity<MessageBinding> implements MessageView, View.OnClickListener, BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener {
 
     @Inject
     MessagePresenter presenter;
 
-
+    int start = 0;
+    int size = 10;
     PtrRecyclerView mPtrRecyclerView;
     MessageAdapter adapter;
 
@@ -52,8 +56,10 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
         adapter = new MessageAdapter(this, presenter);
         mPtrRecyclerView.setAdapter(adapter);
 
+        mViewBinding.ptyRecycle.setCloseLoadMore(true);
+        mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         onShowLoadDialog(getString(R.string.loading), this);
-        presenter.requestMessage();
+        presenter.requestMessage(start, size);
     }
 
     @Override
@@ -83,8 +89,29 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
         switch (view.getId()) {
             case R.id.tv_dialog_reloading_text://刷新重新获取数据
                 onShowLoadDialog(getString(R.string.loading), this);
-                presenter.requestMessage();
+                start = 0;
+                presenter.requestMessage(start, size);
                 break;
         }
+    }
+
+    @Override
+    public void onLoadViewClick(int status) {
+        start = 0;
+        presenter.requestMessage(start, size);
+    }
+
+    @Override
+    public void onRefresh(PtrFrameLayout frame) {
+        start = 0;
+        presenter.requestMessage(start, size);
+    }
+
+    @Override
+    public void onLoadMore() {
+        if (adapter.getCount() > size) {
+            start = adapter.getCount();
+        }
+        presenter.requestMessage(start, size);
     }
 }
