@@ -19,7 +19,10 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
+import com.komutr.client.event.PermissionEvent;
 import com.komutr.client.ui.qrcode.activity.MipcaActivityCapture;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -206,7 +209,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
         ).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean granted) {
-
+                EventBus.getDefault().post(new PermissionEvent());
             }
         });
         mCompositeSubscription.add(disposable);

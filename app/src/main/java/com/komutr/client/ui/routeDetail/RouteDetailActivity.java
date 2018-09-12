@@ -15,7 +15,7 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.RoutesInfo;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RouteDetailBinding;
-import com.komutr.client.ui.main.fragment.book.MapHelp;
+import com.komutr.client.ui.map.MapHelp;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapHelp = new MapHelp(this, mapFragment);
+        mapHelp = new MapHelp(this, mapFragment,null);
     }
 
     @Override

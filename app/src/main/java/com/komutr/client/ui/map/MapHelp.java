@@ -1,4 +1,4 @@
-package com.komutr.client.ui.main.fragment.book;
+package com.komutr.client.ui.map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -43,6 +43,13 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.been.RoutesInfo;
 import com.komutr.client.been.StationDetail;
+import com.komutr.client.been.User;
+import com.komutr.client.event.EventPostInfo;
+import com.komutr.client.event.PermissionEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -58,10 +65,17 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
     FusedLocationProviderClient mFusedLocationClient;
     LocationCallback mLocationCallback;
     LocationRequest mLocationRequest;
+    MapCallback mapCallback;
 
-    public MapHelp(Context context, SupportMapFragment mapFragment) {
+    public MapHelp(Context context, SupportMapFragment mapFragment, MapCallback mapCallback) {
         this.context = context;
+        this.mapCallback = mapCallback;
         mapFragment.getMapAsync(this);
+        EventBus.getDefault().register(this);
+    }
+
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -199,5 +213,10 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
             Polyline polyline = mMap.addPolyline(polylineOptions);
             polyline.setJointType(JointType.ROUND);//24.63618 118.07404 25.98584 25.98584
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPermissionEvent(PermissionEvent event) {
+        loadMyLocation();
     }
 }
