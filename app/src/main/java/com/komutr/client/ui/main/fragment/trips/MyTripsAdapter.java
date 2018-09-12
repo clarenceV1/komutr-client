@@ -53,7 +53,7 @@ public class MyTripsAdapter extends BasePtrAdapter<MyTrips, MyTripsAdapter.ViewH
         int status = data.getStatus() == null ? 3 : data.getStatus();//订单状态 1 已支付 3 已经使用 4 已经退票
         if (detailDepartureTime != null) {
             String[] ams = context.getString(R.string.am_pm).split(",");
-            holder.tvMyTripsTime.setText(detailDepartureTime.getHour() + ":" + detailDepartureTime.getMinute() + ("1".equals(detailDepartureTime.getTime_interval()) ? ams[0] : ams[1]));
+            holder.tvMyTripsTime.setText(detailDepartureTime.getNote());
             holder.tvMyTripsDate.setText(detailDepartureTime.getFull());
         }
         holder.tvMyTripsStatus.setText(context.getString(status == 3 ? R.string.has_use : status == 1 ? R.string.effective : R.string.refunded));

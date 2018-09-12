@@ -11,4 +11,6 @@ public interface OrderDetailsView extends GodBaseView {
     void orderDetailCallback(RespondDO<OrderDetail> respondDO);
 
     void importantCallBack(RespondDO<BuySellTicketDetails> respondDO);
+
+    void operateCallBack(RespondDO respondDO);
 }

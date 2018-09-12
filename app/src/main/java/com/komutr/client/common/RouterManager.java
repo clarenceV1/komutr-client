@@ -178,9 +178,11 @@ public class RouterManager {
         ARouter.getInstance().build(ROUTER_MAIN).navigation();
     }
 
-    public static void goUserRatings(Chauffeur chauffeur) {
+    public static void goUserRatings(Chauffeur chauffeur,String orderId,String shiftId) {
         ARouter.getInstance().build(USER_RATINGS)
-                .withSerializable("chauffeur", chauffeur).navigation();
+                .withSerializable("chauffeur", chauffeur)
+                .withString("orderId", orderId)
+                .withString("shiftId", shiftId).navigation();
     }
 
     public static void goPosition(boolean isStartPosition, int bigArea, int province) {
