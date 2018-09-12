@@ -29,16 +29,17 @@ public class FAQPresenter extends AppBasePresenter<FAQView> {
     @Override
     public void onAttached() {
     }
+
     /**
      *
      */
-    public void requestDetail(int contentType) {
+    public void requestDetail(int contentType, int start, int size) {
         Map<String, Object> query = new HashMap<>();
         query.put("m", "system.faq");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("user_type", "2");
         query.put("content_type", contentType);
-        query.put("limit", "0,10");
+        query.put("limit", start + "," + size);
         Disposable disposable = requestStore.get().commonRequest(query)
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override

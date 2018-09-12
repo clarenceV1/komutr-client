@@ -6,6 +6,7 @@ import com.komutr.client.been.MyObjectBox;
 import io.objectbox.BoxStore;
 
 public class BaseDAO {
+
     public BoxStore boxStore;
 
     public BaseDAO() {

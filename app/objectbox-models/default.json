@@ -65,7 +65,7 @@
     },
     {
       "id": "2:7700975676567819038",
-      "lastPropertyId": "6:816324447455563569",
+      "lastPropertyId": "7:4065991510547307212",
       "name": "Message",
       "properties": [
         {
@@ -89,8 +89,8 @@
           "name": "title"
         },
         {
-          "id": "6:816324447455563569",
-          "name": "unRead"
+          "id": "7:4065991510547307212",
+          "name": "status"
         }
       ],
       "relations": []
@@ -104,7 +104,9 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    816324447455563569
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

@@ -19,7 +19,10 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
+import com.komutr.client.event.EventPostInfo;
 import com.komutr.client.ui.qrcode.activity.MipcaActivityCapture;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +65,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
                     public void accept(RespondDO respondDO) {
                         if (respondDO.isStatus()) {
                             userInfoDao.get().logout();
+                            EventBus.getDefault().post(new EventPostInfo(EventPostInfo.REFRESH_MY_TRIPS));
                         }
                     }
                 })
