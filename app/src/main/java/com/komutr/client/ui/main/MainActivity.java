@@ -1,6 +1,5 @@
 package com.komutr.client.ui.main;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.cai.framework.annotation.aspect.Permission;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.imageload.GlideCircleTransform;
 import com.cai.framework.imageload.ILoadImage;
