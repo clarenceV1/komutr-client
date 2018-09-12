@@ -123,6 +123,8 @@ dependencies {
     api rootProject.ext.dependencies["easyadapter"]
     api rootProject.ext.dependencies["qiniu"]
 
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+
     //framwork
     api project(':LibFrameWork')
 
