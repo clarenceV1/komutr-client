@@ -13,14 +13,16 @@ public class Message {
     private String content;
     private String create_at;
     private String title;
-    private boolean unRead;
 
-    public boolean isUnRead() {
-        return unRead;
+    // 0 未读  1已读 -1用户删除
+    private int status;
+
+    public int getStatus() {
+        return status;
     }
 
-    public void setUnRead(boolean unRead) {
-        this.unRead = unRead;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public long getMsgId() {
