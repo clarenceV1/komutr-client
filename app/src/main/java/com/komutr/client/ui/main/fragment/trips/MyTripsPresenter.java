@@ -1,13 +1,10 @@
 package com.komutr.client.ui.main.fragment.trips;
 
-import android.text.TextUtils;
-
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.MyTrips;
-import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.RespondDO;
 
 import java.util.HashMap;
@@ -30,11 +27,6 @@ public class MyTripsPresenter extends AppBasePresenter<MyTripsView> {
 
     @Override
     public void onAttached() {
-
-    }
-
-
-    public void requestMore() {
 
     }
 

@@ -129,11 +129,12 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
         if (adapter.getCount() > size) {
             start = adapter.getCount();
         }
-        presenter.requestMore();
+        presenter.requestList(start, size);
     }
 
     @Override
     public void onLoadViewClick(int status) {
+        start = 0;
         mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
         presenter.requestList(start, size);
     }
