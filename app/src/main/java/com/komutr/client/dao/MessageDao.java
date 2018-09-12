@@ -2,6 +2,8 @@ package com.komutr.client.dao;
 
 import com.cai.framework.dagger.ActivityScope;
 import com.komutr.client.been.Message;
+import com.komutr.client.been.Message_;
+import com.komutr.client.ui.message.MessagePresenter;
 
 import java.util.List;
 
@@ -43,5 +45,13 @@ public class MessageDao extends BaseDAO {
             msgBox.removeAll();
             msgBox.put(messageList);
         }
+    }
+
+    public int getStatus(int id) {
+        Message message = msgBox.query().equal(Message_.id, id).build().findFirst();
+        if (message != null) {
+            return message.getStatus();
+        }
+        return 0;
     }
 }
