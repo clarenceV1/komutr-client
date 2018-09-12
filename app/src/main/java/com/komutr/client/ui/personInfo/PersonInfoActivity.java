@@ -35,6 +35,7 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.UploadImage;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
@@ -216,11 +217,17 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
     }
 
     @Override
-    public void callbackAvatar(RespondDO respondDO) {
-        hiddenDialog();
-        if (respondDO.isStatus()) {
+    public void callbackAvatar(RespondDO<UploadImage> respondDO) {
 
-        }else {
+        if (respondDO.isStatus()) {
+            UploadImage uploadImage = respondDO.getObject();
+            if (uploadImage != null && !StringUtils.isEmpty(uploadImage.getWeb_path())) {
+                presenter.updateMyData(uploadImage.getWeb_path(), -1, -1, -1);
+            } else {
+                hiddenDialog();
+            }
+        } else {
+            hiddenDialog();
             ToastUtils.showShort(respondDO.getMsg());
         }
     }
@@ -265,10 +272,8 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
                         presenter.uploadImage(file);
                     }
                     break;
-
             }
         }
-
     }
 
 

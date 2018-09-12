@@ -16,6 +16,7 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
+import com.komutr.client.been.MyTrips;
 import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.databinding.FragmentMyTripsBinding;
@@ -92,9 +93,9 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
     }
 
     @Override
-    public void orderListCallback(RespondDO<List<OrderDetail>> respondDO) {
+    public void orderListCallback(RespondDO<List<MyTrips>> respondDO) {
         if (respondDO.isStatus()) {
-            List<OrderDetail> data = respondDO.getObject();
+            List<MyTrips> data = respondDO.getObject();
             if (data != null && data.size() > 0) {//有数据
                 if (start == 0) {
                     adapter.setDatas(data);//下拉

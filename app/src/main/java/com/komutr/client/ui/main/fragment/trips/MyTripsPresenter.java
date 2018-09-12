@@ -4,7 +4,9 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.logger.Logger;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.base.AppBasePresenter;
+import com.komutr.client.been.MyTrips;
 import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.RespondDO;
 
@@ -52,8 +54,8 @@ public class MyTripsPresenter extends AppBasePresenter<MyTripsView> {
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                            List<OrderDetail> phoneCode = JSON.parseArray(respondDO.getData(), OrderDetail.class);
+                        if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
+                            List<MyTrips> phoneCode = JSON.parseArray(respondDO.getData(), MyTrips.class);
                             respondDO.setObject(phoneCode);
                         }
                     }

@@ -45,12 +45,13 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
     @Override
     public void initView() {
         setBarTitle(getString(R.string.message_title));
-
+        mViewBinding.ptyRecycle.setCloseLoadMore(true);
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MessageAdapter(this, presenter);
         mPtrRecyclerView.setAdapter(adapter);
+
         onShowLoadDialog(getString(R.string.loading), this);
         presenter.requestMessage();
     }

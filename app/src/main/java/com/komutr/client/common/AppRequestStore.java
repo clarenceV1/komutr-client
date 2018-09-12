@@ -84,7 +84,7 @@ public class AppRequestStore {
                         RespondDO respondDO = new RespondDO();
                         try {
                             String result = responseBody.string();
-                            Log.d("commonRequest", result);
+                            Log.d("uploadPic", result);
                             if (!StringUtils.isEmpty(result)) {
                                 respondDO = JSON.parseObject(result, RespondDO.class);
                             }

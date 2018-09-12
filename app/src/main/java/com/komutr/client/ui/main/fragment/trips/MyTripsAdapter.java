@@ -13,11 +13,12 @@ import com.example.clarence.utillibrary.DateUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
+import com.komutr.client.been.MyTrips;
 import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.OrderDetailDepartureTime;
 import com.komutr.client.common.RouterManager;
 
-public class MyTripsAdapter extends BasePtrAdapter<OrderDetail, MyTripsAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener {
+public class MyTripsAdapter extends BasePtrAdapter<MyTrips, MyTripsAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener {
 
     Context context;
 
@@ -34,7 +35,7 @@ public class MyTripsAdapter extends BasePtrAdapter<OrderDetail, MyTripsAdapter.V
 
     @Override
     public void onItemClick(View v, int position) {
-        OrderDetail myTrips = datas.get(position);
+        MyTrips myTrips = datas.get(position);
         RouterManager.goOrderDetails(myTrips.getOrder_id(), false);
     }
 
@@ -44,31 +45,24 @@ public class MyTripsAdapter extends BasePtrAdapter<OrderDetail, MyTripsAdapter.V
     }
 
     @Override
-    protected void onPtrBindViewHolder(ViewHolder holder, OrderDetail data, int position) {
+    protected void onPtrBindViewHolder(ViewHolder holder, MyTrips data, int position) {
 
 
         OrderDetailDepartureTime detailDepartureTime = data.getDeparture_time();
-        boolean used = true;
+
+        int status = data.getStatus() == null ? 3 : data.getStatus();//订单状态 1 已支付 3 已经使用 4 已经退票
         if (detailDepartureTime != null) {
-            String[] time = DateUtils.formatTime(System.currentTimeMillis()).split(":");
-            int hour = Integer.valueOf(detailDepartureTime.getHour());
-            int min = Integer.valueOf(detailDepartureTime.getMinute());
-            if (Integer.valueOf(time[0]) > hour) {
-                used = true;
-            } else {
-                used = Integer.valueOf(time[1]) >= min;
-            }
             String[] ams = context.getString(R.string.am_pm).split(",");
-            holder.tvMyTripsTime.setText(detailDepartureTime.getHour() + ":" + detailDepartureTime.getMinute() + (hour > 12 ? ams[1] : ams[0]));
-            holder.tvMyTripsDate.setText(DateUtils.formatDate(System.currentTimeMillis(), "dd/MM/yyyy"));
+            holder.tvMyTripsTime.setText(detailDepartureTime.getHour() + ":" + detailDepartureTime.getMinute() + ("1".equals(detailDepartureTime.getTime_interval()) ? ams[0] : ams[1]));
+            holder.tvMyTripsDate.setText(detailDepartureTime.getFull());
         }
-        holder.tvMyTripsStatus.setText(context.getString(used ? R.string.has_use : R.string.effective));
+        holder.tvMyTripsStatus.setText(context.getString(status == 3 ? R.string.has_use : status == 1 ? R.string.effective : R.string.refunded));
         holder.tvBusNumber.setText(data.getRoute_id());
         holder.tvLicensePlateNo.setText(data.getChauffeur() != null ? data.getChauffeur().getLicence_plate() : "");
         holder.tvStartLocation.setText(data.getStation() != null ? data.getStation().getBeg_station() : "");
         holder.tvEndLocation.setText(data.getStation() != null ? data.getStation().getEnd_station() : "");
-        holder.tvTicketPrice.setText(context.getString(R.string.ticket_price_price,data.getAmount()));
-        if (used) {//已使用
+        holder.tvTicketPrice.setText(context.getString(R.string.ticket_price_price, data.getAmount()));
+        if (status != 1) {//已使用 、已退票
             int colorGrey = StreamUtils.getInstance().resourceToColor(R.color.color_999999, context);
             holder.tvMyTripsTime.setTextColor(colorGrey);
             holder.tvMyTripsDate.setTextColor(colorGrey);

@@ -8,6 +8,8 @@ public class OrderDetailDepartureTime implements Serializable{
     private String minute;
     private String time_interval;
 
+    private String full;
+
     public String getHour() {
         return hour;
     }
@@ -30,5 +32,14 @@ public class OrderDetailDepartureTime implements Serializable{
 
     public void setTime_interval(String time_interval) {
         this.time_interval = time_interval;
+    }
+
+
+    public String getFull() {
+        return full;
+    }
+
+    public void setFull(String full) {
+        this.full = full;
     }
 }

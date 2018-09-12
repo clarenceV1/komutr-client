@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.base.GodBaseApplication;
@@ -48,12 +49,73 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
     public void onAttached() {
     }
 
+
     public User getUserInfo() {
         return userInfoDao.get().getUser();
     }
 
 
 
+
+    /**
+     * 更新用户信息
+     *
+     * @param avatar   先上传图片 在提交
+     * @param username 用户名提交时要检查是否存在
+     * @param big_area 大区id
+     * @param province 省id
+     * @param sex      性别 1男 2女
+     */
+    public void updateMyData(String avatar, int big_area, int province, int sex) {
+        Map<String, Object> query = new HashMap<>();
+        String auth_key = userInfoDao.get().getAppAuth();
+        query.put("m", "customer.updateMyData");
+        query.put("auth_key", auth_key);
+        if (!StringUtils.isEmpty(avatar)) {
+            query.put("avatar", avatar);
+        }
+        /*if (!TextUtils.isEmpty(username)) {
+            query.put("username", username);
+        }*/
+        if (big_area != -1) {
+            query.put("big_area", big_area);
+        }
+        if (province != -1) {
+            query.put("province", province);
+        }
+        if (sex != -1) {
+            query.put("sex", sex);
+        }
+        Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
+            @Override
+            public void accept(RespondDO respondDO) {
+                if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
+                    User userInfo = JSON.parseObject(respondDO.getData(), User.class);
+                    userInfoDao.get().updateUser(userInfo);
+                    respondDO.setObject(userInfo);
+                    EventBus.getDefault().post(new EventPostInfo(EventPostInfo.REFRESH_PERSON_INFO_SUCCESS));
+                }
+            }
+        }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        Log.d("updateMyData", respondDO.toString());
+                        mView.callbackUserInfo(respondDO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
+                        respondDO.setStatus(false);
+                        mView.callbackUserInfo(respondDO);
+
+                    }
+                });
+        mCompositeSubscription.add(disposable);
+    }
 
     public void requestUserInfo() {
         String authKey = userInfoDao.get().getAppAuth();

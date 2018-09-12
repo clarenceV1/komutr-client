@@ -1,8 +1,6 @@
 package com.komutr.client.been;
 
-import java.util.List;
-
-public class OrderDetail {
+public class MyTrips {
     //{"amount":"40.00",
     // "buy_time":"2018-09-08 11:06:15",
     // "chauffeur":{"avatar":"http://car.xinjuhao.wang/uploads/20180828/a0e6fd10585aaf8cfbba86d7de86fcec_tt.jpg",
@@ -28,7 +26,7 @@ public class OrderDetail {
     private String shift_id;
     private OrderDetailStation station;
     private OrderDetailDepartureTime departure_time;
-    private OrderDetailStatus status;
+    private Integer status;
 
     public Review getReview() {
         return review;
@@ -122,11 +120,11 @@ public class OrderDetail {
         this.departure_time = departure_time;
     }
 
-    public OrderDetailStatus getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(OrderDetailStatus status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }

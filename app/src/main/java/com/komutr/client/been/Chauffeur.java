@@ -13,6 +13,17 @@ public class Chauffeur implements Serializable {
     private String username;//订单列表里用
     private String id;//订单列表里用
 
+    private Integer review;
+
+
+    public Integer getReview() {
+        return review;
+    }
+
+    public void setReview(Integer review) {
+        this.review = review;
+    }
+
     public String getUsername() {
         return username;
     }

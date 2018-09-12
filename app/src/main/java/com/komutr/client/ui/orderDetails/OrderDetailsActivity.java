@@ -24,7 +24,9 @@ import com.komutr.client.been.BuySellTicketDetails;
 import com.komutr.client.been.Chauffeur;
 import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.OrderDetailDepartureTime;
+import com.komutr.client.been.OrderDetailStatus;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.Review;
 import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.OrderDetailsBinding;
@@ -72,27 +74,6 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
         mViewBinding.tvRefund.setOnClickListener(this);
         mViewBinding.ivBack.setOnClickListener(this);
 
-        int useStatus = 2;//1:未使用 2:已使用 3:已退票
-        if (useStatus == 1) {
-            hiddenCommentLayout();
-        } else if (useStatus == 2) {
-
-            mViewBinding.ivUseStatus.setVisibility(View.VISIBLE);
-            mViewBinding.ivUseStatus.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.used, this));
-            boolean isComment = false;//判断是否有评论过
-            if (isComment) {//布局不需要更改
-            } else {
-                hiddenCommentLayout();
-                CommonUtils.setBackground(mViewBinding.llRUserRatingLayout, CommonUtils.selectorStateColor(this, R.color.white, R.color.color_f1f1f4));
-                mViewBinding.llRUserRatingLayout.setOnClickListener(this);
-            }
-        } else if (useStatus == 3) {
-            hiddenCommentLayout();
-            mViewBinding.tvRefund.setText(getString(R.string.refund));
-            mViewBinding.tvRefund.setCompoundDrawables(null, null, null, null);
-            mViewBinding.ivUseStatus.setVisibility(View.VISIBLE);
-            mViewBinding.ivUseStatus.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.refunded, this));
-        }
         onShowLoadDialog(getString(R.string.please_wait), this);
         presenter.getOrderDetail(orderId, true);
         presenter.requestImportant();
@@ -121,12 +102,12 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
                 RouterManager.goUserRatings((Chauffeur) view.getTag());
                 break;
             case R.id.tvRefundInstructions://退款介绍
-                showRefundInstructionsDialog("0.00");
+                showRefundInstructionsDialog((String) view.getTag());
                 /*  */
                 break;
             case R.id.tvRefund://退款、删除
                 boolean isDeleteOrder = StringUtils.isEmpty(mViewBinding.tvRefund.getText().toString());//text为空是删除订单、不为空是退票
-                showRefundDialog(isDeleteOrder, "5");
+                showRefundDialog(isDeleteOrder, (String) mViewBinding.tvRefundInstructions.getTag());
                 break;
             case R.id.ivBack://
                 finish();
@@ -188,6 +169,37 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
         if (respondDO.isStatus()) {
             orderDetail = respondDO.getObject();
             if (orderDetail != null) {
+
+                OrderDetailStatus orderDetailStatus = orderDetail.getStatus();
+                if (orderDetailStatus != null) {
+                    //订单状态 1 已支付 2未支付 3 已经使用 4 已经退票
+                    int useStatus = Integer.valueOf(orderDetailStatus.getCode());
+                    mViewBinding.tvRefundInstructions.setTag(orderDetailStatus.getRefund_rate());
+                    if (useStatus == 2) {
+                        hiddenCommentLayout();
+                    } else if (useStatus == 3) {
+                        mViewBinding.ivUseStatus.setVisibility(View.VISIBLE);
+                        mViewBinding.ivUseStatus.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.used, this));
+                       Review review = orderDetail.getReview();//判断是否有评论过
+                        if (review != null) {//布局不需要更改
+                            mViewBinding.tvUserComment.setText(review.getContent());
+                            mViewBinding.crbUserRatings.setStar(review.getReview_score() != null ? review.getReview_score() : 0f);
+                        } else {
+                            hiddenCommentLayout();
+                            CommonUtils.setBackground(mViewBinding.llRUserRatingLayout, CommonUtils.selectorStateColor(this, R.color.white, R.color.color_f1f1f4));
+                            mViewBinding.llRUserRatingLayout.setOnClickListener(this);
+                        }
+                    } else if (useStatus == 4) {
+                        hiddenCommentLayout();
+                        mViewBinding.tvRefund.setText(getString(R.string.refund));
+                        mViewBinding.tvRefund.setCompoundDrawables(null, null, null, null);
+                        mViewBinding.ivUseStatus.setVisibility(View.VISIBLE);
+                        mViewBinding.ivUseStatus.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.refunded, this));
+                    } else {
+                        hiddenCommentLayout();
+                        mViewBinding.tvDidNoScore.setText(null);
+                    }
+                }
                 mViewBinding.tvTicketPriceNum.setText(getString(R.string.ticket_price_price, orderDetail.getAmount()));
                 mViewBinding.tvOrderId.setText(orderDetail.getOrder_number());
                 mViewBinding.tvBusNumber.setText(orderDetail.getRoute_id());
@@ -197,7 +209,8 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
                 if (detailDepartureTime != null) {
                     int hour = Integer.valueOf(detailDepartureTime.getHour());
                     String[] ams = getString(R.string.am_pm).split(",");
-                    mViewBinding.tvTime.setText(detailDepartureTime.getHour() + ":" + detailDepartureTime.getMinute() + (hour > 12 ? ams[1] : ams[0]));
+                    mViewBinding.tvDate.setText(detailDepartureTime.getFull());
+                    mViewBinding.tvTime.setText(detailDepartureTime.getHour() + ":" + detailDepartureTime.getMinute() + ("1".equals(detailDepartureTime.getTime_interval()) ? ams[0] : ams[1]));
                 }
                 Chauffeur chauffeur = orderDetail.getChauffeur();
                 if (chauffeur != null) {
@@ -215,6 +228,7 @@ public class OrderDetailsActivity extends AppBaseActivity<OrderDetailsBinding> i
                         mViewBinding.tvDriverName.setText(chauffeur.getUsername());
                         mViewBinding.tvDriverPhoneNum.setText(chauffeur.getPhone());
                         mViewBinding.llRUserRatingLayout.setTag(chauffeur);
+                        mViewBinding.crbDriverGrade.setStar(chauffeur.getReview() != null ? chauffeur.getReview() : 0f);
                     }
                 }
 
