@@ -22,6 +22,17 @@ public class User {
     private String auth_key;
     private String email;
 
+    private String birthday;
+
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
     public String getEmail() {
         return email;
     }

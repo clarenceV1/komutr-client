@@ -36,6 +36,7 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
 public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
@@ -55,18 +56,16 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
     }
 
 
-
-
     /**
      * 更新用户信息
      *
      * @param avatar   先上传图片 在提交
-     * @param username 用户名提交时要检查是否存在
+     * @param birthday 生日
      * @param big_area 大区id
      * @param province 省id
      * @param sex      性别 1男 2女
      */
-    public void updateMyData(String avatar, int big_area, int province, int sex) {
+    public void updateMyData(String avatar, String birthday, int big_area, int province, int sex) {
         Map<String, Object> query = new HashMap<>();
         String auth_key = userInfoDao.get().getAppAuth();
         query.put("m", "customer.updateMyData");
@@ -74,9 +73,11 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
         if (!StringUtils.isEmpty(avatar)) {
             query.put("avatar", avatar);
         }
-        /*if (!TextUtils.isEmpty(username)) {
-            query.put("username", username);
-        }*/
+
+        if (!StringUtils.isEmpty(birthday)) {
+            query.put("birthday", birthday);
+        }
+
         if (big_area != -1) {
             query.put("big_area", big_area);
         }
@@ -92,7 +93,7 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
                 if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
                     User userInfo = JSON.parseObject(respondDO.getData(), User.class);
                     userInfoDao.get().updateUser(userInfo);
-                    respondDO.setObject(userInfo);
+                    respondDO.setObject(getUserInfo());
                     EventBus.getDefault().post(new EventPostInfo(EventPostInfo.REFRESH_PERSON_INFO_SUCCESS));
                 }
             }
@@ -108,7 +109,7 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
-                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.update_failed));
                         respondDO.setStatus(false);
                         mView.callbackUserInfo(respondDO);
 
@@ -165,7 +166,7 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
         Map<String, String> query = new HashMap<>();
         query.put("m", "customer.uploadImage");
         query.put("auth_key", authKey);
-        Disposable disposable = requestStore.get().uploadFile(query,"image",imageFile)
+        Disposable disposable = requestStore.get().uploadFile(query, "image", imageFile)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
@@ -217,6 +218,7 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
 
     /**
      * 选择相册
+     *
      * @param activity
      */
     public void selectAlbum(final FragmentActivity activity) {
@@ -233,18 +235,18 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
     }
 
 
-
     /**
      * 裁剪头像
+     *
      * @param activity
      */
-    public void cropAvatar(final String photoPath,final FragmentActivity activity) {
+    public void cropAvatar(final String photoPath, final FragmentActivity activity) {
         RxPermissions permissions = new RxPermissions(activity);
         Disposable disposable = permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean granted) {
                 if (granted) {
-                    PhotoUtils.startCorpImage(activity, photoPath,Constant.ActivityReqAndRes.START_CUT_AVATAR);
+                    PhotoUtils.startCorpImage(activity, photoPath, Constant.ActivityReqAndRes.START_CUT_AVATAR);
                 }
             }
         });

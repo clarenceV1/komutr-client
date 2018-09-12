@@ -20,6 +20,11 @@ import com.komutr.client.been.MyTrips;
 import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.databinding.FragmentMyTripsBinding;
+import com.komutr.client.event.EventPostInfo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -79,6 +84,7 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
 
     @Override
     public void initView(View view) {
+        EventBus.getDefault().register(this);
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(activity, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(activity, 10f), StreamUtils.getInstance().resourceToColor(R.color.transparent, activity)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -137,5 +143,20 @@ public class MyTripsFragment extends AppBaseFragment<FragmentMyTripsBinding> imp
         start = 0;
         mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
         presenter.requestList(start, size);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventPostInfo eventPostInfo) {
+        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.REFRESH_MY_TRIPS) {
+            start = 0;
+            presenter.requestList(start, size);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

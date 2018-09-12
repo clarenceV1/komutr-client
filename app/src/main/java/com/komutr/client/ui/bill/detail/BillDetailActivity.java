@@ -18,14 +18,11 @@ import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.BillDetail;
 import com.komutr.client.been.BillDetailItem;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.BillDetailBinding;
 import com.komutr.client.event.EventPostInfo;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -137,7 +134,7 @@ public class BillDetailActivity extends AppBaseActivity<BillDetailBinding> imple
         hiddenDialog();
         ToastUtils.showShort(respondDO.getMsg());
         if (respondDO.isStatus()) {
-            EventBus.getDefault().post(new EventPostInfo(EventPostInfo.ORDER_DELETE_SUCCESS));
+            EventBus.getDefault().post(new EventPostInfo(EventPostInfo.BILL_DELETE_SUCCESS));
             String deleteId = respondDO.getObject();
             finish();
         }

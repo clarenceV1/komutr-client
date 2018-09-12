@@ -3,6 +3,7 @@ package com.komutr.client.ui.userRatings;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,25 +17,36 @@ import com.cai.framework.logger.Logger;
 import com.cai.framework.logger.Printer;
 import com.cai.framework.widget.CustomRatingBar;
 import com.example.clarence.utillibrary.StringUtils;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.Chauffeur;
+import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.UserRatingsBinding;
 import com.komutr.client.databinding.WalletBinding;
+import com.komutr.client.event.EventPostInfo;
 import com.komutr.client.ui.wallet.WalletPresenter;
 import com.komutr.client.ui.wallet.WalletView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 @Route(path = RouterManager.USER_RATINGS, name = "搜索-搜索路线-支付确认-状态-订单详情-用户评分")
-public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> implements UserRatingsView, TextWatcher, CustomRatingBar.OnRatingChangeListener {
+public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> implements UserRatingsView, TextWatcher,View.OnClickListener {
 
     @Autowired(name = "chauffeur")
     Chauffeur chauffeur;//序列号的对象没办法自动解析，需要getArouterSerializableData
+
+    @Autowired(name = "orderId")
+    String orderId;
+
+    @Autowired(name = "shiftId")
+    String shiftId;
     @Inject
     UserRatingsPresenter presenter;
     @Inject
@@ -61,8 +73,7 @@ public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> imp
         setBarTitle(getString(R.string.user_ratings));
         chauffeur = getArouterSerializableData("chauffeur");
         mViewBinding.etUserCommentContent.addTextChangedListener(this);
-        mViewBinding.crbUserRatings.setOnRatingChangeListener(this);
-
+        mViewBinding.btnSubmit.setOnClickListener(this);
         if (chauffeur != null) {
 
             if (!StringUtils.isEmpty(chauffeur.getAvatar())) {
@@ -104,7 +115,18 @@ public class UserRatingsActivity extends AppBaseActivity<UserRatingsBinding> imp
     }
 
     @Override
-    public void onRatingChange(float ratingCount) {
-        Logger.i("ratingCount=" + ratingCount);
+    public void userRatingsCallBack(RespondDO respondDO) {
+        hiddenDialog();
+        ToastUtils.showShort(respondDO.getMsg());
+        if (respondDO.isStatus()) {
+            EventBus.getDefault().post(new EventPostInfo(EventPostInfo.ORDER_DELETE_SUCCESS));
+            finish();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        showDialog(getString(R.string.please_wait),true);
+        presenter.userRatings(orderId,shiftId,chauffeur.getId(),StringUtils.getString(mViewBinding.etUserCommentContent),mViewBinding.crbUserRatings.getStarStep());
     }
 }

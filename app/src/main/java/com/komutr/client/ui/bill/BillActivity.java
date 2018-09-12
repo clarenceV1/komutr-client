@@ -19,7 +19,6 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.BillBinding;
 import com.komutr.client.event.EventPostInfo;
-import com.komutr.client.ui.routes.SearchRoutesAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -76,7 +75,7 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventPostInfo eventPostInfo) {
-        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.ORDER_DELETE_SUCCESS) {
+        if (eventPostInfo != null && eventPostInfo.getStateType() == EventPostInfo.BILL_DELETE_SUCCESS) {
             presenter.requestList();
         }
     }

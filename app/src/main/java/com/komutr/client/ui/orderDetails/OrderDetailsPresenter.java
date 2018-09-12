@@ -74,26 +74,25 @@ public class OrderDetailsPresenter extends AppBasePresenter<OrderDetailsView> {
         mCompositeSubscription.add(disposable);
     }
 
+
     /**
-     * 退票
+     * 删除订单
      *
      * @param orderId
-     * @param type    1 退款 退票 2退票
      */
-    public void refundTicket(String orderId, int type) {
+    public void deleteOrder(String orderId) {
         String authKey = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
-        query.put("m", "sales.refundTicket");
+        query.put("m", "sales.delOrder");
         query.put("auth_key", authKey);
         query.put("id", orderId);
-        query.put("type", type);
         Disposable disposable = requestStore.get().commonRequest(query)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
                         Logger.d(respondDO.toString());
-                        mView.orderDetailCallback(respondDO);
+                        mView.operateCallBack(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -101,7 +100,42 @@ public class OrderDetailsPresenter extends AppBasePresenter<OrderDetailsView> {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
-                        mView.orderDetailCallback(respondDO);
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.order_fail));
+                        mView.operateCallBack(respondDO);
+                    }
+                });
+        mCompositeSubscription.add(disposable);
+    }
+
+    /**
+     * 退票
+     *
+     * @param orderId
+     * @param type    离发车时间 1 大于30分钟 2 是小于30 分钟
+     */
+    public void refundTicket(String orderId, int type) {
+        String authKey = userInfoDao.get().getAppAuth();
+        Map<String, Object> query = new HashMap<>();
+        query.put("m", "sales.refundTicket");
+        query.put("auth_key", authKey);
+        query.put("order_id", orderId);
+        query.put("type", type);
+        Disposable disposable = requestStore.get().commonRequest(query)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        Logger.d(respondDO.toString());
+                        mView.operateCallBack(respondDO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setFromCallBack(-1);
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.refund_fail_));
+                        mView.operateCallBack(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);

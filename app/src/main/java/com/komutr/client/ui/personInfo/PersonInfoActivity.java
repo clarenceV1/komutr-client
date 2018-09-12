@@ -211,8 +211,11 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
 
     @Override
     public void callbackUserInfo(RespondDO respondDO) {
+        hiddenDialog();
         if (respondDO.isStatus()) {
             updateData((User) respondDO.getObject(), true);
+        }else {
+            ToastUtils.showShort(respondDO.getMsg());
         }
     }
 
@@ -222,7 +225,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         if (respondDO.isStatus()) {
             UploadImage uploadImage = respondDO.getObject();
             if (uploadImage != null && !StringUtils.isEmpty(uploadImage.getWeb_path())) {
-                presenter.updateMyData(uploadImage.getWeb_path(), -1, -1, -1);
+                presenter.updateMyData(uploadImage.getWeb_path(), null,-1, -1, -1);
             } else {
                 hiddenDialog();
             }
@@ -337,7 +340,10 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                ((TextView) view.getTag()).setText(DateUtils.getStringDateShort(date));
+                String birthday = DateUtils.getStringDateShort(date);
+                ((TextView) view.getTag()).setText(birthday);
+                showDialog(getString(R.string.updating), true);
+                presenter.updateMyData(null,birthday,-1,-1,-1);
             }
         })
                 .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示

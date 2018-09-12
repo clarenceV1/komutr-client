@@ -10,6 +10,8 @@ public class OrderDetailDepartureTime implements Serializable{
 
     private String full;
 
+    private String note;
+
     public String getHour() {
         return hour;
     }
@@ -41,5 +43,13 @@ public class OrderDetailDepartureTime implements Serializable{
 
     public void setFull(String full) {
         this.full = full;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
