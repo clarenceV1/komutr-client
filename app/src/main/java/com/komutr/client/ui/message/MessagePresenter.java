@@ -66,4 +66,39 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
                 });
         mCompositeSubscription.add(disposable);
     }
+
+
+    public void deleteMessage() {
+        String auth_key = userInfoDao.get().getAppAuth();
+        Map<String, Object> query = new HashMap<>();
+        query.put("m", "system.message");
+        query.put("auth_key", auth_key);
+        Disposable disposable = requestStore.get().commonRequest(query)
+                .doOnSuccess(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
+                            List<Message> messageList = JSON.parseArray(respondDO.getData(), Message.class);
+                            respondDO.setObject(messageList);
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RespondDO>() {
+                    @Override
+                    public void accept(RespondDO respondDO) {
+                        Logger.d(respondDO.toString());
+                        mView.callback(respondDO);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        Logger.e(throwable.getMessage());
+                        RespondDO respondDO = new RespondDO();
+                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
+                        mView.callback(respondDO);
+                    }
+                });
+        mCompositeSubscription.add(disposable);
+    }
 }

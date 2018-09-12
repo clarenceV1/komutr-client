@@ -47,7 +47,6 @@ public class FAQActivity extends AppBaseActivity<MessageDetailBinding> implement
     @Override
     public void initView() {
         setBarTitle(getString(R.string.faq_title));
-
         presenter.requestDetail(contentType);
     }
 

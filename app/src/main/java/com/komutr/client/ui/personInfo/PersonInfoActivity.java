@@ -93,18 +93,6 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
     private void initData() {
         User user = presenter.getUserInfo();
         if (user != null) {
-            if (!StringUtils.isEmpty(user.getAvatar_thum())) {
-                ILoadImageParams imageParams = new ImageForGlideParams.Builder()
-                        .url(user.getAvatar_thum())
-                        .placeholder(R.drawable.default_avatar)
-                        .error(R.drawable.default_avatar)
-                        .transformation(new GlideCircleTransform(this))
-                        .build();
-                imageParams.setImageView(mViewBinding.ivUserAvatar);
-                loadImage.loadImage(this, imageParams);
-            } else {
-                mViewBinding.ivUserAvatar.setImageResource(R.drawable.default_avatar);
-            }
             mViewBinding.tvUserId.setText("ID:" + user.getId());
             updateData(user, false);
         }
@@ -194,6 +182,14 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
                     }
                 }
             }
+            ILoadImageParams imageParams = new ImageForGlideParams.Builder()
+                    .url(user.getAvatar_thum())
+                    .placeholder(R.drawable.default_avatar)
+                    .error(R.drawable.default_avatar)
+                    .transformation(new GlideCircleTransform(this))
+                    .build();
+            imageParams.setImageView(mViewBinding.ivUserAvatar);
+            loadImage.loadImage(this, imageParams);
         }
     }
 
@@ -226,7 +222,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
         if (respondDO.isStatus()) {
            final UploadImage uploadImage = respondDO.getObject();
             if (uploadImage != null && !StringUtils.isEmpty(uploadImage.getWeb_path())) {
-                presenter.updateMyData(uploadImage.getWeb_path(), null,-1, -1, -1);
+                presenter.updateMyData(uploadImage.getService_path(), null,-1, -1, -1);
             } else {
                 hiddenDialog();
             }
