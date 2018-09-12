@@ -1,8 +1,8 @@
 package com.komutr.client.dao;
 
-import android.text.TextUtils;
 
 import com.cai.framework.dagger.ActivityScope;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.been.User;
 
 import javax.inject.Inject;
@@ -66,33 +66,37 @@ public class UserInfoDao extends BaseDAO {
         if (userInfo == null || mUser == null) {
             return;
         }
-        if (!TextUtils.isEmpty(userInfo.getUsername())) {
+        if (!StringUtils.isEmpty(userInfo.getUsername())) {
             mUser.setUsername(userInfo.getUsername());
         }
-        if (!TextUtils.isEmpty(userInfo.getAvatar())) {
+        if (!StringUtils.isEmpty(userInfo.getAvatar())) {
             mUser.setAvatar(userInfo.getAvatar());
         }
-        if (!TextUtils.isEmpty(userInfo.getBig_area())) {
+        if (!StringUtils.isEmpty(userInfo.getBig_area())) {
             mUser.setBig_area(userInfo.getBig_area());
         }
-        if (!TextUtils.isEmpty(userInfo.getProvince())) {
+        if (!StringUtils.isEmpty(userInfo.getProvince())) {
             mUser.setProvince(userInfo.getProvince());
         }
-        if (!TextUtils.isEmpty(userInfo.getSex())) {
+        if (!StringUtils.isEmpty(userInfo.getSex())) {
             mUser.setSex(userInfo.getSex());
         }
-        if (!TextUtils.isEmpty(userInfo.getEmail())) {
+        if (!StringUtils.isEmpty(userInfo.getEmail())) {
             mUser.setEmail(userInfo.getEmail());
         }
-        if (!TextUtils.isEmpty(userInfo.getPhone())) {
+        if (!StringUtils.isEmpty(userInfo.getPhone())) {
             mUser.setPhone(userInfo.getPhone());
         }
-        if (!TextUtils.isEmpty(userInfo.getAvatar_thum())) {
+        if (!StringUtils.isEmpty(userInfo.getAvatar_thum())) {
             mUser.setAvatar_thum(userInfo.getAvatar_thum());
         }
-        if (!TextUtils.isEmpty(userInfo.getAuth_key())) {
+        if (!StringUtils.isEmpty(userInfo.getAuth_key())) {
             mUser.setAuth_key(userInfo.getAuth_key());
         }
+        if (!StringUtils.isEmpty(userInfo.getBirthday())) {
+            mUser.setBirthday(userInfo.getBirthday());
+        }
+        
         userBox.put(mUser);
     }
 
