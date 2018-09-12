@@ -176,11 +176,12 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
      */
     private void updateData(User user, boolean isUpdateView) {
         if (user != null) {
+            String[] sexList = getResources().getString(R.string.sex_list).split(",");
             infoList.put(0, user.getPhone());
             infoList.put(1, user.getUsername());
             infoList.put(2, user.getEmail());
-            infoList.put(3, "");
-            infoList.put(4, user.getSex());
+            infoList.put(3, user.getBirthday());
+            infoList.put(4, "m".equals(user.getSex())?sexList[0]:sexList[1]);
             infoList.put(5, StringUtils.isEmpty(user.getBig_area()) ? "" : user.getBig_area() + (StringUtils.isEmpty(user.getProvince()) ? "" : user.getProvince()));
             if (isUpdateView) {
                 int countChild = mViewBinding.llPersonInfoLayout.getChildCount();
@@ -223,7 +224,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
     public void callbackAvatar(RespondDO<UploadImage> respondDO) {
 
         if (respondDO.isStatus()) {
-            UploadImage uploadImage = respondDO.getObject();
+           final UploadImage uploadImage = respondDO.getObject();
             if (uploadImage != null && !StringUtils.isEmpty(uploadImage.getWeb_path())) {
                 presenter.updateMyData(uploadImage.getWeb_path(), null,-1, -1, -1);
             } else {
@@ -386,6 +387,9 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 ((TextView) view.getTag()).setText(options1Items.get(options1));
+
+                showDialog(getString(R.string.updating), true);
+                presenter.updateMyData(null,null,-1,-1,options1+1);
             }
         })
                 .setCancelText(getString(R.string.btn_cancle))//取消按钮文字
