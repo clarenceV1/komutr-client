@@ -72,7 +72,6 @@ public class WalletActivity extends AppBaseActivity<WalletBinding> implements Wa
 
     @Override
     public void walletCallBack(RespondDO<Wallet> respondDO) {
-
         hiddenDialog();
         if (respondDO.isStatus()) {
             Wallet wallet = respondDO.getObject();

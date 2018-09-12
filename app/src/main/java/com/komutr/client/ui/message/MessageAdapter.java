@@ -56,7 +56,7 @@ public class MessageAdapter extends BasePtrAdapter<Message, MessageAdapter.ViewH
     }
 
     @Override
-    public void onItemLongClick(View v, int Message) {
+    public void onItemLongClick(View v, int position) {
 
     }
 
