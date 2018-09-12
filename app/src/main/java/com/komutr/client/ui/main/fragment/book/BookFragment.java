@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
@@ -12,6 +13,8 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Station;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.FragmentBookBinding;
+import com.komutr.client.ui.map.MapCallback;
+import com.komutr.client.ui.map.MapHelp;
 
 import java.util.List;
 
@@ -56,6 +59,14 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mapHelp != null) {
+            mapHelp.onDestroy();
+        }
+    }
+
+    @Override
     public void initDagger() {
         App.getAppComponent().inject(this);
     }
@@ -85,13 +96,18 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         offset = 0;
         longitude = 118.07404;
         latitude = 24.63618;
-
+//14.600402, 120.991269
         presenter.requestNearby(longitude, latitude, offset, limit);
     }
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapHelp = new MapHelp(getContext(), mapFragment);
+        mapHelp = new MapHelp(getContext(), mapFragment, new MapCallback() {
+            @Override
+            public void getLocation(LatLng location) {
+
+            }
+        });
     }
 
     @Override
@@ -153,5 +169,4 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
             }
         }
     }
-
 }
