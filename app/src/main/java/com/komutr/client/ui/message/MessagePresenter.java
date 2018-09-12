@@ -51,6 +51,7 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
                     public void accept(RespondDO respondDO) {
                         if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
                             List<Message> messageList = JSON.parseArray(respondDO.getData(), Message.class);
+                            messageDao.get().addAll(messageList);
                             respondDO.setObject(messageList);
                         }
                     }

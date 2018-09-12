@@ -26,7 +26,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTER_MESSAGE, name = "消息")
-public class MessageActivity extends AppBaseActivity<MessageBinding> implements MessageView, View.OnClickListener, BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener {
+public class MessageActivity extends AppBaseActivity<MessageBinding> implements MessageView,  BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener {
 
     @Inject
     MessagePresenter presenter;
@@ -49,7 +49,7 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
     @Override
     public void initView() {
         setBarTitle(getString(R.string.message_title));
-        mViewBinding.ptyRecycle.setCloseLoadMore(true);
+
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,7 +58,7 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
 
         mViewBinding.ptyRecycle.setCloseLoadMore(true);
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
-        onShowLoadDialog(getString(R.string.loading), this);
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
         presenter.requestMessage(start, size);
     }
 
@@ -69,35 +69,35 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
 
     @Override
     public void callback(RespondDO<List<Message>> respondDO) {
-        hiddenDialog();
         if (respondDO.isStatus()) {
             List<Message> data = respondDO.getObject();
             if (data != null && data.size() > 0) {//有数据
-                adapter.setDatas(data);//下拉
+                if (start == 0) {
+                    adapter.setDatas(data);//下拉
+                } else {
+                    adapter.addDatas(data);//上啦
+                }
+                mViewBinding.ptyRecycle.setCloseLoadMore(false);
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(true);
+            } else {
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
             }
         } else {
-            if (adapter.getCount() > 0) {
-                ToastUtils.showShort(respondDO.getMsg());
-            } else {
-                onShowLoadError();
-            }
+            mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
         }
-    }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_dialog_reloading_text://刷新重新获取数据
-                onShowLoadDialog(getString(R.string.loading), this);
-                start = 0;
-                presenter.requestMessage(start, size);
-                break;
+        if (adapter.getDatas().isEmpty()) {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_NODATA);
+        } else {
+            mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
         }
     }
 
     @Override
     public void onLoadViewClick(int status) {
+
         start = 0;
+        mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
         presenter.requestMessage(start, size);
     }
 
