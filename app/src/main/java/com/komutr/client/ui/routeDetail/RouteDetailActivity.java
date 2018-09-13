@@ -83,10 +83,6 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
         if (respondDO.isStatus() && respondDO.getObject() != null && mapHelp != null) {
             RoutesInfo routesInfo = respondDO.getObject();
             mapHelp.drawRoutes(routesInfo);
-            List<StationDetail> stationDetails = routesInfo.getAll_station();
-            if (titleBarView != null && stationDetails != null && stationDetails.size() > 0) {
-                titleBarView.setTitleText(stationDetails.get(0).getRoute_id());
-            }
         }
     }
 }

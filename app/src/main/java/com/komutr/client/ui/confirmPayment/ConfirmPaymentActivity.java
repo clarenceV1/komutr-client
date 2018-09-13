@@ -13,7 +13,6 @@ import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.BuyTicket;
 import com.komutr.client.common.RouterManager;
-import com.komutr.client.dagger.component.DaggerCommonComponent;
 import com.komutr.client.databinding.ConfirmPaymentBinding;
 
 import java.util.List;
