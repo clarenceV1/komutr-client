@@ -26,8 +26,8 @@ import io.reactivex.functions.Consumer;
 public class PositionPresenter extends AppBasePresenter<PositionView> {
 
     String type;//beg 始发站 end 结束站
-    int bigArea;//大区 ID
-    int province;//大区下面的行政单位 ID
+    String bigArea;//大区 ID
+    String province;//大区下面的行政单位 ID
 
     String authKey;
 

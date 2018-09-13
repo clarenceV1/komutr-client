@@ -14,7 +14,7 @@ public class StationDetail implements Serializable {
     private int id;
     private double latitude;
     private double longitude;
-    private int route_id;
+    private String route_id;
     private int station_id;
     private String station_name;
 
@@ -42,11 +42,11 @@ public class StationDetail implements Serializable {
         this.longitude = longitude;
     }
 
-    public int getRoute_id() {
+    public String getRoute_id() {
         return route_id;
     }
 
-    public void setRoute_id(int route_id) {
+    public void setRoute_id(String route_id) {
         this.route_id = route_id;
     }
 

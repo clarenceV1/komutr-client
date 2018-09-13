@@ -1,10 +1,10 @@
 package com.komutr.client.been;
 
 public class RegionNext {
-    // [{"big_area_code":"100","code":"100","id":1,"is_active":1,"name":"lkjlk"}]
+    // [{"big_area_code":"1","code":"100","id":1,"is_active":1,"name":"lkjlk"}]
     private String big_area_code;
     private int code;
-    private int id;
+    private String id;
     private int is_active;
     private String name;
 
@@ -24,11 +24,11 @@ public class RegionNext {
         this.code = code;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

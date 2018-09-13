@@ -2,6 +2,7 @@ package com.komutr.client.ui.main.fragment.book;
 
 
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -10,6 +11,8 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
 import com.komutr.client.been.Position;
+import com.komutr.client.been.Region;
+import com.komutr.client.been.RegionNext;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Station;
 import com.komutr.client.been.User;
@@ -19,6 +22,8 @@ import com.komutr.client.event.EventPostInfo;
 import com.komutr.client.event.PositionEvent;
 import com.komutr.client.ui.map.MapCallback;
 import com.komutr.client.ui.map.MapHelp;
+import com.komutr.client.ui.region.RegionPresenter;
+import com.komutr.client.ui.region.RegionView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,14 +38,16 @@ import javax.inject.Inject;
  * Use the {@link BookFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookFragment extends AppBaseFragment<FragmentBookBinding> implements BookView, View.OnClickListener {
+public class BookFragment extends AppBaseFragment<FragmentBookBinding> implements BookView, View.OnClickListener, RegionView {
 
     @Inject
     BookPresenter presenter;
+    @Inject
+    RegionPresenter regionPresenter;
     int offset = 0;//开始行
     int limit = 100;//数量
-    int bigArea;//大区 ID
-    int province;//大区下面的行政单位 ID
+    String bigArea;//大区 ID
+    String province;//大区下面的行政单位 ID
     boolean isChange = false;//是否切换
 
     Station begStation;//起点站
@@ -94,6 +101,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     @Override
     public void addPresenters(List observerList) {
         observerList.add(presenter);
+        observerList.add(regionPresenter);
     }
 
 
@@ -111,6 +119,13 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         mViewBinding.tvStartLocation.setOnClickListener(this);
         mViewBinding.tvEndLocation.setOnClickListener(this);
 
+        bigArea = presenter.getBigArea();
+        province = presenter.getProvince();
+        if (TextUtils.isEmpty(bigArea) || TextUtils.isEmpty(province)) {
+            regionPresenter.requestBigArea();
+            regionPresenter.requestProvince();
+        }
+
     }
 
     private void initMap() {
@@ -120,6 +135,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
             public void getLocation(LatLng location) {
                 mLocation = location;
                 if (location != null) {
+//                    mLocation = new LatLng(24.63618,118.07404f);//todo test data
                     presenter.requestNearby(mLocation.latitude, mLocation.longitude, offset, limit);
                 }
             }
@@ -194,6 +210,28 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
             } else {
                 begStation = stations;
                 mViewBinding.tvStartLocation.setText(begStation.getName());
+            }
+        }
+    }
+
+    @Override
+    public void bigAreaCallback(RespondDO<List<Region>> respondDO) {
+        if (respondDO.isStatus()) {
+            List<Region> regions = respondDO.getObject();
+            if (regions != null && regions.size() > 0) {
+                Region region = regions.get(0);
+                bigArea = region.getId();
+            }
+        }
+    }
+
+    @Override
+    public void nextAreaCallback(RespondDO<List<RegionNext>> respondDO) {
+        if (respondDO.isStatus()) {
+            List<RegionNext> regionNexts = respondDO.getObject();
+            if (regionNexts != null && regionNexts.size() > 0) {
+                RegionNext next = regionNexts.get(0);
+                province = next.getId();
             }
         }
     }

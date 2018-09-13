@@ -17,8 +17,9 @@ import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.been.Chauffeur;
 import com.komutr.client.been.RouterStation;
-import com.komutr.client.been.RoutesShift;
+import com.komutr.client.been.Routes;
 import com.komutr.client.been.SearchRoutes;
+import com.komutr.client.been.Ticket;
 import com.komutr.client.common.Constant;
 import com.komutr.client.common.RouterManager;
 
@@ -51,8 +52,8 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
     @Override
     public void onItemClick(View v, int position) {
         SearchRoutes data = getData(position);
-        if (data != null && data.getRoutesShift() != null) {
-            RouterManager.goRouteDetail(data.getRoute_id(), data.getRoutesShift().getId());
+        if (data != null && data.getRoute() != null) {
+            RouterManager.goRouteDetail(data.getRoute().getRoute_id(), data.getId());
         }
     }
 
@@ -63,16 +64,13 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
 
     @Override
     protected void onPtrBindViewHolder(ViewHolder holder, final SearchRoutes data, int position) {
-        RoutesShift routesShift = data.getRoutesShift();//班次绝对不会空 放心
         holder.btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RouterManager.goReviewPurchase(data);
             }
         });
-        holder.tvBusPrice.setText(data.getTicket() != null ? data.getTicket().getPrice() : context.getString(R.string.default_amount));
-        holder.tvBusNumber.setText(data.getRoute_id());
-        String time = routesShift.getBeg_time_int();
+        String time = data.getBeg_time_int();
         if (!StringUtils.isEmpty(time) && time.length() == 4) {
             boolean isAm = false;
             if (Integer.valueOf(time.substring(0, 2)) < 12) {
@@ -83,18 +81,31 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
             holder.tvBusStartTime.setText(time + (isAm ? ams[0] : ams[1]));
         }
 
-        holder.tvBusStatus.setText(routesShift.getInterval() + context.getString(R.string.min));
-        RouterStation routerStation = data.getStation();
-        if (routerStation != null) {
-            if (routerStation.getBeg() != null) {
-                holder.tvStartLocation.setText(routerStation.getBeg().getName());
+        holder.tvBusStatus.setText(data.getInterval() + context.getString(R.string.min));
+
+        Routes route = data.getRoute();
+        if (route != null) {
+            if (route.getStation() != null) {
+                RouterStation routerStation = route.getStation();
+                if (routerStation != null) {
+                    if (routerStation.getBeg() != null) {
+                        holder.tvStartLocation.setText(routerStation.getBeg().getName());
+                    }
+                    if (routerStation.getEnd() != null) {
+                        holder.tvEndLocation.setText(routerStation.getEnd().getName());
+                    }
+                }
             }
-            if (routerStation.getEnd() != null) {
-                holder.tvEndLocation.setText(routerStation.getEnd().getName());
+            holder.tvBusNumber.setText(route.getRoute_id());
+            if (route.getTicket() != null) {
+                Ticket ticket = route.getTicket();
+                holder.tvBusPrice.setText(ticket.getPrice());
+            } else {
+                holder.tvBusPrice.setText(context.getString(R.string.default_amount));
             }
         }
 
-        Chauffeur chauffeur = routesShift.getChauffeur();
+        Chauffeur chauffeur = data.getChauffeur();
         if (chauffeur != null) {
             if (!StringUtils.isEmpty(chauffeur.getAvatar())) {
                 String icon = Constant.OFFICIAL_BASE_URL.substring(0, Constant.OFFICIAL_BASE_URL.length() - 1) + chauffeur.getAvatar_thum();

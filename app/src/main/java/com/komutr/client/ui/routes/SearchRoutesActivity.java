@@ -18,14 +18,10 @@ import com.example.clarence.utillibrary.StreamUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
-import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.been.Routes;
-import com.komutr.client.been.RoutesShift;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.SearchRoutesBinding;
-import com.komutr.client.ui.main.fragment.trips.MyTripsAdapter;
 
 import java.util.List;
 

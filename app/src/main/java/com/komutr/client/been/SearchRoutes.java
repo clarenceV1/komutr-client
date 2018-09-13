@@ -3,40 +3,59 @@ package com.komutr.client.been;
 import java.io.Serializable;
 
 public class SearchRoutes implements Serializable {
-    private String route_id;
-    private RouterStation station;
-    private Ticket ticket;
-    private RoutesShift routesShift;//班次
+    private String beg_time_int;
+    private Chauffeur chauffeur;
+    private String end_time_int;
+    private String id;
+    private String interval;
+    private Routes route;
 
-    public RoutesShift getRoutesShift() {
-        return routesShift;
+
+    public String getBeg_time_int() {
+        return beg_time_int;
     }
 
-    public void setRoutesShift(RoutesShift routesShift) {
-        this.routesShift = routesShift;
+    public void setBeg_time_int(String beg_time_int) {
+        this.beg_time_int = beg_time_int;
     }
 
-    public String getRoute_id() {
-        return route_id;
+    public String getEnd_time_int() {
+        return end_time_int;
     }
 
-    public void setRoute_id(String route_id) {
-        this.route_id = route_id;
+    public void setEnd_time_int(String end_time_int) {
+        this.end_time_int = end_time_int;
     }
 
-    public RouterStation getStation() {
-        return station;
+    public String getId() {
+        return id;
     }
 
-    public void setStation(RouterStation station) {
-        this.station = station;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public String getInterval() {
+        return interval;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
+
+    public Routes getRoute() {
+        return route;
+    }
+
+    public void setRoute(Routes route) {
+        this.route = route;
+    }
+
+    public Chauffeur getChauffeur() {
+        return chauffeur;
+    }
+
+    public void setChauffeur(Chauffeur chauffeur) {
+        this.chauffeur = chauffeur;
     }
 }

@@ -18,6 +18,7 @@ import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.OrderDetail;
 import com.komutr.client.been.Region;
+import com.komutr.client.been.RegionNext;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RegionBinding;
@@ -69,10 +70,10 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
     }
 
     @Override
-    public void bigAreaCallback(RespondDO respondDO) {
+    public void bigAreaCallback(RespondDO<List<Region>> respondDO) {
         hiddenDialog();
         if (respondDO.isStatus()) {
-            List<Region> data = (List<Region>) respondDO.getObject();
+            List<Region> data = respondDO.getObject();
             if (data != null && data.size() > 0) {//有数据
                 adapter.setDatas(data);//下拉
             }
@@ -86,7 +87,7 @@ public class RegionActivity extends AppBaseActivity<RegionBinding> implements Re
     }
 
     @Override
-    public void nextAreaCallback(RespondDO respondDO) {
+    public void nextAreaCallback(RespondDO<List<RegionNext>> respondDO) {
 
     }
 

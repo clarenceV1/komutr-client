@@ -55,6 +55,9 @@ public class AppRequestStore {
                             Log.d("commonRequest", result);
                             if (!StringUtils.isEmpty(result)) {
                                 respondDO = JSON.parseObject(result, RespondDO.class);
+                                if (respondDO != null && "[]".equals(respondDO.getData())) {
+                                    respondDO.setData(null);
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.komutr.client.ui.position;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,6 +8,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.baseview.LoadingView;
 import com.cai.pullrefresh.BaseListPtrFrameLayout;
@@ -39,9 +41,9 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     @Autowired(name = "isStartPosition")
     boolean isStartPosition;//起点站
     @Autowired(name = "bigArea")
-    int bigArea;//大区 ID
+    String bigArea;//大区 ID
     @Autowired(name = "province")
-    int province;//大区下面的行政单位 ID
+    String province;//大区下面的行政单位 ID
 
     PtrRecyclerView mPtrRecyclerView;
 
@@ -51,6 +53,11 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     int offset = 0;//开始行数 0
     int limit = 10;//条数 10 <offset 0 limit 10 > 取10条数据
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        ARouter.getInstance().inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void initDagger() {

@@ -33,10 +33,9 @@ public class RegionPresenter extends AppBasePresenter<RegionView> {
     }
 
     public void requestBigArea() {
-        String authKey = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.bigArea");
-        query.put("auth_key", authKey);
+        query.put("auth_key", Constant.AUTH_KEY);
         Disposable disposable = requestStore.get().commonRequest(query)
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
@@ -59,23 +58,21 @@ public class RegionPresenter extends AppBasePresenter<RegionView> {
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
-                        respondDO.setFromCallBack(-1);
                         mView.bigAreaCallback(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);
     }
 
-    public void requestNextArea() {
-        String authKey = userInfoDao.get().getAppAuth();
+    public void requestProvince() {
         Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.province");
-        query.put("auth_key", authKey);
+        query.put("auth_key", Constant.AUTH_KEY);
         Disposable disposable = requestStore.get().commonRequest(query)
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        //[{"big_area_code":"100","code":"100","id":1,"is_active":1,"name":"lkjlk"}]
+                        //[{"big_area_code":"1","code":"100","id":1,"is_active":1,"name":"lkjlk"}]
                         if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
                             List<RegionNext> phoneCode = JSON.parseArray(respondDO.getData(), RegionNext.class);
                             respondDO.setObject(phoneCode);
@@ -94,7 +91,6 @@ public class RegionPresenter extends AppBasePresenter<RegionView> {
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
-                        respondDO.setFromCallBack(-1);
                         mView.nextAreaCallback(respondDO);
                     }
                 });
