@@ -9,7 +9,7 @@ android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
-        applicationId "com.komutr.client"
+        applicationId "com.komutr.client"//com.komutr.driver
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
@@ -18,6 +18,12 @@ android {
         renderscriptSupportModeEnabled true
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+        manifestPlaceholders = [
+                GETUI_APP_ID : "BIrNhLcF4w7VRbWDVuQnH",
+                GETUI_APP_KEY : "s69oFojEHh6osFXMXmsbW1",
+                GETUI_APP_SECRET : "V4xE6Fwqa187Y2V137sFt8"
+        ]
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -127,6 +133,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     //framwork
     api project(':LibFrameWork')
+
+    api 'com.getui:sdk:2.12.5.0'
 
     testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'com.android.support.test:runner:1.0.2'

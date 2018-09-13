@@ -1,4 +1,4 @@
-package com.komutr.client.ui.Purchase;
+package com.komutr.client.ui.purchase;
 
 import com.cai.framework.base.GodBaseView;
 import com.komutr.client.been.BuySellTicketDetails;

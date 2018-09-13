@@ -169,12 +169,12 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
                 switchStation();
                 break;
             case R.id.ivSearchRoutes://搜索路线
-//                RouterManager.goSearchRoutes(8, 20);//todo  test
-                if (begStation != null && endStation != null) {
-                    RouterManager.goSearchRoutes(Integer.valueOf(begStation.getId()), Integer.valueOf(endStation.getId()));
-                } else {
-                    ToastUtils.showShort(getString(R.string.point_cannot_empty));//起点/终点不能为空
-                }
+                RouterManager.goSearchRoutes(8, 20);//todo  test
+//                if (begStation != null && endStation != null) {
+//                    RouterManager.goSearchRoutes(Integer.valueOf(begStation.getId()), Integer.valueOf(endStation.getId()));
+//                } else {
+//                    ToastUtils.showShort(getString(R.string.point_cannot_empty));//起点/终点不能为空
+//                }
                 break;
             case R.id.tvStartLocation://起点位置
                 RouterManager.goPosition(true, bigArea, province);

@@ -1,4 +1,4 @@
-package com.komutr.client.ui.FAQ;
+package com.komutr.client.ui.faq;
 
 import android.text.TextUtils;
 
