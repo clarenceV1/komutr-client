@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/tvFaqName"
+        android:id="@+id/tvHelpCenterName"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:drawableRight="@drawable/right_arrow_icon"
@@ -17,16 +17,6 @@
         android:text="Ariginating station"
         android:textColor="@color/color_000000"
         android:textSize="15sp" />
-
-
-    <TextView
-        android:id="@+id/tvFaqContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="13dp"
-        android:textColor="@color/color_666666"
-        android:textSize="13sp"
-        android:visibility="gone" />
 
 
 </LinearLayout>

@@ -10,6 +10,4 @@ public interface HelpCenterView extends GodBaseView {
 
 
     void helpListCallback(RespondDO<List<HelpCenter>> respondDO);
-
-    void detailCallback(RespondDO respondDO);
 }
