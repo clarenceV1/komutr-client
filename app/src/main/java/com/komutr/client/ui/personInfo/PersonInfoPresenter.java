@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
 import com.cai.framework.permission.RxPermissions;
@@ -16,6 +17,7 @@ import com.example.clarence.utillibrary.PrivateConstant;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
+import com.komutr.client.been.PersonInfo;
 import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.UploadImage;
@@ -131,6 +133,20 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
                         if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
                             User user = JSON.parseObject(respondDO.getData(), User.class);
                             if (user != null) {
+//                                User user = new User();
+//                                user.setAuth_key(personInfo.getAuth_key());
+//                                user.setAvatar(personInfo.getAvatar());
+//                                user.setAvatar_thum(personInfo.getAvatar_thum());
+//                                user.setBirthday(personInfo.getBirthday());
+//                                user.setPhone(personInfo.getPhone());
+//                                user.setId(personInfo.getId());
+//                                user.setSex(personInfo.getSex());
+//                                user.setEmail(personInfo.getEmail());
+//                                user.setUsername(personInfo.getUsername());
+//                                if(personInfo.getBig_area() != null)
+//                                user.setBig_area(personInfo.getBig_area().getId()+"");
+//                                if(personInfo.getProvince() != null)
+//                                user.setProvince(personInfo.getProvince().getId()+"");
                                 userInfoDao.get().updateUser(user);
                                 respondDO.setObject(user);
                                 EventBus.getDefault().post(new EventPostInfo(EventPostInfo.REFRESH_PERSON_INFO_SUCCESS));
@@ -232,6 +248,18 @@ public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
             }
         });
         mCompositeSubscription.add(disposable);
+    }
+
+
+    public String parseJson(String content){
+
+        try {
+            org.json.JSONObject jsonObject = new org.json.JSONObject(content);
+            return jsonObject.optString("name");
+        } catch (Exception e) {
+        }
+
+        return content;
     }
 
 

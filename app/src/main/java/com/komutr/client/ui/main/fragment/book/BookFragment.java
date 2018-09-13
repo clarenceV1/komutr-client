@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cai.framework.logger.Logger;
 import com.example.clarence.utillibrary.StringUtils;
 import com.example.clarence.utillibrary.ToastUtils;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -143,6 +144,9 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         if (StringUtils.isEmpty(bigArea) || StringUtils.isEmpty(province)) {
             regionPresenter.requestBigArea();
             regionPresenter.requestProvince();
+        }else {
+            bigArea = regionPresenter.parseJson(bigArea);
+            province = regionPresenter.parseJson(province);
         }
 
     }
@@ -240,6 +244,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
             if (regions != null && regions.size() > 0) {
                 Region region = regions.get(0);
                 bigArea = region.getId();
+                Logger.d("bigArea==="+bigArea);
             }
         }
     }
@@ -251,6 +256,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
             if (regionNexts != null && regionNexts.size() > 0) {
                 RegionNext next = regionNexts.get(0);
                 province = next.getId();
+                Logger.d("province==="+province);
             }
         }
     }

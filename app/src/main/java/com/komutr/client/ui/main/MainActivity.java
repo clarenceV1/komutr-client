@@ -125,6 +125,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
             mViewBinding.btnLogin.setVisibility(View.VISIBLE);
             mViewBinding.btnLogout.setVisibility(View.GONE);
             mViewBinding.llUserInfoLayout.setVisibility(View.GONE);
+            mViewBinding.ivUserAvatar.setImageDrawable(StreamUtils.getInstance().resourceToDrawable(R.drawable.default_avatar,this));
         }
     }
 

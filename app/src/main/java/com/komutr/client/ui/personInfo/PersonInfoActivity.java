@@ -170,7 +170,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
             infoList.put(2, user.getEmail());
             infoList.put(3, user.getBirthday());
             infoList.put(4, "m".equals(user.getSex())?sexList[0]:sexList[1]);
-            infoList.put(5, StringUtils.isEmpty(user.getBig_area()) ? "" : user.getBig_area() + (StringUtils.isEmpty(user.getProvince()) ? "" : user.getProvince()));
+            infoList.put(5, StringUtils.isEmpty(user.getBig_area()) ? "" :presenter.parseJson(user.getBig_area()) + (StringUtils.isEmpty(user.getProvince()) ? "" : presenter.parseJson(user.getProvince())));
             if (isUpdateView) {
                 int countChild = mViewBinding.llPersonInfoLayout.getChildCount();
                 int index = 0;
@@ -192,6 +192,7 @@ public class PersonInfoActivity extends AppBaseActivity<PersonInfoBinding> imple
             loadImage.loadImage(this, imageParams);
         }
     }
+
 
 
     @Override

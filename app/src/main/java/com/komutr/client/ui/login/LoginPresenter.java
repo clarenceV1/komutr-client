@@ -48,7 +48,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
         query.put("m", "customer.registeredOrLogin");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("ver_token_key", verTokenKey);
-        query.put("app_key", UniqueIdUtils.getDeviceInfo(GodBaseApplication.getAppContext(),UniqueIdUtils.DEVICES_INFO.IMEI));
+        query.put("device_code", UniqueIdUtils.getDeviceInfo(GodBaseApplication.getAppContext(),UniqueIdUtils.DEVICES_INFO.IMEI));
         query.put("code", code);
         query.put("phone", phone);
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {

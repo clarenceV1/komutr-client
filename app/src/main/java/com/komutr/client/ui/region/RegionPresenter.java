@@ -96,4 +96,16 @@ public class RegionPresenter extends AppBasePresenter<RegionView> {
                 });
         mCompositeSubscription.add(disposable);
     }
+
+
+    public String parseJson(String content){
+
+        try {
+            org.json.JSONObject jsonObject = new org.json.JSONObject(content);
+            return jsonObject.optString("id");
+        } catch (Exception e) {
+        }
+
+        return content;
+    }
 }
