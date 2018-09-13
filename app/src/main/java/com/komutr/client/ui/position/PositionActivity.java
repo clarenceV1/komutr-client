@@ -1,10 +1,12 @@
 package com.komutr.client.ui.position;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBasePresenter;
 import com.cai.framework.baseview.LoadingView;
 import com.cai.pullrefresh.BaseListPtrFrameLayout;
@@ -45,6 +47,11 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     int offset = 0;//开始行数 0
     int limit = 10;//条数 10 <offset 0 limit 10 > 取10条数据
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        ARouter.getInstance().inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void initDagger() {
