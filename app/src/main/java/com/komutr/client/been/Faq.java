@@ -5,7 +5,7 @@ public class Faq {
     private String content;
     private int id;
     private String created_at;
-    private int title;
+    private String title;
 
     boolean show;
 
@@ -18,11 +18,11 @@ public class Faq {
         this.content = content;
     }
 
-    public int getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(int title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

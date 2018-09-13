@@ -5,6 +5,7 @@ import com.komutr.client.been.Message;
 import com.komutr.client.been.Message_;
 import com.komutr.client.ui.message.MessagePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,23 +21,54 @@ public class MessageDao extends BaseDAO {
         msgBox = boxStore.boxFor(Message.class);
     }
 
-    public List<Message> getMessageList() {
-        return msgBox.query().build().find();
+    /**
+     *
+     * @param offset 从第几条取
+     * @param limit 取出条数
+     * @return
+     */
+    public List<Message> getMessageList(long offset,long limit) {
+        return msgBox.query().build().find(offset,limit);
     }
 
     public void deleteAll() {
         msgBox.removeAll();
     }
 
-    public void addAll(List<Message> messageList) {
+    public List<Message> addAll(List<Message> messageList) {
+
+        List<Message> msgList = new ArrayList<>();
         if (messageList != null && messageList.size() > 0) {
-            msgBox.put(messageList);
+            for (Message message : messageList) {
+                Message msg = getMessageByStatus(message.getId());
+
+                if (msg == null || msg.getId() != -1) {
+                    if (msg == null) {
+                        add(message);
+                    }
+                    msgList.add(message);
+                }
+            }
+//           msgBox.put(messageList);
         }
+        return msgList;
     }
 
     public void add(Message message) {
         if (message != null) {
             msgBox.put(message);
+        }
+    }
+
+
+    /**
+     *更新状态
+     */
+    public void updateStatus(int id, int status) {
+        Message msg = msgBox.query().equal(Message_.id, id).build().findFirst();
+        if(msg != null){
+            msg.setStatus(status);
+            msgBox.put(msg);
         }
     }
 
@@ -47,11 +79,7 @@ public class MessageDao extends BaseDAO {
         }
     }
 
-    public int getStatus(int id) {
-        Message message = msgBox.query().equal(Message_.id, id).build().findFirst();
-        if (message != null) {
-            return message.getStatus();
-        }
-        return 0;
+    public Message getMessageByStatus(int id) {
+        return msgBox.query().equal(Message_.id, id).build().findFirst();
     }
 }

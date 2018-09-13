@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="13dp"
-    android:paddingRight="13dp"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -12,22 +10,24 @@
         android:id="@+id/tvFaqName"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:gravity="center_vertical"
-        android:text="Ariginating station"
         android:drawableRight="@drawable/right_arrow_icon"
-        android:textSize="15sp"
-        android:textColor="@color/color_000000"/>
+        android:gravity="center_vertical"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:text="Ariginating station"
+        android:textColor="@color/color_000000"
+        android:textSize="15sp" />
 
 
     <TextView
         android:id="@+id/tvFaqContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:textColor="@color/color_666666"
         android:textSize="13sp"
-        android:visibility="gone"
-        android:textColor="@color/color_666666"/>
-
-
+        android:visibility="gone" />
 
 
 </LinearLayout>

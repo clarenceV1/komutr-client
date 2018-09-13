@@ -36,6 +36,7 @@ public class MessageActivity extends AppBaseActivity<MessageBinding> implements 
     PtrRecyclerView mPtrRecyclerView;
     MessageAdapter adapter;
 
+
     @Override
     public void initDagger() {
         App.getAppComponent().inject(this);
