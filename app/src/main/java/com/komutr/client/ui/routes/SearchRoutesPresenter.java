@@ -38,10 +38,10 @@ public class SearchRoutesPresenter extends AppBasePresenter<SearchRoutesView> {
         Map<String, Object> query = new HashMap<>();
         query.put("m", "station.route");
         query.put("auth_key", Constant.AUTH_KEY);
-        query.put("beg_station", begStationId + "");
-        query.put("end_station", endStationId + "");
-        query.put("offset", offset + "");
-        query.put("limit", limit + "");
+        query.put("beg_station", begStationId);
+        query.put("end_station", endStationId);
+        query.put("offset", offset);
+        query.put("limit", limit);
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override
             public void accept(RespondDO respondDO) {

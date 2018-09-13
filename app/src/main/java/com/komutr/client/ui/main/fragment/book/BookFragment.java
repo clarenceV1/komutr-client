@@ -99,6 +99,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
             public void getLocation(LatLng location) {
                 mLocation = location;
                 if (location != null) {
+//                    mLocation = new LatLng(24.63618,118.07404f);//todo test data
                     presenter.requestNearby(mLocation.latitude, mLocation.longitude, offset, limit);
                 }
             }
