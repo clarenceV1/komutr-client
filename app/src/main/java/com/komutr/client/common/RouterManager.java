@@ -3,6 +3,7 @@ package com.komutr.client.common;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.komutr.client.been.BuyTicket;
 import com.komutr.client.been.Chauffeur;
+import com.komutr.client.been.RouteDetail;
 import com.komutr.client.been.SearchRoutes;
 
 public class RouterManager {
@@ -169,10 +170,9 @@ public class RouterManager {
                 .withSerializable("Routes", data).navigation();
     }
 
-    public static void goRouteDetail(String routeId, String shiftId) {
+    public static void goRouteDetail(RouteDetail routeDetail) {
         ARouter.getInstance().build(ROUTE_DETAIL)
-                .withString("routeId",routeId)
-                .withString("shiftId",shiftId)
+                .withSerializable("RouteDetail",routeDetail)
                 .navigation();
     }
 

@@ -24,6 +24,8 @@
     <string name="default_amount">0.00</string>
     <string name="am_pm">am,pm</string>
     <string name="min">min</string>
+    <string name="bus_already_start">Already start</string>
+
     <string name="phone_call">Call Phone</string>
     <string name="permissions_des">Permissions description</string>
 

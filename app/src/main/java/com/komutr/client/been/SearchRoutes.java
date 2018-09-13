@@ -9,7 +9,15 @@ public class SearchRoutes implements Serializable {
     private String id;
     private String interval;
     private Routes route;
+    private RoutesTime timer;
 
+    public RoutesTime getTimer() {
+        return timer;
+    }
+
+    public void setTimer(RoutesTime timer) {
+        this.timer = timer;
+    }
 
     public String getBeg_time_int() {
         return beg_time_int;

@@ -16,8 +16,11 @@ import com.cai.pullrefresh.BaseViewHold;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.been.Chauffeur;
+import com.komutr.client.been.RouteDetail;
 import com.komutr.client.been.RouterStation;
 import com.komutr.client.been.Routes;
+import com.komutr.client.been.RoutesSetOff;
+import com.komutr.client.been.RoutesTime;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.been.Ticket;
 import com.komutr.client.common.Constant;
@@ -52,8 +55,13 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
     @Override
     public void onItemClick(View v, int position) {
         SearchRoutes data = getData(position);
-        if (data != null && data.getRoute() != null) {
-            RouterManager.goRouteDetail(data.getRoute().getRoute_id(), data.getId());
+        if (data != null && data.getRoute() != null && data.getRoute().getTicket() != null) {
+            RouteDetail routeDetail = new RouteDetail();
+            routeDetail.setRouteId(data.getRoute().getRoute_id());
+            routeDetail.setShiftId(data.getId());
+            routeDetail.setLineNumber(data.getRoute().getLine_number());
+            routeDetail.setPrice(data.getRoute().getTicket().getPrice());
+            RouterManager.goRouteDetail(routeDetail);
         }
     }
 
@@ -70,18 +78,16 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
                 RouterManager.goReviewPurchase(data);
             }
         });
-        String time = data.getBeg_time_int();
-        if (!StringUtils.isEmpty(time) && time.length() == 4) {
-            boolean isAm = false;
-            if (Integer.valueOf(time.substring(0, 2)) < 12) {
-                isAm = true;
+        RoutesTime routesTime = data.getTimer();
+        if (routesTime != null) {
+            RoutesSetOff setOff = routesTime.getIs_setoff();
+            if (setOff.isIs_setoff()) {
+                holder.tvBusStatus.setText(setOff.getTime_left());
+            } else {
+                holder.tvBusStatus.setText(context.getString(R.string.bus_already_start));
             }
-            String[] ams = context.getString(R.string.am_pm).split(",");
-            time = time.substring(0, 2) + ":" + time.substring(2, 4);
-            holder.tvBusStartTime.setText(time + (isAm ? ams[0] : ams[1]));
+            holder.tvBusStartTime.setText(routesTime.getBeg_time() + routesTime.getInterval());
         }
-
-        holder.tvBusStatus.setText(data.getInterval() + context.getString(R.string.min));
 
         Routes route = data.getRoute();
         if (route != null) {
