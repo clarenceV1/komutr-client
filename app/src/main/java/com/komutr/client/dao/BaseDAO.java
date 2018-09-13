@@ -1,7 +1,6 @@
 package com.komutr.client.dao;
 
 import com.komutr.client.base.App;
-import com.komutr.client.been.MyObjectBox;
 
 import io.objectbox.BoxStore;
 

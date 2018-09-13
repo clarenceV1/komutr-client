@@ -9,12 +9,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseFragment;
+import com.komutr.client.been.Position;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Station;
+import com.komutr.client.been.User;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.FragmentBookBinding;
+import com.komutr.client.event.EventPostInfo;
+import com.komutr.client.event.PositionEvent;
 import com.komutr.client.ui.map.MapCallback;
 import com.komutr.client.ui.map.MapHelp;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -60,10 +68,23 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if (mapHelp != null) {
             mapHelp.onDestroy();
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(PositionEvent positionEvent) {
+        if (positionEvent != null && positionEvent.getStateType() == EventPostInfo.UPDATE_PERSON_INFO_SUCCESS) {
+            Position position = positionEvent.getPosition();
+            if(position != null){
+              
+            }
+        }
+    }
+
+
 
     @Override
     public void initDagger() {
@@ -83,8 +104,8 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
 
     @Override
     public void initView(View view) {
+        EventBus.getDefault().register(this);
         initMap();
-
         mViewBinding.ivChangeLocation.setOnClickListener(this);
         mViewBinding.ivSearchRoutes.setOnClickListener(this);
         mViewBinding.tvStartLocation.setOnClickListener(this);

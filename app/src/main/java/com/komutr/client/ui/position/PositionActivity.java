@@ -1,6 +1,8 @@
 package com.komutr.client.ui.position;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.cai.pullrefresh.RecycleViewDivider;
 import com.cai.pullrefresh.lib.PtrFrameLayout;
 import com.example.clarence.utillibrary.DimensUtils;
 import com.example.clarence.utillibrary.StreamUtils;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -20,14 +23,16 @@ import com.komutr.client.been.Position;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.PositionBinding;
+import com.komutr.client.ui.FrequentlyStation;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 @Route(path = RouterManager.POSITION, name = "搜索位置")
-public class PositionActivity extends AppBaseActivity<PositionBinding> implements PositionView, BaseListPtrFrameLayout.OnPullLoadListener, LoadingView.LoadViewClickListener, View.OnClickListener {
+public class PositionActivity extends AppBaseActivity<PositionBinding> implements PositionView, BaseListPtrFrameLayout.OnPullLoadListener, View.OnClickListener, TextWatcher {
 
     @Inject
     PositionPresenter presenter;
@@ -39,6 +44,7 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     int province;//大区下面的行政单位 ID
 
     PtrRecyclerView mPtrRecyclerView;
+
     PositionAdapter adapter;
 
     String value;//搜索的值
@@ -65,16 +71,13 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PositionAdapter(this, presenter);
+        adapter = new PositionAdapter(this,isStartPosition, presenter);
         mPtrRecyclerView.setAdapter(adapter);
-        adapter.setDatas(presenter.getTestList());
         mViewBinding.ivBack.setOnClickListener(this);
-        mViewBinding.ptyRecycle.setCloseLoadMore(true);
+        mViewBinding.ptyRecycle.setCloseRefresh(true);
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
-        mViewBinding.loadView.setClickListener(this);
-        mViewBinding.loadView.setStatus(LoadingView.STATUS_HIDDEN);
-
-        presenter.requestList("厦门站", offset, limit);
+        mViewBinding.etSearch.onChangedListener(this);
+        presenter.requestFrequentlyStation();
     }
 
     @Override
@@ -84,33 +87,102 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
 
 
     @Override
-    public void callback(List<Position> dataList) {
+    public void searchPositionCallback(RespondDO<List<Position>> respondDO) {
+
+
+        if (respondDO.isStatus()) {
+            List<Position> data = respondDO.getObject();
+            if (data != null && data.size() > 0) {//有数据
+                if (offset == 0) {
+                    adapter.setDatas(data,StringUtils.getString(mViewBinding.etSearch));//下拉
+                } else {
+                    adapter.addDatas(data);//上啦
+                }
+                mViewBinding.ptyRecycle.setCloseLoadMore(false);
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(true);
+            } else {
+                mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
+            }
+        } else {
+            mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
+        }
+
+        if (adapter.getDatas().isEmpty()) {
+            addPositionList(presenter.getFrequentlyStationList());
+        }
 
     }
 
     @Override
-    public void requestListCallback(RespondDO respondDO) {
+    public void frequentlyStationCallback(RespondDO<List<FrequentlyStation>> respondDO) {
 
+        if (respondDO.isStatus()) {
+            addPositionList(respondDO.getObject());
+        }
     }
 
-    @Override
-    public void onLoadViewClick(int status) {
-//        presenter.requestList();
+    /**
+     * 添加常用站点
+     *
+     * @param list
+     */
+    private void addPositionList(List<FrequentlyStation> list) {
+        if (list != null && !list.isEmpty()) {
+            mViewBinding.ptyRecycle.setCloseLoadMore(true);
+            List<Position> positionList = new ArrayList<>();
+            for (FrequentlyStation frequentlyStation : list) {
+                Position position = new Position();
+                position.setFrequentlyStation(true);
+                position.setLatitude(isStartPosition ? frequentlyStation.getBeg_latitude() : frequentlyStation.getEnd_latitude());
+                position.setLongitude(isStartPosition ? frequentlyStation.getBeg_longitude() : frequentlyStation.getEnd_longitude());
+                position.setName(isStartPosition ? frequentlyStation.getBeg_station() : frequentlyStation.getEnd_station());
+                position.setStation_id(isStartPosition ? frequentlyStation.getBeg_station_id() : frequentlyStation.getEnd_station_id());
+                position.setId(frequentlyStation.getId());
+                positionList.add(position);
+            }
+            adapter.setDatas(positionList);//下拉
+        }
     }
+
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
-//        presenter.requestList();
+//       presenter.requestList();
     }
 
     @Override
     public void onLoadMore() {
-        presenter.requestMore();
+        if (adapter.getCount() > offset) {
+            offset = adapter.getCount();
+        }
+        String text = StringUtils.getString(mViewBinding.etSearch);
+        if (!StringUtils.isEmpty(text))
+            presenter.requestList(text, offset, limit);
     }
 
 
     @Override
     public void onClick(View view) {
         finish();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String text = charSequence.toString();
+        if (StringUtils.isEmpty(text)) {
+            addPositionList(presenter.getFrequentlyStationList());
+        } else {
+            presenter.requestList(text, offset, limit);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }

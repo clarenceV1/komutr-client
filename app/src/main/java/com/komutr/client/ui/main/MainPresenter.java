@@ -66,6 +66,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
                     public void accept(RespondDO respondDO) {
                         if (respondDO.isStatus()) {
                             userInfoDao.get().logout();
+                            messageDao.get().deleteAll();
                             EventBus.getDefault().post(new EventPostInfo(EventPostInfo.REFRESH_MY_TRIPS));
                         }
                     }

@@ -1,5 +1,7 @@
 package com.komutr.client.dao;
 
+import android.util.Log;
+
 import com.cai.framework.dagger.ActivityScope;
 import com.komutr.client.been.Message;
 import com.komutr.client.been.Message_;
@@ -22,34 +24,34 @@ public class MessageDao extends BaseDAO {
     }
 
     /**
-     *
      * @param offset 从第几条取
-     * @param limit 取出条数
+     * @param limit  取出条数
      * @return
      */
-    public List<Message> getMessageList(long offset,long limit) {
-        return msgBox.query().build().find(offset,limit);
+    public List<Message> getMessageList(long offset, long limit) {
+        return msgBox.query().build().find(offset, limit);
     }
 
     public void deleteAll() {
         msgBox.removeAll();
     }
 
-    public List<Message> addAll(List<Message> messageList) {
+    public List<Message> addAll(List<Message> messageList, int start, int size) {
 
         List<Message> msgList = new ArrayList<>();
         if (messageList != null && messageList.size() > 0) {
             for (Message message : messageList) {
                 Message msg = getMessageByStatus(message.getId());
-
                 if (msg == null || msg.getId() != -1) {
                     if (msg == null) {
                         add(message);
                     }
-                    msgList.add(message);
+                    msgList.add(msg == null ? message : msg);
                 }
             }
 //           msgBox.put(messageList);
+        }else {
+            msgList.addAll(getMessageList(start,size));
         }
         return msgList;
     }
@@ -62,13 +64,15 @@ public class MessageDao extends BaseDAO {
 
 
     /**
-     *更新状态
+     * 更新状态
      */
     public void updateStatus(int id, int status) {
         Message msg = msgBox.query().equal(Message_.id, id).build().findFirst();
-        if(msg != null){
+        if (msg != null && status != msg.getStatus()) {
+            Log.i("logs", "msg1=" + msg);
             msg.setStatus(status);
             msgBox.put(msg);
+            Log.i("logs", "msg2=" + msgBox.query().equal(Message_.id, id).build().findFirst());
         }
     }
 

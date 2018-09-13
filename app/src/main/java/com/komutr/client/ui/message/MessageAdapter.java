@@ -104,7 +104,7 @@ public class MessageAdapter extends BasePtrAdapter<Message, MessageAdapter.ViewH
         holder.tvMsgTitle.setText(data.getTitle());
         holder.tvMsgContent.setText(data.getContent());
         holder.tvMsgDate.setText(data.getCreate_at());
-        holder.viewRedPoint.setVisibility(data.getStatus() == 1 ? View.VISIBLE : View.INVISIBLE);
+        holder.viewRedPoint.setVisibility(data.getStatus() == 0 ? View.VISIBLE : View.INVISIBLE);
     }
 
 

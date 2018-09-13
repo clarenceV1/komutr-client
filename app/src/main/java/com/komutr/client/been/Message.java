@@ -64,4 +64,16 @@ public class Message {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", msgId=" + msgId +
+                ", content='" + content + '\'' +
+                ", create_at='" + create_at + '\'' +
+                ", title='" + title + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
