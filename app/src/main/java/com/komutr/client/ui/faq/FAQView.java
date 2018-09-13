@@ -1,4 +1,4 @@
-package com.komutr.client.ui.FAQ;
+package com.komutr.client.ui.faq;
 
 import com.cai.framework.base.GodBaseView;
 import com.komutr.client.been.Faq;

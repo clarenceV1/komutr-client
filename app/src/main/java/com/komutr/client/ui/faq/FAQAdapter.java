@@ -1,9 +1,8 @@
-package com.komutr.client.ui.FAQ;
+package com.komutr.client.ui.faq;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cai.pullrefresh.BasePtrAdapter;

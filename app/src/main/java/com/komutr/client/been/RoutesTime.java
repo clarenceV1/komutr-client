@@ -1,6 +1,8 @@
 package com.komutr.client.been;
 
-public class RoutesTime {
+import java.io.Serializable;
+
+public class RoutesTime implements Serializable {
     private String beg_time;
     private String interval;
     private RoutesSetOff is_setoff;

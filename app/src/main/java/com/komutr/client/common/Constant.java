@@ -16,6 +16,11 @@ public class Constant {
 
     public static final String AUTH_KEY = "d511D54i5Odb6WT";
    //tel 211111101 测试账号
+
+//    AppID： BIrNhLcF4w7VRbWDVuQnH
+//    AppSecret： V4xE6Fwqa187Y2V137sFt8
+//    AppKey： s69oFojEHh6osFXMXmsbW1
+//    MasterSecret： mIluqIfoOV9z3bs8SaY4q8
     /**
      * 设置是否是测试环境
      *

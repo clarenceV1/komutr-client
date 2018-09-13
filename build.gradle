@@ -25,7 +25,9 @@ allprojects {
 //        mavenCentral()
         maven { url "http://objectbox.net/beta-repo/" }
         maven { url "https://jitpack.io" }
-
+        maven { //个推用的
+            url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/"
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-package com.komutr.client.ui.FAQ;
+package com.komutr.client.ui.faq;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,11 +18,9 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.Faq;
-import com.komutr.client.been.MyTrips;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.MessageDetailBinding;
-import com.komutr.client.ui.main.fragment.trips.MyTripsAdapter;
 
 import java.util.List;
 

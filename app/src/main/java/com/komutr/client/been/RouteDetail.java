@@ -6,7 +6,7 @@ public class RouteDetail implements Serializable{
     private String routeId;
     private String shiftId;
     private String lineNumber;
-    String price;
+    private String price;
 
     public String getPrice() {
         return price;
