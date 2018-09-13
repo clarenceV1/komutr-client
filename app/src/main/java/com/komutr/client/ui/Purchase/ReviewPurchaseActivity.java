@@ -18,9 +18,10 @@ import com.komutr.client.been.BuyTicket;
 import com.komutr.client.been.Chauffeur;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.RouterStation;
-import com.komutr.client.been.RoutesShift;
+import com.komutr.client.been.Routes;
 import com.komutr.client.been.SearchRoutes;
 import com.komutr.client.been.Station;
+import com.komutr.client.been.Ticket;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.ReviewPurchaseBinding;
 
@@ -29,9 +30,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-
 @Route(path = RouterManager.REVIEW_PURCHASE, name = "搜索-搜索路线-查看购买")
-public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBinding> implements ReviewPurchaseView,View.OnClickListener {
+public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBinding> implements ReviewPurchaseView, View.OnClickListener {
 
     @Autowired(name = "Routes")
     SearchRoutes routes;//序列号的对象没办法自动解析，需要getArouterSerializableData
@@ -70,27 +70,31 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
      * 初始化数据
      */
     private void initData() {
-        RoutesShift routesShift = routes.getRoutesShift();//班次绝对不会空 放心
-        mViewBinding.tvSinglePrice.setText("₱" +(routes.getTicket() != null ? routes.getTicket().getPrice() : getString(R.string.default_amount)));
-        mViewBinding.tvBusNumber.setText(routes.getRoute_id());
+        if (routes == null) {
+            return;
+        }
         mViewBinding.tvTotalPrice.setText(mViewBinding.tvSinglePrice.getText().toString());
-        if(routesShift != null){
-            String time = routesShift.getBeg_time_int();
-            if (!StringUtils.isEmpty(time) && time.length() == 4) {
-                boolean isAm = false;
-                if (Integer.valueOf(time.substring(0, 2)) < 12) {
-                    isAm = true;
-                }
-                String[] ams = getString(R.string.am_pm).split(",");
-                time = time.substring(0, 2) + ":" + time.substring(2, 4);
-                mViewBinding.tvMyTripsTime.setText(time + (isAm ? ams[0] : ams[1]));
-                mViewBinding.tvMyTripsDate.setText(DateUtils.formatDate(System.currentTimeMillis(),"dd/MM/yyyy"));
+        String time = routes.getBeg_time_int();
+        if (!StringUtils.isEmpty(time) && time.length() == 4) {
+            boolean isAm = false;
+            if (Integer.valueOf(time.substring(0, 2)) < 12) {
+                isAm = true;
             }
+            String[] ams = getString(R.string.am_pm).split(",");
+            time = time.substring(0, 2) + ":" + time.substring(2, 4);
+            mViewBinding.tvMyTripsTime.setText(time + (isAm ? ams[0] : ams[1]));
+            mViewBinding.tvMyTripsDate.setText(DateUtils.formatDate(System.currentTimeMillis(), "dd/MM/yyyy"));
         }
 
+        if (routes.getRoute() != null && routes.getRoute().getStation() != null) {
+            Routes route = routes.getRoute();
+            if (route.getTicket() != null) {
+                Ticket ticket = route.getTicket();
+                mViewBinding.tvSinglePrice.setText("₱" + (ticket != null ? ticket.getPrice() : getString(R.string.default_amount)));
+            }
+            mViewBinding.tvBusNumber.setText(route.getRoute_id());
 
-        RouterStation routerStation = routes.getStation();
-        if (routerStation != null) {
+            RouterStation routerStation = routes.getRoute().getStation();
             if (routerStation.getBeg() != null) {
                 mViewBinding.tvStartLocation.setText(routerStation.getBeg().getName());
             }
@@ -99,19 +103,8 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
             }
         }
 
-        Chauffeur chauffeur = routesShift.getChauffeur();
+        Chauffeur chauffeur = routes.getChauffeur();
         if (chauffeur != null) {
-            /*if (!StringUtils.isEmpty(chauffeur.getAvatar())) {
-                String icon = Constant.OFFICIAL_BASE_URL.substring(0, Constant.OFFICIAL_BASE_URL.length() - 1) + chauffeur.getAvatar_thum();
-                ILoadImageParams imageParams = new ImageForGlideParams.Builder()
-                        .url(icon)
-                        .error(R.drawable.default_avatar)
-                        .placeholder(R.drawable.default_avatar)
-                        .transformation(new GlideCircleTransform(this))
-                        .build();
-                imageParams.setImageView(mViewBinding.ivDriverAvatar);
-                iLoadImage.loadImage(context, imageParams);
-            }*/
             mViewBinding.tvLicensePlateNo.setText(chauffeur.getLicence_plate());
         }
 
@@ -137,7 +130,7 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
         if (respondDO.isStatus() && respondDO.getObject() != null) {
             BuySellTicketDetails buySellTicketDetails = respondDO.getObject();
             BuySellTicketDetails.Refund refund = buySellTicketDetails.getRefund();
-            if(refund != null){
+            if (refund != null) {
                 mViewBinding.tvImportantNotes.setText(refund.getContent());
                 mViewBinding.tvImportantTitle.setText(refund.getTitle());
             }
@@ -147,14 +140,14 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
     @Override
     public void onClick(View view) {
         if (routes != null) {
-            RoutesShift routesShift = routes.getRoutesShift();
-            RouterStation routerStation = routes.getStation();
-            if (routesShift != null && routerStation != null) {
-                showDialog(getString(R.string.buying),true);
-                Station beg = routerStation.getBeg();
-                Station end = routerStation.getEnd();
+            if (routes.getRoute() != null && routes.getRoute().getStation() != null) {
+                Routes temR = routes.getRoute();
+                RouterStation station = temR.getStation();
+                showDialog(getString(R.string.buying), true);
+                Station beg = station.getBeg();
+                Station end = station.getEnd();
                 if (beg != null && end != null) {
-                    presenter.purchaseTicket(routes.getRoute_id(), routesShift.getId(), beg.getId(), end.getId());
+                    presenter.purchaseTicket(temR.getRoute_id(), routes.getId(), beg.getId(), end.getId());
                 }
             }
         }
