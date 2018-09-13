@@ -1,14 +1,17 @@
 package com.komutr.client.ui.message;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cai.framework.widget.dialog.GodDialog;
 import com.cai.pullrefresh.BasePtrAdapter;
 import com.cai.pullrefresh.BasePtrViewHold;
 import com.cai.pullrefresh.BaseViewHold;
 import com.example.clarence.utillibrary.CommonUtils;
+import com.example.clarence.utillibrary.DateUtils;
 import com.komutr.client.R;
 import com.komutr.client.been.Message;
 import com.komutr.client.common.RouterManager;
@@ -26,7 +29,7 @@ public class MessageAdapter extends BasePtrAdapter<Message, MessageAdapter.ViewH
 
     MessagePresenter presenter;
 
-    Context context;
+    Activity activity;
 
 
     String searchText;
@@ -36,9 +39,9 @@ public class MessageAdapter extends BasePtrAdapter<Message, MessageAdapter.ViewH
         this.searchText = searchText;
     }
 
-    public MessageAdapter(Context context, MessagePresenter presenter) {
+    public MessageAdapter(Activity activity, MessagePresenter presenter) {
         this.presenter = presenter;
-        this.context = context;
+        this.activity = activity;
     }
 
     @Override
@@ -51,13 +54,48 @@ public class MessageAdapter extends BasePtrAdapter<Message, MessageAdapter.ViewH
 
     @Override
     public void onItemClick(View v, int position) {
-//        RouterManager.goBillDetail();
-        RouterManager.goMessageDetails(getData(position).getContent());
+//      RouterManager.goBillDetail();
+        Message msg = getData(position);
+        if (msg != null && msg.getStatus() == 0) {
+            presenter.updateStatus(msg.getId(), 1);
+            msg.setStatus(1);
+            v.findViewById(R.id.viewRedPoint).setVisibility(View.INVISIBLE);
+        }
+        RouterManager.goMessageDetails(msg.getContent());
+    }
+
+    /**
+     * 显示删除消息对话框
+     */
+    private void showMsgDialog(final int position) {
+        new GodDialog.Builder(activity)
+                .setTitle(activity.getString(R.string.delete_msg))
+                .setMessage(activity.getString(R.string.delete_msg_content))
+                .setNegativeButton(activity.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                       ToastUtils.showShort("点击取消了");
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton(activity.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                       ToastUtils.showShort("点击确定了");
+                        Message msg = getData(position);
+                        if (msg != null && msg.getStatus() != -1) {
+                            presenter.updateStatus(msg.getId(), -1);
+                            removeData(position);
+                        }
+                        dialog.dismiss();
+
+                    }
+                }).build().show();
     }
 
     @Override
     public void onItemLongClick(View v, int position) {
-
+        showMsgDialog(position);
     }
 
     @Override
@@ -66,9 +104,8 @@ public class MessageAdapter extends BasePtrAdapter<Message, MessageAdapter.ViewH
         holder.tvMsgTitle.setText(data.getTitle());
         holder.tvMsgContent.setText(data.getContent());
         holder.tvMsgDate.setText(data.getCreate_at());
+        holder.viewRedPoint.setVisibility(data.getStatus() == 1 ? View.VISIBLE : View.INVISIBLE);
     }
-
-
 
 
     class ViewHolder extends BasePtrViewHold {
@@ -83,8 +120,8 @@ public class MessageAdapter extends BasePtrAdapter<Message, MessageAdapter.ViewH
             tvMsgTitle = itemView.findViewById(R.id.tvMsgTitle);
             tvMsgContent = itemView.findViewById(R.id.tvMsgContent);
             tvMsgDate = itemView.findViewById(R.id.tvMsgDate);
-            viewRedPoint= itemView.findViewById(R.id.viewRedPoint);
-            CommonUtils.setBackground(itemView, CommonUtils.selectorStateColor(context, R.color.white, R.color.color_f1f1f4));
+            viewRedPoint = itemView.findViewById(R.id.viewRedPoint);
+            CommonUtils.setBackground(itemView, CommonUtils.selectorStateColor(activity, R.color.white, R.color.color_f1f1f4));
         }
     }
 

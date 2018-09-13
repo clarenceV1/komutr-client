@@ -1,18 +1,14 @@
 package com.komutr.client.ui.message;
 
-import android.text.TextUtils;
-
 import com.alibaba.fastjson.JSON;
 import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
+import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.Message;
-import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
-import com.komutr.client.common.Constant;
 import com.komutr.client.dao.MessageDao;
-import com.komutr.client.dao.UserInfoDao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +25,7 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
 
     @Inject
     public Lazy<MessageDao> messageDao;
-    
+
     @Inject
     public MessagePresenter() {
 
@@ -37,9 +33,11 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
 
     @Override
     public void onAttached() {
+
     }
 
-    public void requestMessage(int start, int size) {
+
+    public void requestMessage(final int start, final int size) {
         String auth_key = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
         query.put("m", "system.message");
@@ -49,10 +47,15 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                            List<Message> messageList = JSON.parseArray(respondDO.getData(), Message.class);
-                            messageDao.get().addAll(messageList);
+                        if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
+                            List<Message> messageList = messageDao.get().addAll(JSON.parseArray(respondDO.getData(), Message.class));
                             respondDO.setObject(messageList);
+                        }else {
+                            List<Message> messageList = messageDao.get().getMessageList(start,size);
+                            if(messageList != null && !messageList.isEmpty()){
+                                respondDO.setObject(messageList);
+                                respondDO.setStatus(true);
+                            }
                         }
                     }
                 })
@@ -68,7 +71,13 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
                     public void accept(Throwable throwable) {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
-                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
+                        List<Message> messageList = messageDao.get().getMessageList(start,size);
+                        if(messageList != null && !messageList.isEmpty()){
+                            respondDO.setObject(messageList);
+                            respondDO.setStatus(true);
+                        }else {
+                            respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
+                        }
                         mView.callback(respondDO);
                     }
                 });
@@ -76,37 +85,8 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
     }
 
 
-    public void deleteMessage() {
-        String auth_key = userInfoDao.get().getAppAuth();
-        Map<String, Object> query = new HashMap<>();
-        query.put("m", "system.message");
-        query.put("auth_key", auth_key);
-        Disposable disposable = requestStore.get().commonRequest(query)
-                .doOnSuccess(new Consumer<RespondDO>() {
-                    @Override
-                    public void accept(RespondDO respondDO) {
-                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
-                            List<Message> messageList = JSON.parseArray(respondDO.getData(), Message.class);
-                            respondDO.setObject(messageList);
-                        }
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<RespondDO>() {
-                    @Override
-                    public void accept(RespondDO respondDO) {
-                        Logger.d(respondDO.toString());
-                        mView.callback(respondDO);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        Logger.e(throwable.getMessage());
-                        RespondDO respondDO = new RespondDO();
-                        respondDO.setMsg(GodBaseApplication.getAppContext().getString(R.string.request_failed));
-                        mView.callback(respondDO);
-                    }
-                });
-        mCompositeSubscription.add(disposable);
+    public void updateStatus(int id, int status) {
+
+        messageDao.get().updateStatus(id, status);
     }
 }

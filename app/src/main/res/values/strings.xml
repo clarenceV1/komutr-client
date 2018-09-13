@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+    <string name="delete_msg">Delete message</string>
+    <string name="delete_msg_content">Are you sure to delete the message?</string>
     <string name="rating_fail">rating failed</string>
     <string name="order_fail">order failed</string>
     <string name="refund_fail_">refund failed</string>
