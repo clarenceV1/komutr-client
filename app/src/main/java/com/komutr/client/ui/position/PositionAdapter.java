@@ -1,6 +1,6 @@
 package com.komutr.client.ui.position;
 
-import android.content.Context;
+import android.app.Activity;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -16,11 +16,8 @@ import com.example.clarence.utillibrary.CommonUtils;
 import com.example.clarence.utillibrary.StreamUtils;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
-import com.komutr.client.been.Bill;
 import com.komutr.client.been.Position;
-import com.komutr.client.common.RouterManager;
 import com.komutr.client.event.PositionEvent;
-import com.komutr.client.ui.bill.BillPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,7 +34,7 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
 
     PositionPresenter presenter;
 
-    Context context;
+    Activity activity;
 
 
     String searchText;
@@ -49,9 +46,9 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
         this.searchText = searchText;
     }
 
-    public PositionAdapter(Context context, boolean isStartPosition,PositionPresenter presenter) {
+    public PositionAdapter(Activity activity, boolean isStartPosition, PositionPresenter presenter) {
         this.presenter = presenter;
-        this.context = context;
+        this.activity = activity;
         this.isStartPosition = isStartPosition;
     }
 
@@ -66,11 +63,13 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
     @Override
     public void onItemClick(View v, int position) {
 //        RouterManager.goBillDetail();
-       Position positionInfo =  getData(position);
-       if(positionInfo != null){
-           positionInfo.setStartPosition(isStartPosition);
-           EventBus.getDefault().post(new PositionEvent(PositionEvent.CHOOSE_POSITION_SUCCESS,positionInfo));
-       }
+        Position positionInfo = getData(position);
+        if (positionInfo != null) {
+            positionInfo.setStartPosition(isStartPosition);
+            EventBus.getDefault().post(new PositionEvent(PositionEvent.CHOOSE_POSITION_SUCCESS, positionInfo));
+            activity.finish();
+        }
+
 
     }
 
@@ -81,8 +80,8 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
 
     @Override
     protected void onPtrBindViewHolder(ViewHolder holder, Position data, int position) {
-
-        holder.tvPositionName.setText(getStringBuilder(data.getName()));
+        holder.tvPositionName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_333333, activity));
+        holder.tvPositionName.setText(data.isFrequentlyStation() ? data.getName():getStringBuilder(data.getName()));
         holder.ivDeleteRecord.setVisibility(data.isFrequentlyStation() ? View.VISIBLE : View.GONE);
         holder.ivDeleteRecord.setTag(data.getId());
         holder.ivDeleteRecord.setTag(R.id.tag_first, position);
@@ -93,22 +92,21 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
     private SpannableStringBuilder getStringBuilder(String text) {
 
         SpannableStringBuilder style = new SpannableStringBuilder(text);
-        if (!StringUtils.isEmpty(searchText) && text.contains(searchText)) {
-            int mainColor = StreamUtils.getInstance().resourceToColor(R.color.color_main, context);
-            int otherColor = StreamUtils.getInstance().resourceToColor(R.color.color_333333, context);
+        int index;
+        if (!StringUtils.isEmpty(searchText) && (index = text.indexOf(searchText)) >= 0) {
+            int mainColor = StreamUtils.getInstance().resourceToColor(R.color.color_main, activity);
+            int otherColor = StreamUtils.getInstance().resourceToColor(R.color.color_333333, activity);
 
             ForegroundColorSpan mainSpan = new ForegroundColorSpan(mainColor);
             ForegroundColorSpan otherSpan = new ForegroundColorSpan(otherColor);
-
-            int index = searchText.indexOf(text);
             int length = searchText.length();
             int textLength = text.length();
             if (index == 0) {
                 style.setSpan(mainSpan, 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 style.setSpan(otherSpan, length, textLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            } else if (index + 1 == length) {
-                style.setSpan(otherSpan, 0, textLength - length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                style.setSpan(mainSpan, textLength - length, textLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else if (index + 1 +length == textLength) {//在最后的位置
+                style.setSpan(otherSpan, 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                style.setSpan(mainSpan, index, textLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else {
                 style.setSpan(otherSpan, 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 style.setSpan(mainSpan, index, index + length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -136,7 +134,7 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
             super(itemView, listener);
             ivDeleteRecord = itemView.findViewById(R.id.ivDeleteRecord);
             tvPositionName = itemView.findViewById(R.id.tvPositionName);
-            CommonUtils.setBackground(itemView, CommonUtils.selectorStateColor(context, R.color.white, R.color.color_f1f1f4));
+            CommonUtils.setBackground(itemView, CommonUtils.selectorStateColor(activity, R.color.white, R.color.color_f1f1f4));
         }
     }
 

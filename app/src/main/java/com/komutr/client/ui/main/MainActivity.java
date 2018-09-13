@@ -276,11 +276,9 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
 
     @Override
     public void logout(RespondDO respondDO) {
-        hiddenDialog();
+
         if (respondDO.isStatus()) {
-            initLeftData(null);
-        }else {
-            ToastUtils.showShort(respondDO.getMsg());
+
         }
     }
 
@@ -372,7 +370,7 @@ public class MainActivity extends AppBaseActivity<MainBinding> implements MainVi
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();
-                        showDialog(getString(R.string.please_wait),true);
+                        initLeftData(null);
                         presenter.logout();
                     }
                 }).build().show();

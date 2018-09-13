@@ -42,7 +42,7 @@ public class PositionPresenter extends AppBasePresenter<PositionView> {
     }
 
     public void initData(boolean isStartPosition, String bigArea, String province) {
-        this.authKey = Constant.AUTH_KEY;
+        this.authKey = userInfoDao.get().getAppAuth();
         this.type = isStartPosition ? "beg" : "end";
         this.bigArea = bigArea;
         this.province = province;
@@ -53,7 +53,7 @@ public class PositionPresenter extends AppBasePresenter<PositionView> {
     public void requestList(String value, int offset, int limit) {
         Map<String, Object> query = new HashMap<>();
         query.put("m", "station.searchEndAndBegStation");
-        query.put("auth_key", authKey);
+        query.put("auth_key", Constant.AUTH_KEY);
         query.put("value", value);
         query.put("offset", offset);
         query.put("limit", limit);

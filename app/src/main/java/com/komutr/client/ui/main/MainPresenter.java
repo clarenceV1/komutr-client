@@ -56,6 +56,10 @@ public class MainPresenter extends AppBasePresenter<MainView> {
      * 退出登录
      */
     public void logout() {
+
+        userInfoDao.get().logout();
+        messageDao.get().deleteAll();
+
         String authKey = userInfoDao.get().getAppAuth();
         Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.logout");
@@ -65,8 +69,6 @@ public class MainPresenter extends AppBasePresenter<MainView> {
                     @Override
                     public void accept(RespondDO respondDO) {
                         if (respondDO.isStatus()) {
-                            userInfoDao.get().logout();
-                            messageDao.get().deleteAll();
                             EventBus.getDefault().post(new EventPostInfo(EventPostInfo.REFRESH_MY_TRIPS));
                         }
                     }

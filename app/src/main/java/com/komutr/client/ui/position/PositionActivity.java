@@ -77,7 +77,7 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PositionAdapter(this,isStartPosition, presenter);
+        adapter = new PositionAdapter(this, isStartPosition, presenter);
         mPtrRecyclerView.setAdapter(adapter);
         mViewBinding.ivBack.setOnClickListener(this);
         mViewBinding.ptyRecycle.setCloseRefresh(true);
@@ -100,7 +100,7 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
             List<Position> data = respondDO.getObject();
             if (data != null && data.size() > 0) {//有数据
                 if (offset == 0) {
-                    adapter.setDatas(data,StringUtils.getString(mViewBinding.etSearch));//下拉
+                    adapter.setDatas(data, StringUtils.getString(mViewBinding.etSearch));//下拉
                 } else {
                     adapter.addDatas(data);//上啦
                 }
@@ -112,11 +112,6 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
         } else {
             mViewBinding.ptyRecycle.refreshOrLoadMoreComplete(false);
         }
-
-        if (adapter.getDatas().isEmpty()) {
-            addPositionList(presenter.getFrequentlyStationList());
-        }
-
     }
 
     @Override
@@ -147,13 +142,14 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
                 positionList.add(position);
             }
             adapter.setDatas(positionList);//下拉
+        } else {
+            adapter.removeAll();
         }
     }
 
 
     @Override
     public void onRefresh(PtrFrameLayout frame) {
-//       presenter.requestList();
     }
 
     @Override
@@ -183,6 +179,10 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
         if (StringUtils.isEmpty(text)) {
             addPositionList(presenter.getFrequentlyStationList());
         } else {
+            adapter.removeAll();
+            if (offset != 0) {
+                offset = 0;
+            }
             presenter.requestList(text, offset, limit);
         }
     }
