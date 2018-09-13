@@ -74,7 +74,6 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     public void initView() {
 
         presenter.initData(isStartPosition, bigArea, province);
-
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));

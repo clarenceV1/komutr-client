@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">komutr-client</string>
 
+    <string name="point_cannot_empty">start and end points cannot be empty</string>
     <string name="delete_msg">Delete message</string>
     <string name="delete_msg_content">Are you sure to delete the message?</string>
     <string name="rating_fail">rating failed</string>

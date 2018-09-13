@@ -10,6 +10,7 @@ import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.Position;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.common.Constant;
 import com.komutr.client.ui.FrequentlyStation;
 
 import java.util.ArrayList;
@@ -40,28 +41,14 @@ public class PositionPresenter extends AppBasePresenter<PositionView> {
     public void onAttached() {
     }
 
-    public void initData(boolean isStartPosition, int bigArea, int province) {
-        this.authKey = userInfoDao.get().getAppAuth();
+    public void initData(boolean isStartPosition, String bigArea, String province) {
+        this.authKey = Constant.AUTH_KEY;
         this.type = isStartPosition ? "beg" : "end";
         this.bigArea = bigArea;
         this.province = province;
     }
 
-    public List<Position> getTestList() {
 
-        List<Position> list = new ArrayList<>();
-        list.add(new Position());
-        list.add(new Position());
-        list.add(new Position());
-        list.add(new Position());
-        list.add(new Position());
-        list.add(new Position());
-        return list;
-    }
-
-    public void requestMore() {
-
-    }
 
     public void requestList(String value, int offset, int limit) {
         Map<String, Object> query = new HashMap<>();
@@ -88,7 +75,7 @@ public class PositionPresenter extends AppBasePresenter<PositionView> {
                     @Override
                     public void accept(RespondDO respondDO) {
                         Logger.d(respondDO.toString());
-                        mView.frequentlyStationCallback(respondDO);
+                        mView.searchPositionCallback(respondDO);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -96,7 +83,7 @@ public class PositionPresenter extends AppBasePresenter<PositionView> {
                         Logger.e(throwable.getMessage());
                         RespondDO respondDO = new RespondDO();
                         respondDO.setFromCallBack(-1);
-                        mView.frequentlyStationCallback(respondDO);
+                        mView.searchPositionCallback(respondDO);
                     }
                 });
         mCompositeSubscription.add(disposable);

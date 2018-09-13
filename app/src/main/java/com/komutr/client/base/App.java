@@ -3,7 +3,7 @@ package com.komutr.client.base;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cai.framework.base.GodBaseApplication;
 import com.komutr.client.BuildConfig;
-import com.komutr.client.been.MyObjectBox;
+import com.komutr.client.MyObjectBox;
 import com.komutr.client.common.Constant;
 import com.komutr.client.dagger.component.AppComponent;
 import com.komutr.client.dagger.component.DaggerAppComponent;

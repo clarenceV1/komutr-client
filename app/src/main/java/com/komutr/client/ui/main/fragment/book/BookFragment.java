@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.example.clarence.utillibrary.StringUtils;
+import com.example.clarence.utillibrary.ToastUtils;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.komutr.client.R;
@@ -86,11 +88,28 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         if (positionEvent != null && positionEvent.getStateType() == EventPostInfo.UPDATE_PERSON_INFO_SUCCESS) {
             Position position = positionEvent.getPosition();
             if(position != null){
-              
+               if(position.isStartPosition()){
+                   if(begStation == null){
+                       begStation = new Station();
+                   }
+                   begStation.setId(position.getStation_id());
+                   begStation.setLatitude(Double.valueOf(position.getLatitude()));
+                   begStation.setLongitude(Double.valueOf(position.getLongitude()));
+                   begStation.setName(position.getName());
+                   mViewBinding.tvStartLocation.setText(position.getName());
+               }else {
+                   if(endStation == null){
+                       endStation = new Station();
+                   }
+                   endStation.setId(position.getStation_id());
+                   endStation.setLatitude(Double.valueOf(position.getLatitude()));
+                   endStation.setLongitude(Double.valueOf(position.getLongitude()));
+                   endStation.setName(position.getName());
+                   mViewBinding.tvEndLocation.setText(position.getName());
+               }
             }
         }
     }
-
 
 
     @Override
@@ -121,7 +140,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
 
         bigArea = presenter.getBigArea();
         province = presenter.getProvince();
-        if (TextUtils.isEmpty(bigArea) || TextUtils.isEmpty(province)) {
+        if (StringUtils.isEmpty(bigArea) || StringUtils.isEmpty(province)) {
             regionPresenter.requestBigArea();
             regionPresenter.requestProvince();
         }
@@ -150,12 +169,12 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
                 switchStation();
                 break;
             case R.id.ivSearchRoutes://搜索路线
-                RouterManager.goSearchRoutes(8, 20);//todo  test
-//                if (begStation != null && endStation != null) {
-//                    RouterManager.goSearchRoutes(begStation.getId(), endStation.getId());
-//                } else {
-//                    ToastUtils.showShort("起点/终点不能为空");//todo  带完善
-//                }
+//                RouterManager.goSearchRoutes(8, 20);//todo  test
+                if (begStation != null && endStation != null) {
+                    RouterManager.goSearchRoutes(Integer.valueOf(begStation.getId()), Integer.valueOf(endStation.getId()));
+                } else {
+                    ToastUtils.showShort(getString(R.string.point_cannot_empty));//起点/终点不能为空
+                }
                 break;
             case R.id.tvStartLocation://起点位置
                 RouterManager.goPosition(true, bigArea, province);
