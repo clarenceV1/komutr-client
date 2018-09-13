@@ -54,6 +54,8 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
         return R.layout.login;
     }
 
+    SMSCountDownTimer smsCountDownTimer;
+
     @Override
     public void verificationCodeCallback(RespondDO<PhoneCode> respondDO) {
         mViewBinding.btnVerificationCode.setText(getString(R.string.verification_code));
@@ -61,7 +63,7 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
         if (respondDO.isStatus()) {
             this.phoneCode = respondDO.getObject();
             if (this.phoneCode != null && !StringUtils.isEmpty(this.phoneCode.getVer_token_key())) {
-                new SMSCountDownTimer(mViewBinding.btnVerificationCode, 60000, 1000);
+                smsCountDownTimer = new SMSCountDownTimer(mViewBinding.btnVerificationCode, 60000, 1000);
             }
         }else {
             ToastUtils.showShort(respondDO.getMsg());
@@ -98,6 +100,7 @@ public class LoginActivity extends AppBaseActivity<LoginBinding> implements Logi
         String text = charSequence.toString();
         if (mViewBinding.etPhone.hasFocus()) {//获得焦点时为手机号的输入项,获取验证码按钮可点击
             boolean isNotEmpty = !StringUtils.isEmpty(text);
+            if(smsCountDownTimer == null || smsCountDownTimer.isFinish())
             mViewBinding.btnVerificationCode.setEnabled(isNotEmpty);
             mViewBinding.btnLogReg.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode)));
         } else if (mViewBinding.etInputVerificAtionCode.hasFocus()) {//获得焦点时为获取验证码的输入项，登录按钮可点击
