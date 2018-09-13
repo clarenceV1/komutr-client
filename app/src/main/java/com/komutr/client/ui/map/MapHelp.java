@@ -162,10 +162,12 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
             String provider = lm.getBestProvider(criteria, true);
             myLocation = lm.getLastKnownLocation(provider);
         }
-        LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-        if (mapCallback != null) {
-            mapCallback.getLocation(latLng);
+        if (myLocation != null) {
+            LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            if (mapCallback != null) {
+                mapCallback.getLocation(latLng);
+            }
         }
     }
 
