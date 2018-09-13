@@ -16,6 +16,7 @@ import com.cai.pullrefresh.BaseViewHold;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.been.Chauffeur;
+import com.komutr.client.been.RouteDetail;
 import com.komutr.client.been.RouterStation;
 import com.komutr.client.been.Routes;
 import com.komutr.client.been.RoutesSetOff;
@@ -54,8 +55,13 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
     @Override
     public void onItemClick(View v, int position) {
         SearchRoutes data = getData(position);
-        if (data != null && data.getRoute() != null) {
-            RouterManager.goRouteDetail(data.getRoute().getRoute_id(), data.getId());
+        if (data != null && data.getRoute() != null && data.getRoute().getTicket() != null) {
+            RouteDetail routeDetail = new RouteDetail();
+            routeDetail.setRouteId(data.getRoute().getRoute_id());
+            routeDetail.setShiftId(data.getId());
+            routeDetail.setLineNumber(data.getRoute().getLine_number());
+            routeDetail.setPrice(data.getRoute().getTicket().getPrice());
+            RouterManager.goRouteDetail(routeDetail);
         }
     }
 
@@ -75,9 +81,9 @@ public class SearchRoutesAdapter extends BasePtrAdapter<SearchRoutes, SearchRout
         RoutesTime routesTime = data.getTimer();
         if (routesTime != null) {
             RoutesSetOff setOff = routesTime.getIs_setoff();
-            if(setOff.isIs_setoff()){
+            if (setOff.isIs_setoff()) {
                 holder.tvBusStatus.setText(setOff.getTime_left());
-            }else{
+            } else {
                 holder.tvBusStatus.setText(context.getString(R.string.bus_already_start));
             }
             holder.tvBusStartTime.setText(routesTime.getBeg_time() + routesTime.getInterval());

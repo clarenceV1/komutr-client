@@ -12,6 +12,7 @@ import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;
+import com.komutr.client.been.RouteDetail;
 import com.komutr.client.been.RoutesInfo;
 import com.komutr.client.been.StationDetail;
 import com.komutr.client.common.RouterManager;
@@ -27,10 +28,8 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
 
     @Inject
     RouteDetailPresenter presenter;
-    @Autowired(name = "routeId")
-    String routeId;
-    @Autowired(name = "shiftId")
-    String shiftId;
+    @Autowired(name = "RouteDetail")
+    RouteDetail routeDetail;
     MapHelp mapHelp;
 
     @Override
@@ -51,10 +50,17 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
 
     @Override
     public void initView() {
+        routeDetail = getArouterSerializableData("RouteDetail");
         setBarTitle("");
         mViewBinding.btnBuy.setOnClickListener(this);
         initMap();
-        presenter.routesInfo(routeId, shiftId);
+        if (routeDetail != null) {
+            if (titleBarView != null) {
+                titleBarView.setTitleText(routeDetail.getLineNumber());
+            }
+            presenter.routesInfo(routeDetail.getRouteId(), routeDetail.getShiftId());
+            mViewBinding.tvBusPrice.setText(routeDetail.getPrice());
+        }
     }
 
     private void initMap() {
