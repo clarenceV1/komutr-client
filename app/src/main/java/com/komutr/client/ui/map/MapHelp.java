@@ -158,7 +158,7 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
         Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (myLocation == null) {
             Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_HIGH);
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
             String provider = lm.getBestProvider(criteria, true);
             myLocation = lm.getLastKnownLocation(provider);
         }
