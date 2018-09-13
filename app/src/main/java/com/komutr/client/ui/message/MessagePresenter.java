@@ -23,8 +23,6 @@ import io.reactivex.functions.Consumer;
 
 public class MessagePresenter extends AppBasePresenter<MessageView> {
 
-    @Inject
-    public Lazy<MessageDao> messageDao;
 
     @Inject
     public MessagePresenter() {
@@ -48,7 +46,7 @@ public class MessagePresenter extends AppBasePresenter<MessageView> {
                     @Override
                     public void accept(RespondDO respondDO) {
                         if (respondDO.isStatus() && !StringUtils.isEmpty(respondDO.getData())) {
-                            List<Message> messageList = messageDao.get().addAll(JSON.parseArray(respondDO.getData(), Message.class));
+                            List<Message> messageList = messageDao.get().addAll(JSON.parseArray(respondDO.getData(), Message.class),start,size);
                             respondDO.setObject(messageList);
                         }else {
                             List<Message> messageList = messageDao.get().getMessageList(start,size);

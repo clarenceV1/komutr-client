@@ -113,7 +113,7 @@ public final class CameraManager {
 
     // Camera.setOneShotPreviewCallback() has a race condition in Cupcake, so we use the older
     // Camera.setPreviewCallback() on 1.5 and earlier. For Donut and later, we need to use
-    // the more efficient one shot callback, as the older one can swamp the system and cause it
+    // the more efficient one shot searchPositionCallback, as the older one can swamp the system and cause it
     // to run out of memory. We can't use SDK_INT because it was introduced in the Donut SDK.
     //useOneShotPreviewCallback = Integer.parseInt(Build.VERSION.SDK) > Build.VERSION_CODES.CUPCAKE;
     useOneShotPreviewCallback = Integer.parseInt(Build.VERSION.SDK) > 3; // 3 = Cupcake
@@ -216,7 +216,7 @@ public final class CameraManager {
   public void requestAutoFocus(Handler handler, int message) {
     if (camera != null && previewing) {
       autoFocusCallback.setHandler(handler, message);
-      //Log.d(TAG, "Requesting auto-focus callback");
+      //Log.d(TAG, "Requesting auto-focus searchPositionCallback");
       camera.autoFocus(autoFocusCallback);
     }
   }

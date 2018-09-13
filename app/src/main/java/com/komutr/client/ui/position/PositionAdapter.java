@@ -19,7 +19,10 @@ import com.komutr.client.R;
 import com.komutr.client.been.Bill;
 import com.komutr.client.been.Position;
 import com.komutr.client.common.RouterManager;
+import com.komutr.client.event.PositionEvent;
 import com.komutr.client.ui.bill.BillPresenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -29,7 +32,7 @@ import java.util.List;
  *
  * @version 1.0.0.0 2018/9/7 chengaobin
  */
-public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener {
+public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener, View.OnClickListener {
 
 
     PositionPresenter presenter;
@@ -39,14 +42,17 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
 
     String searchText;
 
+    boolean isStartPosition;
+
     public void setDatas(List<Position> datas, String searchText) {
         super.setDatas(datas);
         this.searchText = searchText;
     }
 
-    public PositionAdapter(Context context, PositionPresenter presenter) {
+    public PositionAdapter(Context context, boolean isStartPosition,PositionPresenter presenter) {
         this.presenter = presenter;
         this.context = context;
+        this.isStartPosition = isStartPosition;
     }
 
     @Override
@@ -60,6 +66,12 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
     @Override
     public void onItemClick(View v, int position) {
 //        RouterManager.goBillDetail();
+       Position positionInfo =  getData(position);
+       if(positionInfo != null){
+           positionInfo.setStartPosition(isStartPosition);
+           EventBus.getDefault().post(new PositionEvent(PositionEvent.CHOOSE_POSITION_SUCCESS,positionInfo));
+       }
+
     }
 
     @Override
@@ -70,7 +82,11 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
     @Override
     protected void onPtrBindViewHolder(ViewHolder holder, Position data, int position) {
 
-
+        holder.tvPositionName.setText(getStringBuilder(data.getName()));
+        holder.ivDeleteRecord.setVisibility(data.isFrequentlyStation() ? View.VISIBLE : View.GONE);
+        holder.ivDeleteRecord.setTag(data.getId());
+        holder.ivDeleteRecord.setTag(R.id.tag_first, position);
+        holder.ivDeleteRecord.setOnClickListener(this);
     }
 
 
@@ -102,16 +118,24 @@ public class PositionAdapter extends BasePtrAdapter<Position, PositionAdapter.Vi
         return style;
     }
 
+    @Override
+    public void onClick(View view) {
+        if (presenter != null)
+            presenter.deleteFrequentlyStation((Integer) view.getTag());
+        int position = (int) view.getTag(R.id.tag_first);
+        removeData(position);
+    }
+
     class ViewHolder extends BasePtrViewHold {
 
-        TextView ivPositionName;
+        TextView tvPositionName;
 
         ImageView ivDeleteRecord;
 
         public ViewHolder(View itemView, OnRecyclerViewItemClickListener listener) {
             super(itemView, listener);
             ivDeleteRecord = itemView.findViewById(R.id.ivDeleteRecord);
-            ivPositionName = itemView.findViewById(R.id.tvPositionName);
+            tvPositionName = itemView.findViewById(R.id.tvPositionName);
             CommonUtils.setBackground(itemView, CommonUtils.selectorStateColor(context, R.color.white, R.color.color_f1f1f4));
         }
     }
