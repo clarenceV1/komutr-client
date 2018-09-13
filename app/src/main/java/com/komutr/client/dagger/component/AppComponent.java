@@ -4,6 +4,7 @@ package com.komutr.client.dagger.component;
 import com.cai.framework.dagger.ActivityScope;
 import com.komutr.client.base.App;
 import com.komutr.client.dagger.module.CommonModule;
+import com.komutr.client.service.GeTuiIntentService;
 import com.komutr.client.ui.aboutUs.AboutUsActivity;
 import com.komutr.client.ui.purchase.ReviewPurchaseActivity;
 import com.komutr.client.ui.bill.BillActivity;
@@ -61,6 +62,7 @@ public interface AppComponent {
     void inject(HelpCenterActivity activity);
     void inject(BindEmailActivity activity);
     void inject(BillDetailActivity activity);
+    void inject(GeTuiIntentService service);
 
 
     void inject(BindPhoneActivity activity);

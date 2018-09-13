@@ -42,19 +42,20 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
     }
 
 
-
     public void registeredOrLogin(String code, String phone, String verTokenKey) {
         Map<String, Object> query = new HashMap<>();
         query.put("m", "customer.registeredOrLogin");
         query.put("auth_key", Constant.AUTH_KEY);
         query.put("ver_token_key", verTokenKey);
-        query.put("app_key", UniqueIdUtils.getDeviceInfo(GodBaseApplication.getAppContext(),UniqueIdUtils.DEVICES_INFO.IMEI));
+        query.put("app_key", UniqueIdUtils.getDeviceInfo(GodBaseApplication.getAppContext(), UniqueIdUtils.DEVICES_INFO.IMEI));
         query.put("code", code);
         query.put("phone", phone);
+        String pushClientId = dataStore.get().getGeTuiPushClientId();
+        query.put("device_code", pushClientId);
         Disposable disposable = requestStore.get().commonRequest(query).doOnSuccess(new Consumer<RespondDO>() {
             @Override
             public void accept(RespondDO respondDO) {
-                if (respondDO.isStatus()&& !TextUtils.isEmpty(respondDO.getData())) {
+                if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
                     User userInfo = JSON.parseObject(respondDO.getData(), User.class);
                     respondDO.setObject(userInfo);
                     if (userInfoDao != null) {
@@ -97,7 +98,7 @@ public class LoginPresenter extends AppBasePresenter<LoginView> {
                 .doOnSuccess(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        if(respondDO.isStatus()&&!TextUtils.isEmpty(respondDO.getData())){
+                        if (respondDO.isStatus() && !TextUtils.isEmpty(respondDO.getData())) {
                             PhoneCode phoneCode = JSON.parseObject(respondDO.getData(), PhoneCode.class);
                             respondDO.setObject(phoneCode);
                         }

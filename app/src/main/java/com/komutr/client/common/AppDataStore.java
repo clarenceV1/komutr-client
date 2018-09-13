@@ -13,19 +13,23 @@ public class AppDataStore {
     @Inject
     public ISharePreference sharePreference;
 
-    private static final String OLD_VERSION = "old_version";
+    private static final String GE_TUI_PUSH_CLIENT_ID = "GeTuiPushClientId";
 
     @Inject
     public AppDataStore() {
 
     }
 
-    public void saveOldVersion() {
-        sharePreference.write(OLD_VERSION, false);
+    /**
+     * 个推ClientId
+     *
+     * @param clientid
+     */
+    public void setGeTuiPushClientId(String clientid) {
+        sharePreference.write(GE_TUI_PUSH_CLIENT_ID, clientid);
     }
 
-    public boolean isOldVersion() {
-        return sharePreference.read(OLD_VERSION, true);
+    public String getGeTuiPushClientId() {
+        return sharePreference.read(GE_TUI_PUSH_CLIENT_ID, "");
     }
-
 }
