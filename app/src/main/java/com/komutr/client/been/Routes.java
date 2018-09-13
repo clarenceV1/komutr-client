@@ -12,6 +12,15 @@ public class Routes implements Serializable {
     private String route_id;
     private RouterStation station;
     private Ticket ticket;
+    private String line_number;
+
+    public String getLine_number() {
+        return line_number;
+    }
+
+    public void setLine_number(String line_number) {
+        this.line_number = line_number;
+    }
 
     public String getRoute_id() {
         return route_id;
