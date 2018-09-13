@@ -13,6 +13,7 @@ import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.RoutesInfo;
+import com.komutr.client.been.StationDetail;
 import com.komutr.client.common.RouterManager;
 import com.komutr.client.databinding.RouteDetailBinding;
 import com.komutr.client.ui.map.MapHelp;
@@ -50,7 +51,7 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
 
     @Override
     public void initView() {
-        setBarTitle("Df10001");
+        setBarTitle("");
         mViewBinding.btnBuy.setOnClickListener(this);
         initMap();
         presenter.routesInfo(routeId, shiftId);
@@ -58,7 +59,7 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapHelp = new MapHelp(this, mapFragment,null);
+        mapHelp = new MapHelp(this, mapFragment, null);
     }
 
     @Override
@@ -74,7 +75,12 @@ public class RouteDetailActivity extends AppBaseActivity<RouteDetailBinding> imp
     @Override
     public void routesInfoCallback(RespondDO<RoutesInfo> respondDO) {
         if (respondDO.isStatus() && respondDO.getObject() != null && mapHelp != null) {
-            mapHelp.drawRoutes(respondDO.getObject());
+            RoutesInfo routesInfo = respondDO.getObject();
+            mapHelp.drawRoutes(routesInfo);
+            List<StationDetail> stationDetails = routesInfo.getAll_station();
+            if (titleBarView != null && stationDetails != null && stationDetails.size() > 0) {
+                titleBarView.setTitleText(stationDetails.get(0).getRoute_id());
+            }
         }
     }
 }

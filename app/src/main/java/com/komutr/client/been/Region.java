@@ -3,7 +3,7 @@ package com.komutr.client.been;
 public class Region {
 //    [{"code":"10010","id":1,"is_active":1,"name":"Metropolitan Manila"}]
     private String code;
-    private int id;
+    private String id;
     private int is_active;
     private String name;
 
@@ -15,11 +15,11 @@ public class Region {
         this.code = code;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

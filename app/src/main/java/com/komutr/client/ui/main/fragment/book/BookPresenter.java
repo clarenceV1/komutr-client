@@ -8,6 +8,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.komutr.client.base.AppBasePresenter;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Station;
+import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
 import com.komutr.client.ui.map.MapUtils;
 
@@ -103,10 +104,25 @@ public class BookPresenter extends AppBasePresenter<BookView> {
         }).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Station>() {
                     @Override
-                    public void accept(Station stations){
+                    public void accept(Station stations) {
                         mView.nearestDistanceCallback(stations);
                     }
                 });
         mCompositeSubscription.add(disposable);
+    }
+
+    public String getBigArea() {
+        User user = userInfoDao.get().getUser();
+        if (user != null) {
+            return user.getBig_area();
+        }
+        return null;
+    }
+    public String getProvince() {
+        User user = userInfoDao.get().getUser();
+        if (user != null) {
+            return user.getProvince();
+        }
+        return null;
     }
 }

@@ -187,11 +187,11 @@ public class RouterManager {
                 .withString("shiftId", shiftId).navigation();
     }
 
-    public static void goPosition(boolean isStartPosition, int bigArea, int province) {
+    public static void goPosition(boolean isStartPosition, String bigArea, String province) {
         ARouter.getInstance().build(POSITION)
                 .withBoolean("isStartPosition", isStartPosition)
-                .withInt("bigArea", bigArea)
-                .withInt("province", province).navigation();
+                .withString("bigArea", bigArea)
+                .withString("province", province).navigation();
     }
 
     public static void goRecharge() {

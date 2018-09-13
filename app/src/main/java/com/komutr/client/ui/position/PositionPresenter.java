@@ -25,8 +25,8 @@ import io.reactivex.functions.Consumer;
 public class PositionPresenter extends AppBasePresenter<PositionView> {
 
     String type;//beg 始发站 end 结束站
-    int bigArea;//大区 ID
-    int province;//大区下面的行政单位 ID
+    String bigArea;//大区 ID
+    String province;//大区下面的行政单位 ID
 
     @Inject
     public PositionPresenter() {
@@ -37,7 +37,7 @@ public class PositionPresenter extends AppBasePresenter<PositionView> {
     public void onAttached() {
     }
 
-    public void initData(boolean isStartPosition, int bigArea, int province) {
+    public void initData(boolean isStartPosition, String bigArea, String province) {
         if(isStartPosition){
             type = "beg";
         }else{

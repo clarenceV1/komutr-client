@@ -36,9 +36,9 @@ public class PositionActivity extends AppBaseActivity<PositionBinding> implement
     @Autowired(name = "isStartPosition")
     boolean isStartPosition;//起点站
     @Autowired(name = "bigArea")
-    int bigArea;//大区 ID
+    String bigArea;//大区 ID
     @Autowired(name = "province")
-    int province;//大区下面的行政单位 ID
+    String province;//大区下面的行政单位 ID
 
     PtrRecyclerView mPtrRecyclerView;
     PositionAdapter adapter;
