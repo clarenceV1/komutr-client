@@ -42,6 +42,7 @@ import com.google.android.gms.tasks.Task;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.been.RoutesInfo;
+import com.komutr.client.been.Station;
 import com.komutr.client.been.StationDetail;
 import com.komutr.client.been.User;
 import com.komutr.client.event.EventPostInfo;
@@ -127,7 +128,6 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -137,6 +137,10 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
         mMap.setMaxZoomPreference(20.0f);
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
+
+        //先默认移动到菲律宾
+        LatLng latLng = new LatLng(14.600402, 120.991269);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
         loadMyLocation();
 //        createLocationRequest();
@@ -160,6 +164,9 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
         }
         LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        if (mapCallback != null) {
+            mapCallback.getLocation(latLng);
+        }
     }
 
     @Override
@@ -188,6 +195,18 @@ public class MapHelp implements GoogleMap.OnMyLocationButtonClickListener,
 
     }
 
+    /**
+     * 添加站点标注
+     */
+    public void addStationMarker(LatLng point, int resourceId, String title) {
+        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(resourceId)).position(point).title(title));
+    }
+
+    /**
+     * 画路线图
+     *
+     * @param routes
+     */
     public void drawRoutes(RoutesInfo routes) {
         List<StationDetail> stations = routes.getAll_station();
 

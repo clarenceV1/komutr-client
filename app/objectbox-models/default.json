@@ -4,99 +4,99 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:6463720516586774317",
-      "lastPropertyId": "13:2933580503247942544",
-      "name": "User",
+      "id": "1:6435251893320271289",
+      "lastPropertyId": "6:4656344414467411244",
+      "name": "Message",
       "properties": [
         {
-          "id": "1:1124334461578692372",
+          "id": "1:3078822329182829336",
           "name": "id"
         },
         {
-          "id": "2:2035529207417663954",
-          "name": "userId"
+          "id": "2:3963990056201047409",
+          "name": "msgId"
         },
         {
-          "id": "3:3536920249895014852",
-          "name": "user_type"
+          "id": "3:1666614906946217236",
+          "name": "content"
         },
         {
-          "id": "4:294631440010405789",
-          "name": "username"
+          "id": "4:7915940539032987313",
+          "name": "create_at"
         },
         {
-          "id": "5:5382201405979721130",
-          "name": "phone"
+          "id": "5:2382529395186103745",
+          "name": "title"
         },
         {
-          "id": "6:602506626315528845",
-          "name": "sex"
-        },
-        {
-          "id": "7:3228137364356379524",
-          "name": "big_area"
-        },
-        {
-          "id": "8:7132195373718213758",
-          "name": "province"
-        },
-        {
-          "id": "9:4240971683741209443",
-          "name": "avatar"
-        },
-        {
-          "id": "10:8905071727458471778",
-          "name": "avatar_thum"
-        },
-        {
-          "id": "11:2578030319313798283",
-          "name": "auth_key"
-        },
-        {
-          "id": "12:8539971556593764923",
-          "name": "email"
-        },
-        {
-          "id": "13:2933580503247942544",
-          "name": "birthday"
+          "id": "6:4656344414467411244",
+          "name": "status"
         }
       ],
       "relations": []
     },
     {
-      "id": "2:7700975676567819038",
-      "lastPropertyId": "7:4065991510547307212",
-      "name": "Message",
+      "id": "2:8882567526248681062",
+      "lastPropertyId": "13:4813439597296391593",
+      "name": "User",
       "properties": [
         {
-          "id": "1:519763780005057470",
+          "id": "1:11357247320061807",
           "name": "id"
         },
         {
-          "id": "2:1060021683063982299",
-          "name": "msgId"
+          "id": "2:2803855538379137580",
+          "name": "userId"
         },
         {
-          "id": "3:2853337791202511091",
-          "name": "content"
+          "id": "3:1201781151992320141",
+          "name": "user_type"
         },
         {
-          "id": "4:5377738027931351648",
-          "name": "create_at"
+          "id": "4:3292501962262063439",
+          "name": "username"
         },
         {
-          "id": "5:2882488710336961832",
-          "name": "title"
+          "id": "5:6980092976399693579",
+          "name": "phone"
         },
         {
-          "id": "7:4065991510547307212",
-          "name": "status"
+          "id": "6:7870640074732917862",
+          "name": "sex"
+        },
+        {
+          "id": "7:1992377897127227677",
+          "name": "big_area"
+        },
+        {
+          "id": "8:3285693442531216787",
+          "name": "province"
+        },
+        {
+          "id": "9:2790083231519613092",
+          "name": "avatar"
+        },
+        {
+          "id": "10:1318019919434585693",
+          "name": "avatar_thum"
+        },
+        {
+          "id": "11:9043215975899912189",
+          "name": "auth_key"
+        },
+        {
+          "id": "12:6229183058671815101",
+          "name": "email"
+        },
+        {
+          "id": "13:4813439597296391593",
+          "name": "birthday"
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "2:7700975676567819038",
+  "lastEntityId": "2:8882567526248681062",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
@@ -104,9 +104,7 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    816324447455563569
-  ],
+  "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
 }

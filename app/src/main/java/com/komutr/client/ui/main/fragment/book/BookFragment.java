@@ -29,10 +29,8 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
 
     @Inject
     BookPresenter presenter;
-    double longitude;//精度
-    double latitude;//纬度
-    int offset;//开始行
-    int limit;//数量
+    int offset = 0;//开始行
+    int limit = 100;//数量
     int bigArea;//大区 ID
     int province;//大区下面的行政单位 ID
     boolean isChange = false;//是否切换
@@ -41,6 +39,7 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     Station endStation;//终点站
 
     MapHelp mapHelp;
+    LatLng mLocation;
 
     public BookFragment() {
         // Required empty public constructor
@@ -91,13 +90,6 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         mViewBinding.tvStartLocation.setOnClickListener(this);
         mViewBinding.tvEndLocation.setOnClickListener(this);
 
-        //test
-        limit = 1;
-        offset = 0;
-        longitude = 118.07404;
-        latitude = 24.63618;
-//14.600402, 120.991269
-        presenter.requestNearby(longitude, latitude, offset, limit);
     }
 
     private void initMap() {
@@ -105,7 +97,10 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
         mapHelp = new MapHelp(getContext(), mapFragment, new MapCallback() {
             @Override
             public void getLocation(LatLng location) {
-
+                mLocation = location;
+                if (location != null) {
+                    presenter.requestNearby(mLocation.latitude, mLocation.longitude, offset, limit);
+                }
             }
         });
     }
@@ -154,18 +149,30 @@ public class BookFragment extends AppBaseFragment<FragmentBookBinding> implement
     }
 
     @Override
-    public void requestNearbyCallback(RespondDO<Station> respondDO) {
-        if (respondDO.isStatus()) {
-            Station nearby = respondDO.getObject();
-            if (nearby != null) {
-                if (isChange) {
-                    endStation = nearby;
-                    mViewBinding.tvEndLocation.setText(endStation.getName());
-                } else {
-                    begStation = nearby;
-                    mViewBinding.tvStartLocation.setText(begStation.getName());
+    public void requestNearbyCallback(RespondDO<List<Station>> respondDO) {
+        if (respondDO.isStatus() && respondDO.getObject() != null) {
+            List<Station> nears = respondDO.getObject();
+            if (mLocation != null) {
+                presenter.getNearestDistance(mLocation, nears);
+            }
+            if (mapHelp != null) {
+                for (Station nearby : nears) {
+                    LatLng point = new LatLng(nearby.getLatitude(), nearby.getLongitude());
+                    mapHelp.addStationMarker(point, R.drawable.station_point, nearby.getName());
                 }
+            }
+        }
+    }
 
+    @Override
+    public void nearestDistanceCallback(Station stations) {
+        if (stations != null) {
+            if (isChange) {
+                endStation = stations;
+                mViewBinding.tvEndLocation.setText(endStation.getName());
+            } else {
+                begStation = stations;
+                mViewBinding.tvStartLocation.setText(begStation.getName());
             }
         }
     }

@@ -4,9 +4,13 @@ import com.cai.framework.base.GodBaseView;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Station;
 
+import java.util.List;
+
 public interface BookView extends GodBaseView {
 
-    void requestNearbyCallback(RespondDO<Station> respondDO);
+    void requestNearbyCallback(RespondDO<List<Station>> respondDO);
+
+    void nearestDistanceCallback(Station stations);
 }
 
 
