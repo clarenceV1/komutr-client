@@ -1,6 +1,7 @@
 package com.komutr.client.ui.faq;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,7 +23,6 @@ import java.util.List;
  * @version 1.0.0.0 2018/9/12 chengaobin
  */
 public class FAQAdapter extends BasePtrAdapter<Faq, FAQAdapter.ViewHolder> implements BaseViewHold.OnRecyclerViewItemClickListener, View.OnClickListener {
-
 
 
     Context context;
@@ -62,8 +62,8 @@ public class FAQAdapter extends BasePtrAdapter<Faq, FAQAdapter.ViewHolder> imple
     protected void onPtrBindViewHolder(ViewHolder holder, Faq data, int position) {
 
         holder.ivFaqName.setText(data.getTitle());
-        holder.tvFaqContent.setText(data.getContent());
-        holder.tvFaqContent.setVisibility(data.isShow()?View.VISIBLE:View.GONE);
+        holder.tvFaqContent.setText(Html.fromHtml(data.getContent()));
+        holder.tvFaqContent.setVisibility(data.isShow() ? View.VISIBLE : View.GONE);
         holder.ivFaqName.setTag(position);
         holder.ivFaqName.setTag(R.id.tag_first, holder.tvFaqContent);
         holder.ivFaqName.setOnClickListener(this);
@@ -77,13 +77,13 @@ public class FAQAdapter extends BasePtrAdapter<Faq, FAQAdapter.ViewHolder> imple
         if (tvFaqContent.getVisibility() == View.GONE) {
             getData(position).setShow(true);
             tvFaqContent.setVisibility(View.VISIBLE);
-            ivFaqName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_main,context));
-            ivFaqName.setCompoundDrawablesWithIntrinsicBounds(null, null, StreamUtils.getInstance().resourceToDrawable(R.drawable.right_down_icon,context), null);
+            ivFaqName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_main, context));
+            ivFaqName.setCompoundDrawablesWithIntrinsicBounds(null, null, StreamUtils.getInstance().resourceToDrawable(R.drawable.right_down_icon, context), null);
         } else {
             getData(position).setShow(false);
             tvFaqContent.setVisibility(View.GONE);
-            ivFaqName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_000000,context));
-            ivFaqName.setCompoundDrawablesWithIntrinsicBounds(null, null, StreamUtils.getInstance().resourceToDrawable(R.drawable.right_arrow_icon,context), null);
+            ivFaqName.setTextColor(StreamUtils.getInstance().resourceToColor(R.color.color_000000, context));
+            ivFaqName.setCompoundDrawablesWithIntrinsicBounds(null, null, StreamUtils.getInstance().resourceToDrawable(R.drawable.right_arrow_icon, context), null);
         }
 
     }

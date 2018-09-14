@@ -2,6 +2,7 @@ package com.komutr.client.ui.faq;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -65,6 +66,7 @@ public class FAQActivity extends AppBaseActivity<MessageDetailBinding> implement
     public void initView() {
 
         setBarTitle(getString(R.string.faq_title));
+
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.color_side_line, this)));
         mPtrRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,7 +77,7 @@ public class FAQActivity extends AppBaseActivity<MessageDetailBinding> implement
         mViewBinding.ptyRecycle.setOnPullLoadListener(this);
         mViewBinding.loadView.setClickListener(this);
         mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
-        presenter.requestDetail(contentType,start, size);
+        presenter.requestDetail(contentType, start, size);
     }
 
     @Override
@@ -113,7 +115,7 @@ public class FAQActivity extends AppBaseActivity<MessageDetailBinding> implement
     @Override
     public void onRefresh(PtrFrameLayout frame) {
         start = 0;
-        presenter.requestDetail(contentType,start, size);
+        presenter.requestDetail(contentType, start, size);
     }
 
     @Override
@@ -121,13 +123,14 @@ public class FAQActivity extends AppBaseActivity<MessageDetailBinding> implement
         if (adapter.getCount() > size) {
             start = adapter.getCount();
         }
-        presenter.requestDetail(contentType,start, size);
+        presenter.requestDetail(contentType, start, size);
     }
 
     @Override
     public void onLoadViewClick(int status) {
         start = 0;
         mViewBinding.loadView.setStatus(LoadingView.STATUS_LOADING);
-        presenter.requestDetail(contentType,start, size);
+        presenter.requestDetail(contentType, start, size);
     }
+
 }
