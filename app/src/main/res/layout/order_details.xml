@@ -400,7 +400,8 @@
                         android:background="@color/color_side_line" />
 
 
-                    <!--评论-->
+                    <!--评论 android:text="“Because of your evaluation, today we unwittingly became the Crown seller. Continue to take the high-end route, independent design, independent production, reasonable pricing, I hope to be able to support the store as always, thank you!”"
+                     -->
                     <TextView
                         android:id="@+id/tvUserComment"
                         android:layout_width="wrap_content"
@@ -409,7 +410,6 @@
                         android:paddingTop="10dp"
                         android:paddingLeft="13dp"
                         android:paddingRight="13dp"
-                        android:text="“Because of your evaluation, today we unwittingly became the Crown seller. Continue to take the high-end route, independent design, independent production, reasonable pricing, I hope to be able to support the store as always, thank you!”"
                         android:textColor="@color/color_666666"
                         android:textSize="12sp" />
 

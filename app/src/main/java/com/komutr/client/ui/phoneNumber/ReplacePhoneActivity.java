@@ -41,31 +41,10 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
     public void initView() {
         setBarTitle(getString(R.string.replace_the_binding_title));
 
-
         mViewBinding.etPhone.addTextChangedListener(this);
-        mViewBinding.etEnterConfirmationCode.addTextChangedListener(this);
         mViewBinding.etInputVerificAtionCode.addTextChangedListener(this);
         mViewBinding.btnBinding.setOnClickListener(this);
-        mViewBinding.btnGetCode.setOnClickListener(this);
         mViewBinding.btnVerificationCode.setOnClickListener(this);
-       /* mViewBinding.btnCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phone = mViewBinding.tvPhone.getText().toString();
-                presenter.verificationCode(phone);
-            }
-        });
-        mViewBinding.btnCommit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (phoneCode != null) {
-                    String phone = mViewBinding.tvPhone.getText().toString();
-                    String code = phoneCode.getCode();//测试的时候才能这样用
-                    presenter.changePhoneNumber(phone, code, phoneCode);
-                }
-
-            }
-        });*/
     }
 
     @Override
@@ -74,25 +53,19 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
     }
 
 
+    SMSCountDownTimer smsCountDownTimer;
+
+
     @Override
     public void verificationCodeCallback(RespondDO<PhoneCode> respondDO) {
 
-        if (respondDO.getFromCallBack() == 1) {//旧手机验证码
-            mViewBinding.btnGetCode.setText(getString(R.string.get_code));
-            mViewBinding.btnGetCode.setEnabled(true);
-        } else {
-            mViewBinding.btnVerificationCode.setText(getString(R.string.get_code));
-            mViewBinding.btnVerificationCode.setEnabled(true);
-        }
-
-
+        mViewBinding.btnVerificationCode.setText(getString(R.string.get_code));
+        mViewBinding.btnVerificationCode.setEnabled(true);
         if (respondDO.isStatus()) {//成功
             PhoneCode phoneCode = respondDO.getObject();
             if (phoneCode != null && !StringUtils.isEmpty(phoneCode.getVer_token_key())) {
-                new SMSCountDownTimer(respondDO.getFromCallBack() == 1 ? mViewBinding.btnGetCode : mViewBinding.btnVerificationCode, 60000, 1000);
-                if(respondDO.getFromCallBack() == 2){
-                    this.phoneCode = phoneCode;
-                }
+                smsCountDownTimer = new SMSCountDownTimer(mViewBinding.btnVerificationCode, 60000, 1000);
+                this.phoneCode = phoneCode;
             }
         } else {//失败
 
@@ -105,7 +78,7 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
 
         ToastUtils.showShort(respondDO.getMsg());
         if (respondDO.isStatus()) {//成功
-          finish();
+            finish();
         } else {//失败
 
         }
@@ -120,19 +93,14 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         String text = charSequence.toString();
-        if (mViewBinding.etEnterConfirmationCode.hasFocus()) {//获取旧手机验证码
+        if (mViewBinding.etPhone.hasFocus()) {//获得焦点时为手机号的输入项,获取验证码按钮可点击
             boolean isNotEmpty = !StringUtils.isEmpty(text);
-            mViewBinding.btnGetCode.setEnabled(isNotEmpty);
-            mViewBinding.btnVerificationCode.setEnabled(!StringUtils.isEmpty(StringUtils.getString(mViewBinding.etPhone)));
-            mViewBinding.btnBinding.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etPhone)) && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode)));
-        } else if (mViewBinding.etPhone.hasFocus()) {//获得焦点时为手机号的输入项,获取验证码按钮可点击
-            boolean isNotEmpty = !StringUtils.isEmpty(text);
-            mViewBinding.btnVerificationCode.setEnabled(isNotEmpty);
-            mViewBinding.btnGetCode.setEnabled(!StringUtils.isEmpty(StringUtils.getString(mViewBinding.etEnterConfirmationCode)));
-            mViewBinding.btnBinding.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode)) && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etEnterConfirmationCode)));
+            if (smsCountDownTimer == null || smsCountDownTimer.isFinish())
+                mViewBinding.btnVerificationCode.setEnabled(isNotEmpty);
+            mViewBinding.btnBinding.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etInputVerificAtionCode)));
         } else if (mViewBinding.etInputVerificAtionCode.hasFocus()) {//获得焦点时为获取验证码的输入项，登录按钮可点击
             boolean isNotEmpty = !StringUtils.isEmpty(text);
-            mViewBinding.btnBinding.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etPhone)) && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etEnterConfirmationCode)));
+            mViewBinding.btnBinding.setEnabled(isNotEmpty && !StringUtils.isEmpty(StringUtils.getString(mViewBinding.etPhone)));
         }
     }
 
@@ -144,17 +112,6 @@ public class ReplacePhoneActivity extends AppBaseActivity<ReplacePhoneBinding> i
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnGetCode://获取旧手机验证码
-                String phone = mViewBinding.etEnterConfirmationCode.getText().toString();
-                if (phone.length() != 11) {
-                    ToastUtils.showShort(getString(R.string.please_input_correct_phone_number));
-                    return;
-                }
-                mViewBinding.btnGetCode.setTag(phone);
-                mViewBinding.btnGetCode.setEnabled(false);
-                mViewBinding.btnGetCode.setText(getString(R.string.getting));
-                presenter.verificationCode(phone, 1);
-                break;
             case R.id.btnVerificationCode://获取新手机验证码
                 String newPhone = mViewBinding.etPhone.getText().toString();
                 if (newPhone.length() != 11) {

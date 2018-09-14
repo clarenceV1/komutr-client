@@ -7,7 +7,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <!--短信验证码-->
+        <!--&lt;!&ndash;短信验证码&ndash;&gt;
         <LinearLayout
             style="@style/common_layout_style"
             android:layout_marginTop="21dp"
@@ -39,7 +39,7 @@
                 android:text="@string/get_code" />
 
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <!--新手机号码-->
         <EditText

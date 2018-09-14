@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 @Route(path = RouterManager.ROUTER_ABOUT_US, name = "我的-关于我们")
 public class AboutUsActivity extends AppBaseActivity<AboutBinding> implements AboutUsView {
+
     @Inject
     AboutUsPresenter presenter;
 
