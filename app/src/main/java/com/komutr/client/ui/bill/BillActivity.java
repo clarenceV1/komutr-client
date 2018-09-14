@@ -51,7 +51,7 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
     @Override
     public void initView() {
         EventBus.getDefault().register(this);
-       setBarTitle(getString(R.string.transactions));
+        setBarTitle(getString(R.string.transactions));
 
         mPtrRecyclerView = (PtrRecyclerView) mViewBinding.ptyRecycle.getRecyclerView();
         mPtrRecyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, DimensUtils.dp2px(this, 1f), StreamUtils.getInstance().resourceToColor(R.color.transparent, this)));
@@ -104,7 +104,7 @@ public class BillActivity extends AppBaseActivity<BillBinding> implements BillVi
 
     @Override
     public void billListCallback(RespondDO<List<Bill>> respondDO) {
-        if(respondDO.isStatus() && respondDO.getObject()!=null){
+        if (respondDO.isStatus() && respondDO.getObject() != null) {
             adapter.setDatas(respondDO.getObject());
         }
         if (adapter.getDatas().isEmpty()) {

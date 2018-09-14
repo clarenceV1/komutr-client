@@ -52,7 +52,7 @@ public class RouteDetailPresenter extends AppBasePresenter<RouteDetailView> {
                 .subscribe(new Consumer<RespondDO>() {
                     @Override
                     public void accept(RespondDO respondDO) {
-                        Log.d("registeredOrLogin", respondDO.toString());
+                        Log.d("routesInfo", respondDO.toString());
                         mView.routesInfoCallback(respondDO);
                     }
                 }, new Consumer<Throwable>() {

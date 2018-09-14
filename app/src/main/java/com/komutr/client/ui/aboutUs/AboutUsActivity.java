@@ -1,7 +1,13 @@
 package com.komutr.client.ui.aboutUs;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cai.framework.base.GodBasePresenter;
+import com.cai.framework.web.WebViewFragment;
 import com.komutr.client.R;
 import com.komutr.client.base.App;
 import com.komutr.client.base.AppBaseActivity;
@@ -33,6 +39,7 @@ public class AboutUsActivity extends AppBaseActivity<AboutBinding> implements Ab
     @Override
     public void initView() {
         setBarTitle(getString(R.string.about_us_title));
+        showDialog(getString(R.string.loading),true);
         presenter.requestContent();
     }
 
@@ -43,6 +50,19 @@ public class AboutUsActivity extends AppBaseActivity<AboutBinding> implements Ab
 
     @Override
     public void callback(RespondDO<AboutUs> respondDO) {
+        hiddenDialog();
+        if(respondDO.isStatus() && respondDO.getObject() != null && respondDO.getObject().getContent() != null){
+            initFragment(respondDO.getObject().getContent().getContent());
+        }
+    }
 
+
+    private void initFragment(String htmlData) {
+        Bundle bundle = new Bundle();
+        bundle.putString(WebViewFragment.HTML_DATA, htmlData);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.llCenterAboutLayout, Fragment.instantiate(this, WebViewFragment.class.getName(), bundle));
+        fragmentTransaction.commit();
     }
 }

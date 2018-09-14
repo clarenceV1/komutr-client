@@ -1,13 +1,10 @@
 package com.komutr.client.ui.personInfo;
 
 import android.Manifest;
-import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.cai.framework.base.GodBaseApplication;
 import com.cai.framework.logger.Logger;
 import com.cai.framework.permission.RxPermissions;
@@ -17,15 +14,11 @@ import com.example.clarence.utillibrary.PrivateConstant;
 import com.example.clarence.utillibrary.StringUtils;
 import com.komutr.client.R;
 import com.komutr.client.base.AppBasePresenter;
-import com.komutr.client.been.PersonInfo;
-import com.komutr.client.been.PhoneCode;
 import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.UploadImage;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
 import com.komutr.client.event.EventPostInfo;
-import com.komutr.client.ui.qrcode.activity.MipcaActivityCapture;
-import com.komutr.client.ui.wallet.WalletView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,8 +31,6 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 
 public class PersonInfoPresenter extends AppBasePresenter<PersonInfoView> {
 

@@ -31,7 +31,7 @@ import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.komutr.client.R;
-import com.komutr.client.ui.qrcode.activity.MipcaActivityCapture;
+import com.komutr.client.ui.qrcode.activity.CaptureActivity;
 import com.komutr.client.ui.qrcode.camera.CameraManager;
 import com.komutr.client.ui.qrcode.camera.PlanarYUVLuminanceSource;
 
@@ -41,10 +41,10 @@ final class DecodeHandler extends Handler {
 
   private static final String TAG = DecodeHandler.class.getSimpleName();
 
-  private final MipcaActivityCapture activity;
+  private final CaptureActivity activity;
   private final MultiFormatReader multiFormatReader;
 
-  DecodeHandler(MipcaActivityCapture activity, Hashtable<DecodeHintType, Object> hints) {
+  DecodeHandler(CaptureActivity activity, Hashtable<DecodeHintType, Object> hints) {
     multiFormatReader = new MultiFormatReader();
     multiFormatReader.setHints(hints);
     this.activity = activity;

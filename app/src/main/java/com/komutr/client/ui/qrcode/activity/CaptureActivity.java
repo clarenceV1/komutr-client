@@ -1,13 +1,10 @@
 package com.komutr.client.ui.qrcode.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.view.SurfaceHolder;
@@ -15,27 +12,31 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
-
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cai.framework.base.GodBasePresenter;
 import com.example.clarence.utillibrary.StringUtils;
 import com.example.clarence.utillibrary.ToastUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.komutr.client.R;
+import com.komutr.client.base.App;
+import com.komutr.client.base.AppBaseActivity;
 import com.komutr.client.common.RouterManager;
+import com.komutr.client.databinding.CaptureBinding;
 import com.komutr.client.ui.qrcode.camera.CameraManager;
 import com.komutr.client.ui.qrcode.decoding.CaptureActivityHandler;
 import com.komutr.client.ui.qrcode.decoding.InactivityTimer;
 import com.komutr.client.ui.qrcode.view.ViewfinderView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Vector;
 
-public class MipcaActivityCapture extends Activity implements Callback, OnClickListener {
+@Route(path = RouterManager.MIP_CA_CAPTURE, name = "首页-扫描二维码")
+public class CaptureActivity extends AppBaseActivity<CaptureBinding> implements Callback, OnClickListener {
 
     private CaptureActivityHandler handler;
-    private ViewfinderView viewfinderView;
     private boolean hasSurface;
     private Vector<BarcodeFormat> decodeFormats;
     private String characterSet;
@@ -48,26 +49,41 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
     /**
      * Called when the activity is first created.
      */
-    @Override
+  /*  @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture);
         //ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
-        CameraManager.init(getApplication());
-        viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+    }*/
+
+    @Override
+    public void initView() {
+        CameraManager.init(this);
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
+        mViewBinding.ivBack.setOnClickListener(this);
+        mViewBinding.tvBill.setOnClickListener(this);
+    }
 
-        findViewById(R.id.iv_back).setOnClickListener(this);
-        findViewById(R.id.tv_bill).setOnClickListener(this);
+    @Override
+    public int getLayoutId() {
+        return R.layout.capture;
+    }
+
+    @Override
+    public void initDagger() {
+        App.getAppComponent().inject(this);
+    }
+
+    @Override
+    public void addPresenters(List<GodBasePresenter> observerList) {
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
-        SurfaceHolder surfaceHolder = surfaceView.getHolder();
+        SurfaceHolder surfaceHolder = mViewBinding.previewView.getHolder();
         if (hasSurface) {
             initCamera(surfaceHolder);
         } else {
@@ -125,7 +141,7 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
             RouterManager.goConfirmPayment(resultString,null);
 //            this.setResult(RESULT_OK, resultIntent);
         }
-        MipcaActivityCapture.this.finish();
+        CaptureActivity.this.finish();
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {
@@ -137,8 +153,7 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
             return;
         }
         if (handler == null) {
-            handler = new CaptureActivityHandler(this, decodeFormats,
-                    characterSet);
+            handler = new CaptureActivityHandler(this, decodeFormats,characterSet);
         }
     }
 
@@ -164,7 +179,7 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
     }
 
     public ViewfinderView getViewfinderView() {
-        return viewfinderView;
+        return mViewBinding.viewFinderView;
     }
 
     public Handler getHandler() {
@@ -172,7 +187,7 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
     }
 
     public void drawViewfinder() {
-        viewfinderView.drawViewfinder();
+        mViewBinding.viewFinderView.drawViewfinder();
 
     }
 
@@ -222,9 +237,11 @@ public class MipcaActivityCapture extends Activity implements Callback, OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_bill:
+            case R.id.tvBill:
+                RouterManager.goBill();
+                finish();
                 break;
-            case R.id.iv_back:
+            case R.id.ivBack:
                 finish();
                 break;
         }

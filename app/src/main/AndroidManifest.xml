@@ -55,7 +55,7 @@
         <activity android:name=".ui.position.PositionActivity" />
         <activity android:name=".ui.bill.BillActivity" />
         <activity android:name=".ui.recharge.RechargeActivity" />
-        <activity android:name=".ui.qrcode.activity.MipcaActivityCapture" />
+        <activity android:name=".ui.qrcode.activity.CaptureActivity" />
         <activity android:name=".ui.userRatings.UserRatingsActivity" />
         <activity android:name=".ui.orderDetails.OrderDetailsActivity" />
         <activity android:name=".ui.status.StatusActivity" />

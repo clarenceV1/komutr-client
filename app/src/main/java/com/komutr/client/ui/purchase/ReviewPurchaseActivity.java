@@ -61,6 +61,7 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
         routes = getArouterSerializableData("Routes");
 
         mViewBinding.btnConfirm.setOnClickListener(this);
+        showDialog(getString(R.string.loading),true);
         presenter.requestBuySellTicketDetails();
         initData();
 
@@ -127,6 +128,7 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
 
     @Override
     public void buySellTicketDetailsCallBack(RespondDO<BuySellTicketDetails> respondDO) {
+        hiddenDialog();
         if (respondDO.isStatus() && respondDO.getObject() != null) {
             BuySellTicketDetails buySellTicketDetails = respondDO.getObject();
             BuySellTicketDetails.Refund refund = buySellTicketDetails.getRefund();
@@ -134,6 +136,8 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
                 mViewBinding.tvImportantNotes.setText(refund.getContent());
                 mViewBinding.tvImportantTitle.setText(refund.getTitle());
             }
+        }else {
+            ToastUtils.showShort(respondDO.getMsg());
         }
     }
 
@@ -143,10 +147,10 @@ public class ReviewPurchaseActivity extends AppBaseActivity<ReviewPurchaseBindin
             if (routes.getRoute() != null && routes.getRoute().getStation() != null) {
                 Routes temR = routes.getRoute();
                 RouterStation station = temR.getStation();
-                showDialog(getString(R.string.buying), true);
                 Station beg = station.getBeg();
                 Station end = station.getEnd();
                 if (beg != null && end != null) {
+                    showDialog(getString(R.string.buying), true);
                     presenter.purchaseTicket(temR.getRoute_id(), routes.getId(), beg.getId(), end.getId());
                 }
             }

@@ -123,6 +123,9 @@ public class RouterManager {
 
     public static final String MESSAGE_DETAILS = ROUTER_HOME + "MessageDetailsActivity";
 
+
+    public static final String MIP_CA_CAPTURE = ROUTER_HOME + "CaptureActivity";
+
     /**
      * 消息详情
      *
@@ -201,5 +204,10 @@ public class RouterManager {
 
     public static void goBill() {
         ARouter.getInstance().build(BILL).navigation();
+    }
+
+
+    public static void goScanQrCode() {
+        ARouter.getInstance().build(MIP_CA_CAPTURE).navigation();
     }
 }

@@ -24,6 +24,7 @@ import com.komutr.client.ui.message.details.MessageDetailsActivity;
 import com.komutr.client.ui.nickname.NicknameActivity;
 import com.komutr.client.ui.orderDetails.OrderDetailsActivity;
 import com.komutr.client.ui.position.PositionActivity;
+import com.komutr.client.ui.qrcode.activity.CaptureActivity;
 import com.komutr.client.ui.recharge.RechargeActivity;
 import com.komutr.client.ui.status.StatusActivity;
 import com.komutr.client.ui.personInfo.PersonInfoActivity;
@@ -62,6 +63,7 @@ public interface AppComponent {
     void inject(HelpCenterActivity activity);
     void inject(BindEmailActivity activity);
     void inject(BillDetailActivity activity);
+    void inject(CaptureActivity activity);
     void inject(GeTuiIntentService service);
 
 

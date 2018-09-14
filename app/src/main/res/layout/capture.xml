@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <SurfaceView
+                android:id="@+id/previewView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+            <com.komutr.client.ui.qrcode.view.ViewfinderView
+                android:id="@+id/viewFinderView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/safetycertification_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/color_main">
+
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/app_name"
+                android:padding="12dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/arrow_back" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/scan_code_payment"
+                android:textColor="@color/color_ffffff"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/tvBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="@string/bill"
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

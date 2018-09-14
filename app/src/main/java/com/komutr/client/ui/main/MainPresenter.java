@@ -19,9 +19,10 @@ import com.komutr.client.been.RespondDO;
 import com.komutr.client.been.Service;
 import com.komutr.client.been.User;
 import com.komutr.client.common.Constant;
+import com.komutr.client.common.RouterManager;
 import com.komutr.client.event.EventPostInfo;
 import com.komutr.client.event.PermissionEvent;
-import com.komutr.client.ui.qrcode.activity.MipcaActivityCapture;
+import com.komutr.client.ui.qrcode.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -193,7 +194,7 @@ public class MainPresenter extends AppBasePresenter<MainView> {
             @Override
             public void accept(Boolean granted) {
                 if (granted) {
-                    activity.startActivity(new Intent(activity, MipcaActivityCapture.class));
+                    RouterManager.goScanQrCode();
                 }
             }
         });
